@@ -42,7 +42,6 @@ export default function MutationGenerator() {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
     toast({
       title: "Mutation Proposed",
       description: `ROI Target: ${values.roiTarget}%, Entropy Risk: ${values.entropyRisk}%.`,
