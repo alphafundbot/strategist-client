@@ -1,18 +1,13 @@
-import AppTabs from '@/components/common/app-tabs';
+import AppLayout from '@/components/common/app-layout';
 
-export default function AppLayout({
+export default function Layout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen w-full flex-col bg-muted/20">
-      <div className="flex flex-col sm:gap-4 sm:py-4">
-        <AppTabs />
-        <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-          {children}
-        </main>
-      </div>
-    </div>
+    <AppLayout>
+        {children}
+    </AppLayout>
   );
 }
