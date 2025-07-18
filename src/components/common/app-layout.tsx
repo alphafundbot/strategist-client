@@ -33,6 +33,7 @@ import {
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import React, { useEffect, useState } from 'react';
+import BottomNav from './bottom-nav';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -167,7 +168,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             </div>
           </div>
         </header>
-        <main className="flex-1 p-4 sm:px-6 sm:py-4">{children}</main>
+        <main className="flex-1 p-4 sm:px-6 sm:py-4 pb-20 md:pb-4">{children}</main>
+        <BottomNav />
       </SidebarInset>
     </SidebarProvider>
   );
