@@ -1,7 +1,7 @@
 
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { generateRationaleNarration } from "@/ai/flows/rationale-narration"
 import { textToSpeech } from "@/ai/flows/text-to-speech"
 import { Button } from "@/components/ui/button"
@@ -13,7 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { BrainCircuit, Loader2, Sparkles, Volume2 } from "lucide-react"
+import { BrainCircuit, Loader2, Sparkles, Volume2, VolumeX } from "lucide-react"
 import { Progress } from "@/components/ui/progress"
 import { Skeleton } from "../ui/skeleton"
 
@@ -23,13 +23,18 @@ export default function RationaleNarration() {
   const [isNarrating, setIsNarrating] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
+  const stopNarration = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      setIsNarrating(false);
+    }
+  }
+
   const handleGenerate = async () => {
     setIsLoading(true)
     setNarration(null)
-    if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-    }
+    stopNarration();
     try {
       const result = await generateRationaleNarration({
         mutationProposal: "New high-frequency trading algorithm.",
@@ -45,10 +50,16 @@ export default function RationaleNarration() {
   }
 
   const handleNarrate = async () => {
-    if (!narration || isNarrating) return;
+    if (!narration) return;
+
+    if (isNarrating) {
+      stopNarration();
+      return;
+    }
 
     if (audioRef.current) {
         audioRef.current.play();
+        setIsNarrating(true);
         return;
     }
 
@@ -61,7 +72,6 @@ export default function RationaleNarration() {
         audio.play();
         audio.onended = () => {
           setIsNarrating(false);
-          audioRef.current = null;
         };
       } else {
         setIsNarrating(false);
@@ -71,6 +81,13 @@ export default function RationaleNarration() {
       setIsNarrating(false);
     }
   };
+  
+  useEffect(() => {
+    return () => {
+      stopNarration();
+    }
+  }, [])
+
 
   return (
     <Card className="shadow-lg flex flex-col h-full">
@@ -96,8 +113,8 @@ export default function RationaleNarration() {
           <div className="space-y-4">
             <div className="flex items-start gap-4">
               <p className="flex-grow text-sm text-muted-foreground">{narration.rationale}</p>
-              <Button size="icon" variant="ghost" onClick={handleNarrate} disabled={isNarrating || isLoading}>
-                {isNarrating ? <Loader2 className="h-5 w-5 animate-spin"/> : <Volume2 className="h-5 w-5" />}
+              <Button size="icon" variant="ghost" onClick={handleNarrate} disabled={isLoading}>
+                {isNarrating ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
               </Button>
             </div>
             <div>

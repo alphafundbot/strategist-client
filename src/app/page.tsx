@@ -2,7 +2,7 @@
 "use client"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { textToSpeech } from "@/ai/flows/text-to-speech"
 
 import { Button } from "@/components/ui/button"
@@ -20,11 +20,16 @@ Choose your tier to enter the cockpit.
 
 export default function LoginPage() {
   const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false);
   const [isNarrating, setIsNarrating] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
 
   const handleLogin = (tier: string) => {
+    if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+    }
     if (typeof window !== 'undefined') {
       localStorage.setItem("userTier", tier)
     }
@@ -32,32 +37,52 @@ export default function LoginPage() {
   }
 
   const handleWalkthrough = async () => {
-    if (isNarrating) return;
+    if (isNarrating) {
+        if (audioRef.current) {
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0;
+        }
+        setIsNarrating(false);
+        setIsLoading(false);
+        return
+    };
 
     if (audioRef.current) {
         audioRef.current.play();
+        setIsNarrating(true);
+        setIsLoading(false);
         return;
     }
 
-    setIsNarrating(true);
+    setIsLoading(true);
     try {
       const result = await textToSpeech(walkthroughText);
       if (result.media) {
         const audio = new Audio(result.media);
         audioRef.current = audio;
         audio.play();
+        setIsNarrating(true);
         audio.onended = () => {
           setIsNarrating(false);
-          audioRef.current = null;
+          setIsLoading(false);
         };
       } else {
         setIsNarrating(false);
       }
     } catch (error) {
       console.error("Failed to generate narration audio:", error);
-      setIsNarrating(false);
+    } finally {
+        setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    return () => {
+        if (audioRef.current) {
+            audioRef.current.pause();
+        }
+    }
+  }, []);
 
   const tiers = [
     { name: "Elite", icon: <Crown className="w-8 h-8 text-yellow-400 group-hover:scale-110 transition-transform" /> },
@@ -93,13 +118,13 @@ export default function LoginPage() {
           ))}
         </CardContent>
         <CardFooter className="flex-col gap-4">
-             <Button onClick={handleWalkthrough} disabled={isNarrating} variant="ghost" className="w-full">
-              {isNarrating ? (
+             <Button onClick={handleWalkthrough} disabled={isLoading} variant="ghost" className="w-full">
+              {isLoading ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : (
                 <Volume2 className="mr-2 h-4 w-4" />
               )}
-              Play Walkthrough
+              {isNarrating ? 'Stop Walkthrough' : 'Play Walkthrough'}
             </Button>
             <p className="text-xs text-muted-foreground text-center w-full">
                 © {new Date().getFullYear()} Strategist Systems™. All rights reserved.
