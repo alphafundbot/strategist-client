@@ -116,7 +116,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 isActive={pathname.startsWith('/settings')}
                 tooltip={{ children: 'Settings' }}
               >
-                <Link href="#">
+                <Link href="/settings">
                   <Settings />
                   <span>Settings</span>
                 </Link>
