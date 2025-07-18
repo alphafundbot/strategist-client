@@ -9,27 +9,34 @@ import GlossaryManager from '@/components/dashboard/glossary-manager';
 
 export default function DashboardPage() {
   return (
-    <div className="grid auto-rows-fr gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
-      <div className="xl:col-span-2 grid auto-rows-fr gap-4">
+    <div className="grid gap-4 md:gap-8 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 auto-rows-fr">
+      {/* Row 1: Main Dashboard */}
+      <div className="xl:col-span-3">
         <MutationDashboard />
       </div>
-      <div className="row-span-1 grid auto-rows-fr gap-4 lg:row-span-2">
+
+      {/* Row 2: Core Actions */}
+      <div className="xl:col-span-2">
+        <CognitionGraph />
+      </div>
+      <div className="grid auto-rows-fr gap-4 md:gap-8">
         <MutationGenerator />
         <RationaleNarration />
       </div>
-      <div className="grid auto-rows-fr gap-4">
+
+      {/* Row 3: Analytics and Tools */}
+      <div >
         <RoiSimulation />
       </div>
-      <div className="xl:col-span-2 grid auto-rows-fr gap-4">
-         <CognitionGraph />
-      </div>
-       <div className="grid auto-rows-fr gap-4">
+      <div>
         <ReplayAnnotator />
       </div>
-      <div className="grid auto-rows-fr gap-4">
-         <GlossaryManager />
+      <div>
+        <GlossaryManager />
       </div>
-      <div className="grid auto-rows-fr gap-4">
+
+      {/* Row 4: Audit */}
+      <div className="xl:col-span-3">
         <AuditTrace />
       </div>
     </div>
