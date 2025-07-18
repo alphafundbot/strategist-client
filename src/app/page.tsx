@@ -1,3 +1,4 @@
+
 "use client"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -58,6 +59,14 @@ export default function LoginPage() {
     }
   };
 
+  const tiers = [
+    { name: "Elite", icon: <Crown className="w-8 h-8 text-yellow-400 group-hover:scale-110 transition-transform" /> },
+    { name: "Gold", icon: <Star className="w-8 h-8 text-amber-500 group-hover:scale-110 transition-transform" /> },
+    { name: "Silver", icon: <Gem className="w-8 h-8 text-slate-400 group-hover:scale-110 transition-transform" /> },
+    { name: "Bronze", icon: <Shield className="w-8 h-8 text-orange-600 group-hover:scale-110 transition-transform" /> },
+    { name: "Free", icon: <User className="w-8 h-8 text-gray-400 group-hover:scale-110 transition-transform" /> },
+  ]
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-background to-muted">
       <Card className="w-full max-w-md shadow-2xl">
@@ -69,56 +78,19 @@ export default function LoginPage() {
           <CardDescription className="pt-2">Select your access tier to begin</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4 p-6">
+          {tiers.map((tier) => (
             <Button
-                onClick={() => handleLogin("Elite")}
-                className="w-full justify-start text-lg py-8 group"
-                variant="outline"
+              key={tier.name}
+              onClick={() => handleLogin(tier.name)}
+              className="w-full justify-start text-lg py-8 group"
+              variant="outline"
             >
-                <div className="flex items-center gap-4">
-                    <Crown className="w-8 h-8 text-yellow-400 group-hover:scale-110 transition-transform" />
-                    <span className="font-semibold">Elite</span>
-                </div>
+              <div className="flex items-center gap-4">
+                {tier.icon}
+                <span className="font-semibold">{tier.name}{tier.name !== 'Free' ? '' : ' Tier'}</span>
+              </div>
             </Button>
-             <Button
-                onClick={() => handleLogin("Gold")}
-                className="w-full justify-start text-lg py-8 group"
-                variant="outline"
-            >
-                <div className="flex items-center gap-4">
-                    <Star className="w-8 h-8 text-amber-500 group-hover:scale-110 transition-transform" />
-                    <span className="font-semibold">Gold</span>
-                </div>
-            </Button>
-            <Button
-                onClick={() => handleLogin("Silver")}
-                className="w-full justify-start text-lg py-8 group"
-                variant="outline"
-            >
-                <div className="flex items-center gap-4">
-                    <Gem className="w-8 h-8 text-slate-400 group-hover:scale-110 transition-transform" />
-                    <span className="font-semibold">Silver</span>
-                </div>
-            </Button>
-            <Button
-                onClick={() => handleLogin("Bronze")}
-                className="w-full justify-start text-lg py-8 group"
-                variant="outline"
-            >
-                <div className="flex items-center gap-4">
-                    <Shield className="w-8 h-8 text-orange-600 group-hover:scale-110 transition-transform" />
-                    <span className="font-semibold">Bronze</span>
-                </div>
-            </Button>
-             <Button
-                onClick={() => handleLogin("Free")}
-                className="w-full justify-start text-lg py-8 group"
-                variant="outline"
-            >
-                <div className="flex items-center gap-4">
-                    <User className="w-8 h-8 text-gray-400 group-hover:scale-110 transition-transform" />
-                    <span className="font-semibold">Free Tier</span>
-                </div>
-            </Button>
+          ))}
         </CardContent>
         <CardFooter className="flex-col gap-4">
              <Button onClick={handleWalkthrough} disabled={isNarrating} variant="ghost" className="w-full">
