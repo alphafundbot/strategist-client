@@ -137,7 +137,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <div className="flex flex-1 items-center justify-end gap-4">
              <div className="flex items-center gap-2">
                 {tierIcons[tier] || <User className="h-5 w-5" />}
-                <span className="font-medium">{tier || 'User'}</span>
+                <span className="font-medium">{tier || 'User'} Tier</span>
             </div>
           </div>
         </header>
