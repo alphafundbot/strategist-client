@@ -118,14 +118,14 @@ export default function LoginPage() {
         </CardContent>
         <CardFooter className="flex-col gap-4">
              <Button onClick={handleWalkthrough} disabled={isLoading} variant="ghost" className="w-full">
-              {isLoading ? (
+              {isLoading && !isNarrating ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : isNarrating ? (
                 <VolumeX className="mr-2 h-4 w-4" />
               ) : (
                 <Volume2 className="mr-2 h-4 w-4" />
               )}
-              {isNarrating ? 'Stop Walkthrough' : 'Play Walkthrough'}
+              {isLoading && !isNarrating ? 'Loading...' : isNarrating ? 'Stop Walkthrough' : 'Play Walkthrough'}
             </Button>
             <p className="text-xs text-muted-foreground text-center w-full">
                 © {new Date().getFullYear()} Strategist Systems™. All rights reserved.
