@@ -7,7 +7,7 @@ import { textToSpeech } from "@/ai/flows/text-to-speech"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Rocket, User, Shield, Gem, Star, Crown, Volume2, Loader2 } from "lucide-react"
+import { Rocket, User, Shield, Gem, Star, Crown, Volume2, Loader2, VolumeX } from "lucide-react"
 
 const walkthroughText = `
 Welcome to the Strategist Systems Cockpit. Select your access tier to begin.
@@ -24,12 +24,17 @@ export default function LoginPage() {
   const [isNarrating, setIsNarrating] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-
-  const handleLogin = (tier: string) => {
+  const stopNarration = () => {
     if (audioRef.current) {
         audioRef.current.pause();
-        audioRef.current = null;
+        audioRef.current.currentTime = 0;
     }
+    setIsNarrating(false);
+    setIsLoading(false);
+  }
+
+  const handleLogin = (tier: string) => {
+    stopNarration();
     if (typeof window !== 'undefined') {
       localStorage.setItem("userTier", tier)
     }
@@ -38,19 +43,13 @@ export default function LoginPage() {
 
   const handleWalkthrough = async () => {
     if (isNarrating) {
-        if (audioRef.current) {
-            audioRef.current.pause();
-            audioRef.current.currentTime = 0;
-        }
-        setIsNarrating(false);
-        setIsLoading(false);
-        return
+      stopNarration();
+      return
     };
 
     if (audioRef.current) {
         audioRef.current.play();
         setIsNarrating(true);
-        setIsLoading(false);
         return;
     }
 
@@ -64,13 +63,13 @@ export default function LoginPage() {
         setIsNarrating(true);
         audio.onended = () => {
           setIsNarrating(false);
-          setIsLoading(false);
         };
       } else {
         setIsNarrating(false);
       }
     } catch (error) {
       console.error("Failed to generate narration audio:", error);
+      setIsNarrating(false);
     } finally {
         setIsLoading(false);
     }
@@ -121,6 +120,8 @@ export default function LoginPage() {
              <Button onClick={handleWalkthrough} disabled={isLoading} variant="ghost" className="w-full">
               {isLoading ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : isNarrating ? (
+                <VolumeX className="mr-2 h-4 w-4" />
               ) : (
                 <Volume2 className="mr-2 h-4 w-4" />
               )}
