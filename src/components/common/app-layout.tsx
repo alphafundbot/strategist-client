@@ -15,6 +15,7 @@ import {
   Star,
   Gem,
   Shield,
+  AreaChart,
 } from 'lucide-react';
 
 import {
@@ -90,6 +91,18 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 <Link href="/dashboard">
                   <Home />
                   <span>Dashboard</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname.startsWith('/trading')}
+                tooltip={{ children: 'Trading' }}
+              >
+                <Link href="/trading">
+                  <AreaChart />
+                  <span>Trading</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
