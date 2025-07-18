@@ -1,1 +1,6 @@
-// Flows will be imported for their side effects in this file.
+import { config } from 'dotenv';
+config();
+
+import '@/ai/flows/cognition-graph-config.ts';
+import '@/ai/flows/rationale-narration.ts';
+import '@/ai/flows/investor-summary-generator.ts';

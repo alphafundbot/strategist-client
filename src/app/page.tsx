@@ -1,3 +1,63 @@
-export default function Home() {
-  return <></>;
+"use client"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Rocket, User, Eye, Crown } from "lucide-react"
+
+export default function LoginPage() {
+  const router = useRouter()
+
+  const handleLogin = (tier: string) => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem("userTier", tier)
+    }
+    router.push("/dashboard")
+  }
+
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-background to-muted">
+      <Card className="w-full max-w-md shadow-2xl">
+        <CardHeader className="text-center">
+          <div className="flex justify-center items-center mb-4">
+            <Rocket className="w-10 h-10 text-primary" />
+          </div>
+          <CardTitle className="text-3xl font-headline">Strategist Systems™ Cockpit</CardTitle>
+          <CardDescription className="pt-2">Select your access tier to begin</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4 p-6">
+          <Button
+            onClick={() => handleLogin("Elite")}
+            className="w-full justify-start text-lg py-6"
+            variant="default"
+          >
+            <Crown className="mr-4 h-6 w-6" />
+            Elite Strategist
+          </Button>
+          <Button
+            onClick={() => handleLogin("Advisor")}
+            className="w-full justify-start text-lg py-6"
+            variant="secondary"
+          >
+            <User className="mr-4 h-6 w-6" />
+            Advisor
+          </Button>
+          <Button
+            onClick={() => handleLogin("Observer")}
+            className="w-full justify-start text-lg py-6"
+            variant="outline"
+          >
+            <Eye className="mr-4 h-6 w-6" />
+            Observer
+          </Button>
+        </CardContent>
+        <CardFooter>
+            <p className="text-xs text-muted-foreground text-center w-full">
+                © {new Date().getFullYear()} Strategist Systems™. All rights reserved.
+            </p>
+        </CardFooter>
+      </Card>
+    </div>
+  )
 }
