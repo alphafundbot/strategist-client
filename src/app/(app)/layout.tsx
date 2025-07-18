@@ -1,5 +1,4 @@
-import AppSidebar from '@/components/common/app-sidebar';
-import AppHeader from '@/components/common/app-header';
+import AppTabs from '@/components/common/app-tabs';
 
 export default function AppLayout({
   children,
@@ -8,9 +7,8 @@ export default function AppLayout({
 }) {
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/20">
-      <AppSidebar />
-      <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
-        <AppHeader />
+      <div className="flex flex-col sm:gap-4 sm:py-4">
+        <AppTabs />
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
           {children}
         </main>
