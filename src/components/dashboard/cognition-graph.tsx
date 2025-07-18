@@ -49,10 +49,10 @@ export default function CognitionGraph() {
       <CardContent className="flex-grow space-y-4">
         <div className="aspect-video w-full bg-muted rounded-lg flex items-center justify-center">
             <Image 
-                src="https://placehold.co/600x400.png"
+                src="https://images.unsplash.com/photo-1543286386-7131e8a21a4c?q=80&w=600"
                 width={600}
                 height={400}
-                alt="Cognition graph placeholder"
+                alt="Cognition graph"
                 className="rounded-md object-cover"
                 data-ai-hint="network graph"
             />
