@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { generateRationaleNarration } from "@/ai/flows/rationale-narration"
+import { textToSpeech } from "@/ai/flows/text-to-speech"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -11,13 +12,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { BrainCircuit, Loader2, Sparkles } from "lucide-react"
+import { BrainCircuit, Loader2, Sparkles, Volume2 } from "lucide-react"
 import { Progress } from "@/components/ui/progress"
 import { Skeleton } from "../ui/skeleton"
 
 export default function RationaleNarration() {
   const [narration, setNarration] = useState<{ rationale: string; clarityScore: number } | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [isNarrating, setIsNarrating] = useState(false)
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const handleGenerate = async () => {
     setIsLoading(true)
@@ -35,6 +38,24 @@ export default function RationaleNarration() {
       setIsLoading(false)
     }
   }
+
+  const handleNarrate = async () => {
+    if (!narration || isNarrating) return;
+    setIsNarrating(true);
+    try {
+      const result = await textToSpeech(narration.rationale);
+      if (result.media) {
+        audioRef.current = new Audio(result.media);
+        audioRef.current.play();
+        audioRef.current.onended = () => {
+          setIsNarrating(false);
+        };
+      }
+    } catch (error) {
+      console.error("Failed to generate narration audio:", error);
+      setIsNarrating(false);
+    }
+  };
 
   return (
     <Card className="shadow-lg flex flex-col">
@@ -58,7 +79,12 @@ export default function RationaleNarration() {
         )}
         {narration && (
           <div className="space-y-4">
-            <p className="text-sm text-muted-foreground">{narration.rationale}</p>
+            <div className="flex items-start gap-4">
+              <p className="flex-grow text-sm text-muted-foreground">{narration.rationale}</p>
+              <Button size="icon" variant="ghost" onClick={handleNarrate} disabled={isNarrating}>
+                {isNarrating ? <Loader2 className="h-5 w-5 animate-spin"/> : <Volume2 className="h-5 w-5" />}
+              </Button>
+            </div>
             <div>
               <div className="flex justify-between items-center mb-1">
                 <span className="text-sm font-medium">Clarity Score</span>
