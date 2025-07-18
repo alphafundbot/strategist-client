@@ -4,8 +4,8 @@ import { TrendingUp, Target, ShieldCheck } from 'lucide-react';
 
 interface MutationCardProps {
     id: string;
-    fillAccuracy: number;
-    roiArc: number;
+    fillAccuracy: number | null;
+    roiArc: number | null;
     signalAncestry: string;
     status: 'active' | 'override' | 'pending';
 }
@@ -17,7 +17,7 @@ const statusStyles = {
 }
 
 export default function MutationCard({ id, fillAccuracy, roiArc, signalAncestry, status }: MutationCardProps) {
-    const roiColor = roiArc >= 0 ? 'text-accent' : 'text-destructive';
+    const roiColor = roiArc === null || roiArc >= 0 ? 'text-accent' : 'text-destructive';
 
     return (
         <Card className="hover:shadow-md transition-shadow">
@@ -31,12 +31,14 @@ export default function MutationCard({ id, fillAccuracy, roiArc, signalAncestry,
                     <div className="flex items-center gap-2">
                          <Target className="w-4 h-4" />
                         <span>Fill Acc.</span>
-                        <span className="font-semibold text-foreground">{fillAccuracy}%</span>
+                        <span className="font-semibold text-foreground">{fillAccuracy !== null ? `${fillAccuracy}%` : 'N/A'}</span>
                     </div>
                     <div className="flex items-center gap-2">
                         <TrendingUp className={`w-4 h-4 ${roiColor}`} />
                         <span>ROI Arc</span>
-                        <span className={`font-semibold ${roiColor}`}>{roiArc > 0 ? '+' : ''}{roiArc}%</span>
+                        <span className={`font-semibold ${roiColor}`}>
+                            {roiArc !== null ? `${roiArc > 0 ? '+' : ''}${roiArc}%` : 'Pending'}
+                        </span>
                     </div>
                 </div>
             </CardContent>

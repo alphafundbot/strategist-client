@@ -25,8 +25,8 @@ const mutations = [
   },
   {
     id: "MUT-004",
-    fillAccuracy: 97.5,
-    roiArc: 8.5,
+    fillAccuracy: null,
+    roiArc: null,
     signalAncestry: "Alpha-9",
     status: "pending",
   },
