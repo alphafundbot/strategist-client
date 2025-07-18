@@ -27,7 +27,6 @@ export default function RationaleNarration() {
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
-      setIsNarrating(false);
     }
   }
 
@@ -35,6 +34,10 @@ export default function RationaleNarration() {
     setIsLoading(true)
     setNarration(null)
     stopNarration();
+    if (audioRef.current) {
+        audioRef.current = null;
+    }
+    setIsNarrating(false);
     try {
       const result = await generateRationaleNarration({
         mutationProposal: "New high-frequency trading algorithm.",
@@ -54,12 +57,12 @@ export default function RationaleNarration() {
 
     if (isNarrating) {
       stopNarration();
+      setIsNarrating(false);
       return;
     }
 
     if (audioRef.current) {
         audioRef.current.play();
-        setIsNarrating(true);
         return;
     }
 
@@ -73,6 +76,14 @@ export default function RationaleNarration() {
         audio.onended = () => {
           setIsNarrating(false);
         };
+        audio.onpause = () => {
+            if (audio.currentTime !== audio.duration) {
+                setIsNarrating(false);
+            }
+        };
+        audio.onplaying = () => {
+            setIsNarrating(true);
+        }
       } else {
         setIsNarrating(false);
       }
