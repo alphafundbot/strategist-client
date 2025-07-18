@@ -12,6 +12,9 @@ import {
   Eye,
   Rocket,
   Settings,
+  Star,
+  Gem,
+  Shield,
 } from 'lucide-react';
 
 import {
@@ -54,8 +57,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   const tierIcons: { [key: string]: React.ReactNode } = {
     Elite: <Crown className="h-5 w-5 text-yellow-400" />,
-    Advisor: <User className="h-5 w-5 text-blue-400" />,
-    Observer: <Eye className="h-5 w-5 text-gray-400" />,
+    Gold: <Star className="h-5 w-5 text-amber-500" />,
+    Silver: <Gem className="h-5 w-5 text-slate-400" />,
+    Bronze: <Shield className="h-5 w-5 text-orange-600" />,
+    Free: <User className="h-5 w-5 text-gray-400" />,
   };
 
   return (

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Rocket, User, Eye, Crown } from "lucide-react"
+import { Rocket, User, Shield, Gem, Star, Crown } from "lucide-react"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -34,27 +34,47 @@ export default function LoginPage() {
             >
                 <div className="flex items-center gap-4">
                     <Crown className="w-8 h-8 text-yellow-400 group-hover:scale-110 transition-transform" />
-                    <span className="font-semibold">Elite Strategist</span>
+                    <span className="font-semibold">Elite</span>
                 </div>
             </Button>
-            <Button
-                onClick={() => handleLogin("Advisor")}
+             <Button
+                onClick={() => handleLogin("Gold")}
                 className="w-full justify-start text-lg py-8 group"
                 variant="outline"
             >
                 <div className="flex items-center gap-4">
-                    <User className="w-8 h-8 text-blue-400 group-hover:scale-110 transition-transform" />
-                    <span className="font-semibold">Advisor</span>
+                    <Star className="w-8 h-8 text-amber-500 group-hover:scale-110 transition-transform" />
+                    <span className="font-semibold">Gold</span>
                 </div>
             </Button>
             <Button
-                onClick={() => handleLogin("Observer")}
+                onClick={() => handleLogin("Silver")}
                 className="w-full justify-start text-lg py-8 group"
                 variant="outline"
             >
                 <div className="flex items-center gap-4">
-                    <Eye className="w-8 h-8 text-gray-400 group-hover:scale-110 transition-transform" />
-                    <span className="font-semibold">Observer</span>
+                    <Gem className="w-8 h-8 text-slate-400 group-hover:scale-110 transition-transform" />
+                    <span className="font-semibold">Silver</span>
+                </div>
+            </Button>
+            <Button
+                onClick={() => handleLogin("Bronze")}
+                className="w-full justify-start text-lg py-8 group"
+                variant="outline"
+            >
+                <div className="flex items-center gap-4">
+                    <Shield className="w-8 h-8 text-orange-600 group-hover:scale-110 transition-transform" />
+                    <span className="font-semibold">Bronze</span>
+                </div>
+            </Button>
+             <Button
+                onClick={() => handleLogin("Free")}
+                className="w-full justify-start text-lg py-8 group"
+                variant="outline"
+            >
+                <div className="flex items-center gap-4">
+                    <User className="w-8 h-8 text-gray-400 group-hover:scale-110 transition-transform" />
+                    <span className="font-semibold">Free Tier</span>
                 </div>
             </Button>
         </CardContent>
