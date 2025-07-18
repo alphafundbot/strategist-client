@@ -27,30 +27,36 @@ export default function LoginPage() {
           <CardDescription className="pt-2">Select your access tier to begin</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4 p-6">
-          <Button
-            onClick={() => handleLogin("Elite")}
-            className="w-full justify-start text-lg py-6"
-            variant="default"
-          >
-            <Crown className="mr-4 h-6 w-6" />
-            Elite Strategist
-          </Button>
-          <Button
-            onClick={() => handleLogin("Advisor")}
-            className="w-full justify-start text-lg py-6"
-            variant="secondary"
-          >
-            <User className="mr-4 h-6 w-6" />
-            Advisor
-          </Button>
-          <Button
-            onClick={() => handleLogin("Observer")}
-            className="w-full justify-start text-lg py-6"
-            variant="outline"
-          >
-            <Eye className="mr-4 h-6 w-6" />
-            Observer
-          </Button>
+            <Button
+                onClick={() => handleLogin("Elite")}
+                className="w-full justify-start text-lg py-8 group"
+                variant="outline"
+            >
+                <div className="flex items-center gap-4">
+                    <Crown className="w-8 h-8 text-yellow-400 group-hover:scale-110 transition-transform" />
+                    <span className="font-semibold">Elite Strategist</span>
+                </div>
+            </Button>
+            <Button
+                onClick={() => handleLogin("Advisor")}
+                className="w-full justify-start text-lg py-8 group"
+                variant="outline"
+            >
+                <div className="flex items-center gap-4">
+                    <User className="w-8 h-8 text-blue-400 group-hover:scale-110 transition-transform" />
+                    <span className="font-semibold">Advisor</span>
+                </div>
+            </Button>
+            <Button
+                onClick={() => handleLogin("Observer")}
+                className="w-full justify-start text-lg py-8 group"
+                variant="outline"
+            >
+                <div className="flex items-center gap-4">
+                    <Eye className="w-8 h-8 text-gray-400 group-hover:scale-110 transition-transform" />
+                    <span className="font-semibold">Observer</span>
+                </div>
+            </Button>
         </CardContent>
         <CardFooter>
             <p className="text-xs text-muted-foreground text-center w-full">
