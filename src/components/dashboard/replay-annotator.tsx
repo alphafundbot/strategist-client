@@ -1,3 +1,4 @@
+
 "use client"
 import { useState } from "react"
 import {
@@ -38,7 +39,6 @@ export default function ReplayAnnotator() {
 
   const handleAddAnnotation = () => {
     if (annotation.trim()) {
-      console.log("New Annotation:", annotation);
       toast({
         title: "Annotation Added",
         description: `"${annotation}"`,
