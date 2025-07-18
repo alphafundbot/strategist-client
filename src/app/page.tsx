@@ -11,10 +11,9 @@ import { Rocket, User, Shield, Gem, Star, Crown, Volume2, Loader2, VolumeX } fro
 
 const walkthroughText = `
 Welcome to the Strategist Systems Cockpit. Select your access tier to begin.
-Elite tier provides full access to all mutation tools and override terminals.
-Gold and Silver tiers offer access to advanced simulation and replay tools.
-The Free+ tier provides access to core mutation monitoring.
-The Free tier allows you to observe live mutation data.
+The Free tier allows you to observe live mutation data and deposit funds.
+Free+ tier, unlocked after your first deposit, gives you access to the mutation simulator and light narration.
+Silver, Gold, and Elite tiers unlock advanced simulation, override controls, and the full power of the cognition graph and AI narration.
 Choose your tier to enter the cockpit.
 `;
 
@@ -47,7 +46,6 @@ export default function LoginPage() {
 
     if (audioRef.current && !audioRef.current.paused) {
         audioRef.current.pause();
-        audioRef.current.currentTime = 0;
         setIsLoading(false);
         return;
     }
@@ -68,6 +66,14 @@ export default function LoginPage() {
         audio.onended = () => {
           setIsLoading(false);
         };
+        audio.onpause = () => {
+            if (audio.currentTime !== audio.duration) {
+                setIsLoading(false);
+            }
+        };
+        audio.onplaying = () => {
+            setIsLoading(true);
+        }
       } else {
         setIsLoading(false);
       }
@@ -119,15 +125,15 @@ export default function LoginPage() {
           ))}
         </CardContent>
         <CardFooter className="flex-col gap-4">
-             <Button onClick={handleWalkthrough} disabled={isLoading && !audioRef.current?.paused} variant="ghost" className="w-full">
-              {isLoading && !audioRef.current?.paused ? (
+             <Button onClick={handleWalkthrough} disabled={isLoading && !(audioRef.current && !audioRef.current.paused)} variant="ghost" className="w-full">
+              {isLoading && !(audioRef.current && !audioRef.current.paused) ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : (audioRef.current && !audioRef.current.paused) ? (
                 <VolumeX className="mr-2 h-4 w-4" />
               ) : (
                 <Volume2 className="mr-2 h-4 w-4" />
               )}
-              {isLoading && !audioRef.current?.paused ? 'Loading...' : (audioRef.current && !audioRef.current.paused) ? 'Stop Walkthrough' : 'Play Walkthrough'}
+              {isLoading && !(audioRef.current && !audioRef.current.paused) ? 'Loading...' : (audioRef.current && !audioRef.current.paused) ? 'Stop Walkthrough' : 'Play Walkthrough'}
             </Button>
             <p className="text-xs text-muted-foreground text-center w-full">
                 © {new Date().getFullYear()} Strategist Systems™. All rights reserved.
