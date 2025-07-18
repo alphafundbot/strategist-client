@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState } from "react"
@@ -36,7 +37,7 @@ export default function CognitionGraph() {
   }
 
   return (
-    <Card className="shadow-lg flex flex-col">
+    <Card className="shadow-lg flex flex-col h-full">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
             <GitFork className="w-6 h-6" />
