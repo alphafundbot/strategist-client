@@ -25,6 +25,10 @@ export default function RationaleNarration() {
   const handleGenerate = async () => {
     setIsLoading(true)
     setNarration(null)
+    if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+    }
     try {
       const result = await generateRationaleNarration({
         mutationProposal: "New high-frequency trading algorithm.",
@@ -41,15 +45,25 @@ export default function RationaleNarration() {
 
   const handleNarrate = async () => {
     if (!narration || isNarrating) return;
+
+    if (audioRef.current) {
+        audioRef.current.play();
+        return;
+    }
+
     setIsNarrating(true);
     try {
       const result = await textToSpeech(narration.rationale);
       if (result.media) {
-        audioRef.current = new Audio(result.media);
-        audioRef.current.play();
-        audioRef.current.onended = () => {
+        const audio = new Audio(result.media);
+        audioRef.current = audio;
+        audio.play();
+        audio.onended = () => {
           setIsNarrating(false);
+          audioRef.current = null;
         };
+      } else {
+        setIsNarrating(false);
       }
     } catch (error) {
       console.error("Failed to generate narration audio:", error);
