@@ -4,19 +4,19 @@
 
 @layer base {
   :root {
-    --background: 276 47% 95%;
+    --background: 276 47% 95%; /* light purple */
     --foreground: 262 30% 20%;
     --card: 0 0% 100%;
     --card-foreground: 262 30% 20%;
     --popover: 0 0% 100%;
     --popover-foreground: 262 30% 20%;
-    --primary: 262 52% 50%;
+    --primary: 262 52% 50%; /* deep purple */
     --primary-foreground: 262 100% 98%;
     --secondary: 276 30% 90%;
     --secondary-foreground: 262 30% 20%;
     --muted: 276 30% 90%;
     --muted-foreground: 262 20% 50%;
-    --accent: 174 100% 29%;
+    --accent: 174 100% 29%; /* teal */
     --accent-foreground: 174 100% 98%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
