@@ -38,7 +38,7 @@ export default function TransfersPage() {
              <CardDescription>
                 Transfer funds from your vault to a primary account.
             </CardDescription>
-          </CardHeader>
+          </Header>
           <CardContent>
              <p className="text-sm text-muted-foreground">The withdrawal flow will be available here.</p>
           </CardContent>
@@ -49,7 +49,7 @@ export default function TransfersPage() {
             <CardDescription>
                 Review your past vault deposits and withdrawals.
             </CardDescription>
-          </CardHeader>
+          </Header>
           <CardContent>
             <p className="text-sm text-muted-foreground">A detailed transfer history log will be available here.</p>
           </CardContent>
