@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState, useRef } from "react"
@@ -95,7 +96,7 @@ export default function RationaleNarration() {
           <div className="space-y-4">
             <div className="flex items-start gap-4">
               <p className="flex-grow text-sm text-muted-foreground">{narration.rationale}</p>
-              <Button size="icon" variant="ghost" onClick={handleNarrate} disabled={isNarrating}>
+              <Button size="icon" variant="ghost" onClick={handleNarrate} disabled={isNarrating || isLoading}>
                 {isNarrating ? <Loader2 className="h-5 w-5 animate-spin"/> : <Volume2 className="h-5 w-5" />}
               </Button>
             </div>
