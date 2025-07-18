@@ -1,4 +1,5 @@
 "use client"
+import { useState } from "react"
 import {
   Card,
   CardContent,
@@ -11,6 +12,7 @@ import { Line, LineChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YA
 import { ChartConfig, ChartContainer, ChartTooltipContent } from "@/components/ui/chart"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
+import { useToast } from "@/hooks/use-toast"
 import { PlayCircle, MessageSquarePlus } from "lucide-react"
 
 const timelineData = [
@@ -31,6 +33,20 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export default function ReplayAnnotator() {
+  const [annotation, setAnnotation] = useState("");
+  const { toast } = useToast();
+
+  const handleAddAnnotation = () => {
+    if (annotation.trim()) {
+      console.log("New Annotation:", annotation);
+      toast({
+        title: "Annotation Added",
+        description: `"${annotation}"`,
+      });
+      setAnnotation("");
+    }
+  }
+
   return (
     <Card className="shadow-lg">
       <CardHeader>
@@ -54,10 +70,16 @@ export default function ReplayAnnotator() {
             </LineChart>
           </ResponsiveContainer>
         </ChartContainer>
-        <Textarea placeholder="Add annotation..." className="mt-4" rows={2}/>
+        <Textarea 
+          placeholder="Add annotation..." 
+          className="mt-4" 
+          rows={2}
+          value={annotation}
+          onChange={(e) => setAnnotation(e.target.value)}
+        />
       </CardContent>
       <CardFooter>
-        <Button className="w-full">
+        <Button className="w-full" onClick={handleAddAnnotation}>
             <MessageSquarePlus className="w-4 h-4 mr-2" />
             Add Annotation
         </Button>
