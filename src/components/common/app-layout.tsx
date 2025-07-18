@@ -16,6 +16,7 @@ import {
   Gem,
   Shield,
   AreaChart,
+  Banknote,
 } from 'lucide-react';
 
 import {
@@ -103,6 +104,18 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 <Link href="/trading">
                   <AreaChart />
                   <span>Trading</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname.startsWith('/transfers')}
+                tooltip={{ children: 'Transfers' }}
+              >
+                <Link href="/transfers">
+                  <Banknote />
+                  <span>Transfers</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
