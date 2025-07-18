@@ -1,13 +1,27 @@
 "use client"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useState, useRef } from "react"
+import { textToSpeech } from "@/ai/flows/text-to-speech"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Rocket, User, Shield, Gem, Star, Crown } from "lucide-react"
+import { Rocket, User, Shield, Gem, Star, Crown, Volume2, Loader2 } from "lucide-react"
+
+const walkthroughText = `
+Welcome to the Strategist Systems Cockpit. Select your access tier to begin.
+Elite tier provides full access to all mutation tools and override terminals.
+Gold and Silver tiers offer access to advanced simulation and replay tools.
+Bronze tier provides access to core mutation monitoring.
+The Free tier allows you to observe live mutation data.
+Choose your tier to enter the cockpit.
+`;
 
 export default function LoginPage() {
   const router = useRouter()
+  const [isNarrating, setIsNarrating] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
 
   const handleLogin = (tier: string) => {
     if (typeof window !== 'undefined') {
@@ -15,6 +29,34 @@ export default function LoginPage() {
     }
     router.push("/dashboard")
   }
+
+  const handleWalkthrough = async () => {
+    if (isNarrating) return;
+
+    if (audioRef.current) {
+        audioRef.current.play();
+        return;
+    }
+
+    setIsNarrating(true);
+    try {
+      const result = await textToSpeech(walkthroughText);
+      if (result.media) {
+        const audio = new Audio(result.media);
+        audioRef.current = audio;
+        audio.play();
+        audio.onended = () => {
+          setIsNarrating(false);
+          audioRef.current = null;
+        };
+      } else {
+        setIsNarrating(false);
+      }
+    } catch (error) {
+      console.error("Failed to generate narration audio:", error);
+      setIsNarrating(false);
+    }
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-background to-muted">
@@ -78,7 +120,15 @@ export default function LoginPage() {
                 </div>
             </Button>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="flex-col gap-4">
+             <Button onClick={handleWalkthrough} disabled={isNarrating} variant="ghost" className="w-full">
+              {isNarrating ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <Volume2 className="mr-2 h-4 w-4" />
+              )}
+              Play Walkthrough
+            </Button>
             <p className="text-xs text-muted-foreground text-center w-full">
                 © {new Date().getFullYear()} Strategist Systems™. All rights reserved.
             </p>
