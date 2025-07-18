@@ -48,7 +48,7 @@ export default function ReplayAnnotator() {
   }
 
   return (
-    <Card className="shadow-lg">
+    <Card className="shadow-lg flex flex-col h-full">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
             <PlayCircle className="w-6 h-6" />
@@ -58,28 +58,28 @@ export default function ReplayAnnotator() {
           Review fill accuracy timeline and annotate performance.
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex-grow space-y-4">
         <ChartContainer config={chartConfig} className="h-48 w-full">
           <ResponsiveContainer>
-            <LineChart data={timelineData}>
+            <LineChart data={timelineData} margin={{ top: 5, right: 20, left: -10, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="time" tickLine={false} axisLine={false} tickMargin={8} fontSize={12}/>
               <YAxis domain={[90, 100]} unit="%" tickLine={false} axisLine={false} tickMargin={8} fontSize={12} />
-              <Tooltip content={<ChartTooltipContent />} />
-              <Line type="monotone" dataKey="accuracy" stroke="var(--color-accuracy)" strokeWidth={2} dot={false} />
+              <Tooltip content={<ChartTooltipContent indicator="line" />} />
+              <Line type="monotone" dataKey="accuracy" stroke="var(--color-accuracy)" strokeWidth={2} dot={true} />
             </LineChart>
           </ResponsiveContainer>
         </ChartContainer>
         <Textarea 
-          placeholder="Add annotation..." 
-          className="mt-4" 
+          placeholder="Add annotation for mutation BRST-9019..." 
+          className="mt-4 text-sm" 
           rows={2}
           value={annotation}
           onChange={(e) => setAnnotation(e.target.value)}
         />
       </CardContent>
       <CardFooter>
-        <Button className="w-full" onClick={handleAddAnnotation}>
+        <Button className="w-full" onClick={handleAddAnnotation} disabled={!annotation.trim()}>
             <MessageSquarePlus className="w-4 h-4 mr-2" />
             Add Annotation
         </Button>
