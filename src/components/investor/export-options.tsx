@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { useToast } from "@/hooks/use-toast"
-import { Download, FileType, FileBarChart2, Loader2, Wand2 } from "lucide-react"
+import { Download, FileBarChart2, Loader2, Wand2 } from "lucide-react"
 import { generatePitchDeck } from "@/ai/flows/pitch-deck-generator"
 
 const mockReports = [
