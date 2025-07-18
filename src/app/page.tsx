@@ -13,7 +13,7 @@ const walkthroughText = `
 Welcome to the Strategist Systems Cockpit. Select your access tier to begin.
 Elite tier provides full access to all mutation tools and override terminals.
 Gold and Silver tiers offer access to advanced simulation and replay tools.
-Bronze tier provides access to core mutation monitoring.
+The Free+ tier provides access to core mutation monitoring.
 The Free tier allows you to observe live mutation data.
 Choose your tier to enter the cockpit.
 `;
@@ -21,7 +21,6 @@ Choose your tier to enter the cockpit.
 export default function LoginPage() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false);
-  const [isNarrating, setIsNarrating] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const stopNarration = () => {
@@ -29,7 +28,6 @@ export default function LoginPage() {
         audioRef.current.pause();
         audioRef.current.currentTime = 0;
     }
-    setIsNarrating(false);
     setIsLoading(false);
   }
 
@@ -42,14 +40,21 @@ export default function LoginPage() {
   }
 
   const handleWalkthrough = async () => {
-    if (isNarrating) {
+    if (isLoading) {
       stopNarration();
-      return
+      return;
     };
+
+    if (audioRef.current && !audioRef.current.paused) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+        setIsLoading(false);
+        return;
+    }
 
     if (audioRef.current) {
         audioRef.current.play();
-        setIsNarrating(true);
+        setIsLoading(true);
         return;
     }
 
@@ -60,18 +65,15 @@ export default function LoginPage() {
         const audio = new Audio(result.media);
         audioRef.current = audio;
         audio.play();
-        setIsNarrating(true);
         audio.onended = () => {
-          setIsNarrating(false);
+          setIsLoading(false);
         };
       } else {
-        setIsNarrating(false);
+        setIsLoading(false);
       }
     } catch (error) {
       console.error("Failed to generate narration audio:", error);
-      setIsNarrating(false);
-    } finally {
-        setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -87,7 +89,7 @@ export default function LoginPage() {
     { name: "Elite", icon: <Crown className="w-8 h-8 text-yellow-400 group-hover:scale-110 transition-transform" /> },
     { name: "Gold", icon: <Star className="w-8 h-8 text-amber-500 group-hover:scale-110 transition-transform" /> },
     { name: "Silver", icon: <Gem className="w-8 h-8 text-slate-400 group-hover:scale-110 transition-transform" /> },
-    { name: "Bronze", icon: <Shield className="w-8 h-8 text-orange-600 group-hover:scale-110 transition-transform" /> },
+    { name: "Free+", icon: <Shield className="w-8 h-8 text-orange-600 group-hover:scale-110 transition-transform" /> },
     { name: "Free", icon: <User className="w-8 h-8 text-gray-400 group-hover:scale-110 transition-transform" /> },
   ]
 
@@ -117,15 +119,15 @@ export default function LoginPage() {
           ))}
         </CardContent>
         <CardFooter className="flex-col gap-4">
-             <Button onClick={handleWalkthrough} disabled={isLoading} variant="ghost" className="w-full">
-              {isLoading && !isNarrating ? (
+             <Button onClick={handleWalkthrough} disabled={isLoading && !audioRef.current?.paused} variant="ghost" className="w-full">
+              {isLoading && !audioRef.current?.paused ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : isNarrating ? (
+              ) : (audioRef.current && !audioRef.current.paused) ? (
                 <VolumeX className="mr-2 h-4 w-4" />
               ) : (
                 <Volume2 className="mr-2 h-4 w-4" />
               )}
-              {isLoading && !isNarrating ? 'Loading...' : isNarrating ? 'Stop Walkthrough' : 'Play Walkthrough'}
+              {isLoading && !audioRef.current?.paused ? 'Loading...' : (audioRef.current && !audioRef.current.paused) ? 'Stop Walkthrough' : 'Play Walkthrough'}
             </Button>
             <p className="text-xs text-muted-foreground text-center w-full">
                 © {new Date().getFullYear()} Strategist Systems™. All rights reserved.

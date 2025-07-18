@@ -57,22 +57,22 @@ export default function DashboardPage() {
 
       {/* Row 2: Core Actions */}
       <div className="xl:col-span-2">
-        {hasAccess(['Elite', 'Gold', 'Silver']) ? <CognitionGraph /> : <LockedFeatureCard featureName="Cognition Graph" />}
+        {hasAccess(['Elite']) ? <CognitionGraph /> : <LockedFeatureCard featureName="Cognition Graph" />}
       </div>
       <div className="grid auto-rows-fr gap-4 md:gap-8">
-        {hasAccess(['Elite', 'Gold', 'Silver', 'Bronze']) ? <MutationGenerator /> : <LockedFeatureCard featureName="Mutation Generator" />}
+        {hasAccess(['Elite', 'Gold', 'Silver', 'Free+']) ? <MutationGenerator /> : <LockedFeatureCard featureName="Mutation Generator" />}
         {hasAccess(['Elite', 'Gold', 'Silver']) ? <RationaleNarration /> : <LockedFeatureCard featureName="Rationale Narration" />}
       </div>
 
       {/* Row 3: Analytics and Tools */}
       <div >
-        {hasAccess(['Elite', 'Gold']) ? <RoiSimulation /> : <LockedFeatureCard featureName="ROI Simulation" />}
+        {hasAccess(['Elite', 'Gold', 'Silver']) ? <RoiSimulation /> : <LockedFeatureCard featureName="ROI Simulation" />}
       </div>
       <div>
-        {hasAccess(['Elite', 'Gold', 'Silver']) ? <ReplayAnnotator /> : <LockedFeatureCard featureName="Replay Annotator" />}
+        {hasAccess(['Elite', 'Gold']) ? <ReplayAnnotator /> : <LockedFeatureCard featureName="Replay Annotator" />}
       </div>
       <div>
-        {hasAccess(['Elite', 'Gold']) ? <GlossaryManager /> : <LockedFeatureCard featureName="Glossary Manager" />}
+        {hasAccess(['Elite']) ? <GlossaryManager /> : <LockedFeatureCard featureName="Glossary Manager" />}
       </div>
 
       {/* Row 4: Audit */}
