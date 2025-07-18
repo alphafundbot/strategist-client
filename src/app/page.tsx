@@ -10,11 +10,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Rocket, User, Shield, Gem, Star, Crown, Volume2, Loader2, VolumeX } from "lucide-react"
 
 const walkthroughText = `
-Welcome to the Strategist Systems Cockpit. Select your access tier to begin.
-The Free tier allows you to observe live mutation data and deposit funds.
-Free+ tier, unlocked after your first deposit, gives you access to the mutation simulator and light narration.
-Silver, Gold, and Elite tiers unlock advanced simulation, override controls, and the full power of the cognition graph and AI narration.
-Choose your tier to enter the cockpit.
+Welcome strategist. Your vault begins at 4% yield. Elevation awaits.
 `;
 
 export default function LoginPage() {
