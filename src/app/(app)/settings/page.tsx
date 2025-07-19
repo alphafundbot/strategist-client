@@ -1,6 +1,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ThemeToggle } from '@/components/settings/theme-toggle';
+import ExportOptions from '@/components/investor/export-options';
 
 export default function SettingsPage() {
   return (
@@ -39,6 +40,8 @@ export default function SettingsPage() {
           <ThemeToggle />
         </CardContent>
       </Card>
+
+      <ExportOptions />
 
     </div>
   );

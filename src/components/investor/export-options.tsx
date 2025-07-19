@@ -25,7 +25,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { useToast } from "@/hooks/use-toast"
-import { Download, FileLock2 } from "lucide-react"
+import { Download, FileLock2, FileJson } from "lucide-react"
 
 export default function ExportOptions() {
   const { toast } = useToast()
@@ -40,10 +40,10 @@ export default function ExportOptions() {
 
   const isFreeTier = tier === "Free+";
 
-  const handleDownloadPdf = (reportType: string) => {
+  const handleDownload = (reportType: string, format: 'PDF' | 'JSON') => {
     toast({
         title: "Secure Report Generated",
-        description: `${reportType} downloaded. PII suppressed, download logged.`,
+        description: `${reportType} (${format}) downloaded. PII suppressed, download logged.`,
     })
   }
 
@@ -54,13 +54,43 @@ export default function ExportOptions() {
     "Tier Elevation Log",
     "Override Suppression Audit",
     "Collective Vault Risk Report",
+    "Full Strategist Telemetry"
   ];
 
-  const downloadButton = (
+  const downloadButton = (format: 'PDF' | 'JSON') => (
     <Button size="lg" variant="secondary" disabled={isFreeTier}>
-        <FileLock2 className="mr-2 h-4 w-4" />
-        Download Report (PDF)
+        {format === 'PDF' ? <FileLock2 className="mr-2 h-4 w-4" /> : <FileJson className="mr-2 h-4 w-4" />}
+        Download as {format}
     </Button>
+  )
+
+  const downloadDropdown = (format: 'PDF' | 'JSON') => (
+     <DropdownMenu>
+        {isFreeTier ? (
+            <TooltipProvider>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        {/* The button is nested in a span to allow the tooltip to work on disabled buttons */}
+                        <span>{downloadButton(format)}</span>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                        <p>Upgrade to unlock data exports.</p>
+                    </TooltipContent>
+                </Tooltip>
+            </TooltipProvider>
+        ) : (
+            <DropdownMenuTrigger asChild>{downloadButton(format)}</DropdownMenuTrigger>
+        )}
+        <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuLabel>Secure {format} Reports</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            {reportTypes.map((type) => (
+                <DropdownMenuItem key={type} onClick={() => handleDownload(type, format)}>
+                    {type}
+                </DropdownMenuItem>
+            ))}
+        </DropdownMenuContent>
+    </DropdownMenu>
   )
 
   return (
@@ -68,39 +98,15 @@ export default function ExportOptions() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
             <Download className="w-6 h-6" />
-            Export Center
+            Data & Export Center
         </CardTitle>
         <CardDescription>
-          Generate and download reports for investor presentations.
+          Generate and download your strategist data and performance reports.
         </CardDescription>
       </CardHeader>
-      <CardContent className="grid gap-4 sm:grid-cols-1">
-        <DropdownMenu>
-            {isFreeTier ? (
-                <TooltipProvider>
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            {/* The button is nested in a span to allow the tooltip to work on disabled buttons */}
-                            <span>{downloadButton}</span>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            <p>Upgrade to unlock downloads.</p>
-                        </TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
-            ) : (
-                <DropdownMenuTrigger asChild>{downloadButton}</DropdownMenuTrigger>
-            )}
-            <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuLabel>Secure PDF Reports</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                {reportTypes.map((type) => (
-                    <DropdownMenuItem key={type} onClick={() => handleDownloadPdf(type)}>
-                        {type}
-                    </DropdownMenuItem>
-                ))}
-            </DropdownMenuContent>
-        </DropdownMenu>
+      <CardContent className="grid gap-4 sm:grid-cols-2">
+        {downloadDropdown('PDF')}
+        {downloadDropdown('JSON')}
       </CardContent>
     </Card>
   )
