@@ -28,6 +28,7 @@ if (typeof window !== 'undefined') {
       provider: new ReCaptchaV3Provider(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!),
       isTokenAutoRefreshEnabled: true,
     });
+    console.log("App Check initialized successfully.");
   } catch (error) {
     console.error("Failed to initialize App Check:", error);
   }
