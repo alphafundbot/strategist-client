@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { PlusCircle, Landmark } from "lucide-react"
 
 const vaultTypes = [
-  "Family", "Peer-to-Peer", "Business", "School", "Church", "Nonprofit", 
+  "Personal (Me)", "Family", "Peer-to-Peer", "Business", "School", "Church", "Nonprofit", 
   "Hospital", "Union", "Online Group", "Fanbase", "Religious Org", 
   "Local Government", "State Government", "Federal Government", "Firm", 
   "Club", "Bank", "Casino", "Wall Street Entity", "Private Equity"
@@ -82,7 +82,7 @@ export default function VaultsPage() {
                             </SelectTrigger>
                             <SelectContent>
                                 {vaultTypes.map((type) => (
-                                    <SelectItem key={type} value={type.toLowerCase().replace(/ /g, '-')}>
+                                    <SelectItem key={type} value={type.toLowerCase().replace(/ /g, '-').replace(/\(me\)/, 'me')}>
                                         {type}
                                     </SelectItem>
                                 ))}
