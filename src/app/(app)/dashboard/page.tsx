@@ -11,22 +11,17 @@ export default function DashboardPage() {
 
     useEffect(() => {
         // This effect runs only on the client, after hydration
-        const storedTier = localStorage.getItem('userTier');
-        if (storedTier) {
-          setTier(storedTier);
-        } else {
-          // If nothing in localStorage, maybe wait for layout effect to set it
-          // or set a default. For now, we'll wait for it to be non-null.
-          const checkTier = () => {
-            const newTier = localStorage.getItem('userTier');
-            if (newTier) {
-              setTier(newTier);
+        const checkTier = () => {
+            const storedTier = localStorage.getItem('userTier');
+            if (storedTier) {
+                setTier(storedTier);
             } else {
-              setTimeout(checkTier, 100);
+                // If the value isn't set yet, check again shortly.
+                // The layout component is responsible for setting this value.
+                setTimeout(checkTier, 100);
             }
-          };
-          checkTier();
-        }
+        };
+        checkTier();
     }, []);
 
     return (
