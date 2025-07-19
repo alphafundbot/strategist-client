@@ -22,14 +22,19 @@ const chartData = [
 ];
 
 const RegionContent = ({ region }: { region: string }) => {
-  const stats = {
-    volatility: (Math.random() * 0.5 + 0.1).toFixed(2),
-    sentiment: (Math.random() * 50 + 50).toFixed(1),
-    strategists: Math.floor(Math.random() * 500 + 50)
-  }
+  const [stats, setStats] = React.useState({ volatility: '0.00', sentiment: '0.0', strategists: 0 });
+
+  React.useEffect(() => {
+    // This ensures that the random data is generated only on the client side, avoiding hydration mismatches.
+    setStats({
+      volatility: (Math.random() * 0.5 + 0.1).toFixed(2),
+      sentiment: (Math.random() * 50 + 50).toFixed(1),
+      strategists: Math.floor(Math.random() * 500 + 50)
+    });
+  }, [region]);
 
   return (
-    <Card className="bg-card/70 backdrop-blur-md">
+    <Card className="border-primary/20 bg-card/50 backdrop-blur-xl">
       <CardHeader>
         <CardTitle>{region} Asset Feed</CardTitle>
         <CardDescription>
@@ -38,7 +43,7 @@ const RegionContent = ({ region }: { region: string }) => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <Card className="lg:col-span-2">
+          <Card className="lg:col-span-2 bg-background/30">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <TrendingUp className="w-5 h-5" />
@@ -68,7 +73,7 @@ const RegionContent = ({ region }: { region: string }) => {
           
           <div className="space-y-6 lg:col-span-2">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <Card>
+                <Card className="bg-background/30">
                     <CardHeader className="p-4">
                         <CardTitle className="text-sm font-medium flex items-center gap-2">
                             <ShieldAlert className="w-4 h-4 text-muted-foreground" />
@@ -79,7 +84,7 @@ const RegionContent = ({ region }: { region: string }) => {
                         <div className="text-2xl font-bold">{stats.volatility}</div>
                     </CardContent>
                 </Card>
-                 <Card>
+                 <Card className="bg-background/30">
                     <CardHeader className="p-4">
                         <CardTitle className="text-sm font-medium flex items-center gap-2">
                             <BrainCircuit className="w-4 h-4 text-muted-foreground" />
@@ -90,7 +95,7 @@ const RegionContent = ({ region }: { region: string }) => {
                         <div className="text-2xl font-bold">{stats.sentiment}%</div>
                     </CardContent>
                 </Card>
-                 <Card>
+                 <Card className="bg-background/30">
                     <CardHeader className="p-4">
                         <CardTitle className="text-sm font-medium flex items-center gap-2">
                             <Users className="w-4 h-4 text-muted-foreground" />
@@ -102,7 +107,7 @@ const RegionContent = ({ region }: { region: string }) => {
                     </CardContent>
                 </Card>
             </div>
-            <Card>
+            <Card className="bg-background/30">
                 <CardHeader>
                     <CardTitle className="text-lg">Asset Saturation Heat Map</CardTitle>
                 </CardHeader>
@@ -119,7 +124,7 @@ const RegionContent = ({ region }: { region: string }) => {
 }
 
 export default function AssetsPage() {
-  const [activeTab, setActiveTab] = React.useState(regionTabs[0].toLowerCase().replace(" ", "-"));
+  const [activeTab, setActiveTab] = React.useState(regionTabs[0].toLowerCase().replace(/\s+/g, "-"));
 
   return (
     <div className="space-y-8">
@@ -134,18 +139,18 @@ export default function AssetsPage() {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <div className="flex justify-center">
-            <TabsList className="grid w-full max-w-4xl grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
+        <div className="flex justify-center pb-4">
+            <TabsList className="grid w-full max-w-4xl grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 h-auto">
               {regionTabs.map((tab) => (
-                <TabsTrigger key={tab} value={tab.toLowerCase().replace(" ", "-")}>
+                <TabsTrigger key={tab} value={tab.toLowerCase().replace(/\s+/g, "-")} className="py-2">
                   {tab}
                 </TabsTrigger>
               ))}
             </TabsList>
         </div>
         {regionTabs.map((tab) => (
-          <TabsContent key={tab} value={tab.toLowerCase().replace(" ", "-")}>
-            {activeTab === tab.toLowerCase().replace(" ", "-") && <RegionContent region={tab} />}
+          <TabsContent key={tab} value={tab.toLowerCase().replace(/\s+/g, "-")}>
+            {activeTab === tab.toLowerCase().replace(/\s+/g, "-") && <RegionContent region={tab} />}
           </TabsContent>
         ))}
       </Tabs>
