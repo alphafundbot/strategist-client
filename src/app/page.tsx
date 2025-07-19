@@ -97,17 +97,17 @@ export default function LoginPage() {
     { 
       name: "Gold", 
       icon: <Star className="w-8 h-8 text-amber-500" />,
-      description: "Unlimited ROI, mutation replay lab, strategist fingerprint evolution"
+      description: "Forecast ROI between 13-18%. Access mutation replay lab and strategist fingerprint evolution."
     },
     { 
       name: "Silver", 
       icon: <Gem className="w-8 h-8 text-slate-400" />,
-      description: "ROI up to 18%, pooled vaults, override suppression preview"
+      description: "Forecast ROI between 10-12%. Unlock pooled vaults and override preview."
     },
     { 
       name: "Free+", 
       icon: <Shield className="w-8 h-8 text-orange-600" />,
-      description: "ROI forecasting up to 8%, basic vault access, Everest voice onboarding"
+      description: "Forecast ROI between 4-8%. Access basic vaults and Everest onboarding."
     },
   ]
 
