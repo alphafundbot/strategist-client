@@ -46,7 +46,7 @@ import { cn } from '@/lib/utils';
 import { ThemeToggle } from '../settings/theme-toggle';
 
 const strategistData: { [key: string]: any } = {
-    "Free+": { fingerprint: "Alpha-1", vault: 1000.00, roi: 8, growth: 0, volatility: 0.89, entropy: 0.12 },
+    "Free+": { fingerprint: "Alpha-1", vault: 1000.00, roi: 8, growth: 0.2, volatility: 0.89, entropy: 0.12 },
     "Silver": { fingerprint: "Beta-3", vault: 12450.00, roi: 12, growth: 2.1, volatility: 0.45, entropy: 0.09 },
     "Gold": { fingerprint: "Gamma-6", vault: 28900.00, roi: 18, growth: 4.8, volatility: 0.21, entropy: 0.05 },
     "Omega": { fingerprint: "Omega-9", vault: 102000.00, roi: 20, growth: 12.3, volatility: 0.08, entropy: 0.02 },

@@ -30,7 +30,7 @@ export default function DashboardPage() {
             <div className="space-y-8">
                 <div className="text-center">
                     <h1 className="text-3xl font-bold">Dashboard</h1>
-                    <div className="text-muted-foreground">Monitor strategist fingerprint, vault metrics, and evolution protocol.</div>
+                    <p className="text-muted-foreground">Monitor strategist fingerprint, vault metrics, and evolution protocol.</p>
                 </div>
             </div>
         ); 
@@ -40,7 +40,7 @@ export default function DashboardPage() {
         <div className="space-y-8">
             <div className="text-center">
                 <h1 className="text-3xl font-bold">Dashboard</h1>
-                <div className="text-muted-foreground">Monitor strategist fingerprint, vault metrics, and evolution protocol.</div>
+                <p className="text-muted-foreground">Monitor strategist fingerprint, vault metrics, and evolution protocol.</p>
             </div>
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
