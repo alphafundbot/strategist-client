@@ -93,9 +93,7 @@ export default function AuthenticatedLayout({ children }: { children: ReactNode 
             bottomNavItems={bottomNavItems}
             activePath={pathname}
         >
-            <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
-                {childrenWithProps}
-            </main>
+            {childrenWithProps}
             <Toaster />
         </AppLayout>
     );

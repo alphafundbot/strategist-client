@@ -41,10 +41,8 @@ export default function AppLayout({
           onMenuClick={() => setSidebarOpen(!sidebarOpen)} 
         />
         
-        <main className="flex-1 overflow-y-auto bg-background text-foreground">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <main className="flex-1 overflow-y-auto bg-background text-foreground p-4 sm:p-6 lg:p-8">
             {children}
-          </div>
         </main>
       </div>
       
