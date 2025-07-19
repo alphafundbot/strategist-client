@@ -36,7 +36,9 @@ export default function TradingPage() {
         <CognitionGraph />
         <ReplayAnnotator />
       </div>
-      <VoiceControlFab />
+      <div className="flex justify-center py-4">
+        <VoiceControlFab />
+      </div>
     </div>
   );
 }

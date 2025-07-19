@@ -28,16 +28,16 @@ export default function VoiceControlFab() {
             size="icon"
             onClick={handleMicClick}
             className={cn(
-              "fixed top-1/2 -translate-y-1/2 right-6 h-14 w-14 rounded-full shadow-2xl z-30",
+              "h-16 w-16 rounded-full shadow-2xl z-10",
               "bg-background border-2 border-primary/50 text-primary-foreground",
               "hover:bg-accent/10 hover:border-primary transition-all",
               isListening && "ring-4 ring-primary/50 ring-offset-2 ring-offset-background animate-pulse"
             )}
           >
-            <Mic className="h-7 w-7 text-primary" />
+            <Mic className="h-8 w-8 text-primary" />
           </Button>
         </TooltipTrigger>
-        <TooltipContent side="left" className="bg-card backdrop-blur-sm border-primary/30">
+        <TooltipContent side="top" className="bg-card backdrop-blur-sm border-primary/30">
           <p>Voice Commands</p>
         </TooltipContent>
       </Tooltip>
