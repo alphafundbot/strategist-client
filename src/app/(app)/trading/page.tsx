@@ -1,17 +1,42 @@
+
 'use client';
 
-// This is a temporary smoke test to isolate a rendering issue.
-// If this page loads correctly at /trading, the problem is within one of
-// the original child components of the Trading Cockpit page.
-export default function TradingTestPage() {
+import MutationDashboard from '@/components/dashboard/mutation-dashboard';
+import MutationGenerator from '@/components/dashboard/mutation-generator';
+import RationaleNarration from '@/components/dashboard/rationale-narration';
+import CognitionGraph from '@/components/dashboard/cognition-graph';
+import RoiSimulation from '@/components/dashboard/roi-simulation';
+import AuditTrace from '@/components/dashboard/audit-trace';
+import ReplayAnnotator from '@/components/dashboard/replay-annotator';
+import GlossaryManager from '@/components/dashboard/glossary-manager';
+import VoiceControlFab from '@/components/common/voice-control-fab';
+
+export default function TradingCockpitPage() {
   return (
-    <div className="flex flex-col items-center justify-center h-full">
-      <div className="p-8 border-2 border-dashed rounded-lg border-green-500 bg-green-500/10">
-        <h1 className="text-2xl font-bold text-green-500">✅ Trading Route is Live</h1>
-        <p className="mt-2 text-center text-muted-foreground">
-          Routing to /trading is working correctly.
-        </p>
+    <>
+      <div className="space-y-8">
+          <div className="text-center">
+              <h1 className="text-3xl font-bold">Trading Cockpit</h1>
+              <p className="text-muted-foreground">High-frequency mutation engine and strategist oversight.</p>
+          </div>
+          <div className="grid gap-8 lg:grid-cols-3">
+              <div className="lg:col-span-2 space-y-8">
+                  <MutationDashboard />
+                  <RoiSimulation />
+                  <AuditTrace />
+              </div>
+              <div className="lg:col-span-1 space-y-8">
+                  <MutationGenerator />
+                  <RationaleNarration />
+              </div>
+          </div>
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              <CognitionGraph />
+              <ReplayAnnotator />
+              <GlossaryManager />
+          </div>
       </div>
-    </div>
+      <VoiceControlFab />
+    </>
   );
 }
