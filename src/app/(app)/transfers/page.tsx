@@ -5,18 +5,6 @@ import AccountList from '@/components/transfers/account-list';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 
-const deposits = [
-  { date: "2025-07-18", institution: "JPMorgan Chase", account: "Checking (...4321)", amount: 10200.00, status: "Settled" },
-  { date: "2025-07-17", institution: "Wells Fargo", account: "Investment (...5678)", amount: 25000.00, status: "Pending" },
-  { date: "2025-07-15", institution: "Bank of America", account: "Savings (...8765)", amount: 78901.23, status: "Settled" },
-];
-
-const history = [
-    { type: "Deposit", date: "2025-07-18", institution: "JPMorgan Chase", amount: 10200.00, status: "Settled" },
-    { type: "Deposit", date: "2025-07-17", institution: "Wells Fargo", amount: 25000.00, status: "Pending" },
-    { type: "Deposit", date: "2025-07-15", institution: "Bank of America", amount: 78901.23, status: "Settled" },
-];
-
 const getStatusBadgeVariant = (status: string) => {
     switch (status.toLowerCase()) {
         case 'settled':
@@ -31,11 +19,24 @@ const getStatusBadgeVariant = (status: string) => {
     }
 };
 
+const deposits = [
+  { date: "2025-07-18", institution: "JPMorgan Chase", account: "Checking (...4321)", amount: 10200.00, status: "Settled" },
+  { date: "2025-07-17", institution: "Wells Fargo", account: "Investment (...5678)", amount: 25000.00, status: "Pending" },
+  { date: "2025-07-15", institution: "Bank of America", account: "Savings (...8765)", amount: 78901.23, status: "Settled" },
+];
+
+const history = [
+    { type: "Deposit", date: "2025-07-18", institution: "JPMorgan Chase", amount: 10200.00, status: "Settled" },
+    { type: "Deposit", date: "2025-07-17", institution: "Wells Fargo", amount: 25000.00, status: "Pending" },
+    { type: "Deposit", date: "2025-07-15", institution: "Bank of America", amount: 78901.23, status: "Settled" },
+];
+
+
 export default function TransfersPage() {
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-center">Transfers</h1>
+        <h1 className="text-3xl font-bold">Transfers</h1>
         <p className="text-muted-foreground">Manage your connected accounts and vault deposits.</p>
       </div>
 

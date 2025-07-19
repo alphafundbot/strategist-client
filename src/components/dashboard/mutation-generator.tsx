@@ -31,7 +31,7 @@ const getFormSchema = (tier: string) => {
     let minRoi = 0;
     let minMessage = "Must be positive";
     let maxRoi = 20;
-    let maxMessage = "ROI target exceeds 20% cap.";
+    let maxMessage = "ROI target cannot exceed 20%.";
     
     switch (tier) {
         case 'Free+':
@@ -85,7 +85,9 @@ export default function MutationGenerator() {
   useEffect(() => {
     const newSchema = getFormSchema(tier);
     setFormSchema(newSchema);
-  }, [tier]);
+    // This is a hack to force re-validation with the new schema context
+    form.trigger();
+  }, [tier, form]);
   
   useEffect(() => {
     const defaultValues: { [key: string]: number } = {

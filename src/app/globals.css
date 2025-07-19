@@ -5,27 +5,27 @@
 
 @layer base {
   :root {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 262 83% 58%;
+    --background: 270 60% 97%; /* Very light purple */
+    --foreground: 276 36% 15%;
+    --card: 270 60% 97%;
+    --card-foreground: 276 36% 15%;
+    --popover: 270 60% 97%;
+    --popover-foreground: 276 36% 15%;
+    --primary: 262 52% 47%; /* Deep purple */
     --primary-foreground: 0 0% 98%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
+    --secondary: 270 20% 90%;
+    --secondary-foreground: 276 36% 15%;
+    --muted: 270 20% 90%;
     --muted-foreground: 240 5% 64.9%;
-    --accent: 200 60% 50%;
+    --accent: 175 100% 29%; /* Teal */
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 262 83% 58%;
-    --chart-1: 262 83% 58%;
-    --chart-2: 200 60% 50%;
+    --border: 270 20% 85%;
+    --input: 270 20% 85%;
+    --ring: 262 52% 47%;
+    --chart-1: 262 52% 47%;
+    --chart-2: 175 100% 29%;
     --chart-3: 43 96% 56%;
     --chart-4: 173 58% 50%;
     --chart-5: 0 0% 80%;
@@ -33,27 +33,27 @@
   }
 
   .dark {
-    --background: 0 0% 10%;
+    --background: 276 36% 15%; /* Darker purple-ish grey */
     --foreground: 0 0% 98%;
-    --card: 0 0% 10%;
+    --card: 276 36% 20%;
     --card-foreground: 0 0% 98%;
-    --popover: 0 0% 10%;
+    --popover: 276 36% 15%;
     --popover-foreground: 0 0% 98%;
-    --primary: 262 83% 58%;
+    --primary: 262 52% 47%; /* Deep purple */
     --primary-foreground: 0 0% 98%;
-    --secondary: 240 3.7% 15.9%;
+    --secondary: 276 36% 25%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
+    --muted: 276 36% 25%;
     --muted-foreground: 240 5% 64.9%;
-    --accent: 200 60% 50%;
+    --accent: 175 100% 29%; /* Teal */
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 20%;
-    --input: 240 3.7% 15.9%;
-    --ring: 262 83% 58%;
-    --chart-1: 262 83% 58%;
-    --chart-2: 200 60% 50%;
+    --border: 276 36% 25%;
+    --input: 276 36% 25%;
+    --ring: 262 52% 47%;
+    --chart-1: 262 52% 47%;
+    --chart-2: 175 100% 29%;
     --chart-3: 43 96% 56%;
     --chart-4: 173 58% 50%;
     --chart-5: 0 0% 80%;

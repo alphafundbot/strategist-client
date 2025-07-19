@@ -46,7 +46,7 @@ export default function OnboardingPage() {
       options: [
         { value: 'investor', label: 'Investor (High-level, persuasive)' },
         { value: 'technical', label: 'Technical (Detailed, precise)' },
-        { value: 'compressed', label: 'Compressed (Concise, data-driven)' },
+        { value: 'compressed', label: 'Compressed (Data-driven)' },
       ],
     },
     {
@@ -71,8 +71,7 @@ export default function OnboardingPage() {
             <CardTitle className="text-2xl font-bold">Cockpit Personalization</CardTitle>
           </div>
           <CardDescription>
-            Answer these optional questions to tailor your strategist experience.
-            This will adapt your UI, narration, and module priority.
+            Calibrate your cockpit by answering these optional questions. This will adapt your UI, narration, and module priority to your unique strategist fingerprint.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
