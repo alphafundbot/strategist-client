@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { PlusCircle, Landmark, Users, PieChart as PieChartIcon, TrendingUp, Shield } from "lucide-react"
+import { PlusCircle, Landmark, Users, TrendingUp, Shield } from "lucide-react"
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from "recharts"
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart"
 
@@ -116,7 +116,7 @@ export default function VaultsPage() {
                                            </div>
                                        </div>
                                    </div>
-                                   <div className="h-48">
+                                   <ChartContainer config={{}} className="h-48 w-full">
                                        <ResponsiveContainer width="100%" height="100%">
                                            <PieChart>
                                                <Tooltip content={<ChartTooltipContent hideLabel />} />
@@ -127,7 +127,7 @@ export default function VaultsPage() {
                                                </Pie>
                                            </PieChart>
                                        </ResponsiveContainer>
-                                   </div>
+                                   </ChartContainer>
                                </CardContent>
                            </Card>
                        ))

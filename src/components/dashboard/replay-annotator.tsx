@@ -7,7 +7,6 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-  CardFooter
 } from "@/components/ui/card"
 import { Line, LineChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 import { ChartConfig, ChartContainer, ChartTooltipContent } from "@/components/ui/chart"
@@ -58,7 +57,7 @@ export default function ReplayAnnotator() {
           Review fill accuracy timeline and annotate performance.
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex-grow grid md:grid-cols-2 gap-6 items-center">
+      <CardContent className="flex-grow flex flex-col gap-6">
         <div className="h-48 w-full">
             <ChartContainer config={chartConfig} className="h-full w-full">
             <ResponsiveContainer>
