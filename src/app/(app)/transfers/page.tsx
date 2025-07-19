@@ -49,7 +49,7 @@ export default function TransfersPage() {
             <CardDescription>
                 Review your past vault deposits and withdrawals.
             </CardDescription>
-          </Header>
+          </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">A detailed transfer history log will be available here.</p>
           </CardContent>
