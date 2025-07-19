@@ -69,7 +69,7 @@ export default function ConnectPage() {
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {platforms.map((platform) => (
-          <Card key={platform.name} className="flex flex-col bg-card/70 backdrop-blur-md">
+          <Card key={platform.name} className="flex flex-col bg-card/70 backdrop-blur-md transition-all hover:shadow-lg hover:-translate-y-1">
             <CardHeader className="flex flex-row items-center gap-4 space-y-0">
                 <PlatformLogo logo={platform.logo} status={platform.status} />
                 <div className="flex-grow">
