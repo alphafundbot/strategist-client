@@ -1,4 +1,3 @@
-
 import InvestorSummary from '@/components/investor/investor-summary';
 import RoiCharts from '@/components/investor/roi-charts';
 import ExportOptions from '@/components/investor/export-options';
