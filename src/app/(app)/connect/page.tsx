@@ -23,6 +23,12 @@ const platforms = [
   { name: "Webull", status: "Connected", logo: "W" },
   { name: "Gemini", status: "Disconnected", logo: "G" },
   { name: "Charles Schwab", status: "Disconnected", logo: "CS" },
+  { name: "Bitstamp", status: "Disconnected", logo: "BS" },
+  { name: "OANDA", status: "Connected", logo: "O" },
+  { name: "FXCM", status: "Disconnected", logo: "FX" },
+  { name: "IG Markets", status: "Syncing", logo: "IG" },
+  { name: "Uniswap", status: "Connected", logo: "U" },
+  { name: "Aave", status: "Disconnected", logo: "AAVE" },
   { name: "Custom API", status: "Connected", logo: "+" },
 ];
 
