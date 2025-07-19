@@ -32,6 +32,9 @@ export default function DashboardPage() {
                     <h1 className="text-3xl font-bold">Dashboard</h1>
                     <p className="text-muted-foreground">Monitor strategist fingerprint, vault metrics, and evolution protocol.</p>
                 </div>
+                 <div className="flex justify-center items-center h-64">
+                    <div className="animate-pulse rounded-md bg-muted h-32 w-full"></div>
+                </div>
             </div>
         ); 
     }
@@ -87,7 +90,7 @@ export default function DashboardPage() {
             </div>
             
             <div>
-                <h2 className="text-xl font-semibold mt-8 mb-2 text-center md:text-left">Evolution Protocol Metrics</h2>
+                <h2 className="text-xl font-semibold mt-8 mb-4 text-center md:text-left">Evolution Protocol Metrics</h2>
                 <div className="grid gap-6 md:grid-cols-3">
                     <Card>
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
