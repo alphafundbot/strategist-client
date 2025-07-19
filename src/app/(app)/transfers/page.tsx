@@ -1,5 +1,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import PlaidLinkButton from '@/components/transfers/plaid-link-button';
+import AccountList from '@/components/transfers/account-list';
 
 export default function TransfersPage() {
   return (
@@ -12,13 +14,18 @@ export default function TransfersPage() {
       <div className="grid gap-4 md:gap-8 grid-cols-1 lg:grid-cols-2">
         <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle>Connected Accounts</CardTitle>
-            <CardDescription>
-                Link and manage your external financial accounts.
-            </CardDescription>
+            <div className="flex justify-between items-center">
+                <div>
+                    <CardTitle>Connected Accounts</CardTitle>
+                    <CardDescription>
+                        Link and manage your external financial accounts.
+                    </CardDescription>
+                </div>
+                <PlaidLinkButton />
+            </div>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">Plaid or MX integration will be available here.</p>
+            <AccountList />
           </CardContent>
         </Card>
         <Card>
