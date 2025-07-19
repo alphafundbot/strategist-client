@@ -10,7 +10,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Rocket, User, Shield, Gem, Star, Crown, Volume2, Loader2, VolumeX } from "lucide-react"
 
 const walkthroughText = `
-Welcome strategist. Your vault begins at 4% yield. Elevation awaits.
+Welcome, Strategist. You have accessed the Strategist Systems Cockpit, a high-efficiency platform designed to amplify your decision-making. Your journey begins now. Before you, are five access tiers, each unlocking deeper capabilities. Your initial vault yield is set, but your potential for elevation is limitless. Select a tier to initialize your cockpit and begin your first mutation sequence.
 `;
 
 export default function LoginPage() {
@@ -129,7 +129,7 @@ export default function LoginPage() {
               ) : (
                 <Volume2 className="mr-2 h-4 w-4" />
               )}
-              {isLoading && !(audioRef.current && !audioRef.current.paused) ? 'Loading...' : (audioRef.current && !audioRef.current.paused) ? 'Stop Walkthrough' : 'Play Walkthrough'}
+              {isLoading && !(audioRef.current && !audioRef.current.paused) ? 'Loading...' : (audioRef.current && !audioRef.current.paused) ? 'Stop Introduction' : 'Play Introduction'}
             </Button>
             <p className="text-xs text-muted-foreground text-center w-full">
                 © {new Date().getFullYear()} Strategist Systems™. All rights reserved.
