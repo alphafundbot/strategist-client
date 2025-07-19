@@ -10,7 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
-import { Code2, UserCircle, Bot, SlidersHorizontal } from 'lucide-react';
+import { Code2, UserCircle, Bot, SlidersHorizontal, Settings as SettingsIcon } from 'lucide-react';
 import { ClientOnly } from '@/components/common/ClientOnly';
 import { useEffect, useState } from 'react';
 
@@ -33,7 +33,10 @@ export default function SettingsPage() {
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h1 className="text-3xl font-bold">Settings</h1>
+        <h1 className="text-3xl font-bold flex items-center justify-center gap-2">
+            <SettingsIcon className="w-8 h-8" />
+            Settings
+        </h1>
         <p className="text-muted-foreground">Manage your cockpit preferences and platform connections.</p>
       </div>
 
@@ -132,13 +135,39 @@ export default function SettingsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>UI & Theme Customization</CardTitle>
-          <CardDescription>Personalize the look and feel of your cockpit.</CardDescription>
+          <CardTitle>Accessibility & Appearance</CardTitle>
+          <CardDescription>Personalize the look and feel of your cockpit for optimal viewing.</CardDescription>
         </CardHeader>
-        <CardContent>
-          <ClientOnly>
-            <ThemeToggle />
-          </ClientOnly>
+        <CardContent className="space-y-6">
+            <div>
+                 <Label className="font-semibold">Theme</Label>
+                 <p className="text-sm text-muted-foreground mb-2">Select a light or dark theme for the interface.</p>
+                 <ClientOnly>
+                    <ThemeToggle />
+                 </ClientOnly>
+            </div>
+            <div>
+                 <Label htmlFor="text-size" className="font-semibold">Text Size</Label>
+                 <p className="text-sm text-muted-foreground mb-2">Adjust the text size for better readability.</p>
+                 <Select defaultValue="100">
+                    <SelectTrigger id="text-size">
+                        <SelectValue placeholder="Select text size" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="90">90%</SelectItem>
+                        <SelectItem value="100">100% (Default)</SelectItem>
+                        <SelectItem value="110">110%</SelectItem>
+                        <SelectItem value="120">120%</SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
+             <div className="flex items-center justify-between">
+                <div>
+                    <Label htmlFor="high-contrast" className="font-semibold">High Contrast Mode</Label>
+                    <p className="text-sm text-muted-foreground">Increase text and border contrast for higher visibility.</p>
+                </div>
+                <Switch id="high-contrast" />
+            </div>
         </CardContent>
       </Card>
 
