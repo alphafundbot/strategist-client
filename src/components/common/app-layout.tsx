@@ -17,6 +17,8 @@ import {
   Shield,
   AreaChart,
   Banknote,
+  TrendingUp,
+  Wallet,
 } from 'lucide-react';
 
 import {
@@ -34,6 +36,7 @@ import {
 import { Button } from '@/components/ui/button';
 import React, { useEffect, useState } from 'react';
 import BottomNav from './bottom-nav';
+import { Badge } from '@/components/ui/badge';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -75,6 +78,15 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   
   const hasTradingAccess = isClient && (tier === 'Silver' || tier === 'Gold');
   const hasInvestorAccess = isClient && tier === 'Omega';
+
+  const strategistData: { [key: string]: any } = {
+    "Free+": { fingerprint: "Alpha-1", vault: 1000.00, roi: 0 },
+    "Silver": { fingerprint: "Beta-3", vault: 12450.00, roi: 14.2 },
+    "Gold": { fingerprint: "Gamma-6", vault: 28900.00, roi: 19.8 },
+    "Omega": { fingerprint: "Omega-9", vault: 102000.00, roi: 31900 },
+  }
+
+  const currentData = strategistData[tier] || strategistData['Free+'];
 
   return (
     <SidebarProvider>
@@ -173,12 +185,25 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
-        <header className="sticky top-0 z-10 flex h-14 items-center justify-between gap-4 border-b bg-background/80 px-4 backdrop-blur-sm sm:px-6">
+        <header className="sticky top-0 z-10 flex h-16 items-center justify-between gap-4 border-b bg-background/80 px-4 backdrop-blur-sm sm:px-6">
           <SidebarTrigger className="md:hidden" />
-          <div className="flex flex-1 items-center justify-end gap-4">
+          <div className="flex flex-1 items-center justify-end gap-4 md:gap-6">
+            <div className="hidden md:flex items-center gap-4 text-sm font-medium">
+                <div className="flex items-center gap-2">
+                    <Wallet className="h-5 w-5 text-muted-foreground" />
+                    <span>${currentData.vault.toLocaleString()}</span>
+                </div>
+                 <div className="flex items-center gap-2">
+                    <TrendingUp className="h-5 w-5 text-muted-foreground" />
+                    <span>{currentData.roi > 0 ? '+' : ''}{currentData.roi}%</span>
+                </div>
+            </div>
              <div className="flex items-center gap-2">
                 {tierIcons[tier] || <User className="h-5 w-5" />}
-                <span className="font-medium">{tier || 'User'} Tier</span>
+                <div className="flex flex-col text-left">
+                  <span className="font-semibold text-sm">{currentData.fingerprint}</span>
+                  <span className="text-xs text-muted-foreground">{tier || 'User'} Tier</span>
+                </div>
             </div>
           </div>
         </header>
