@@ -87,9 +87,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     'Free+': <Shield className="h-5 w-5 text-orange-600" />,
   };
   
-  const hasTradingAccess = isClient && (tier === 'Silver' || tier === 'Gold');
-  const hasInvestorAccess = isClient && tier === 'Gold';
-
   const currentData = strategistData[tier] || strategistData['Free+'];
   const showSidebar = pathname !== '/onboarding';
 
@@ -136,20 +133,18 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-              {hasTradingAccess && (
-                <SidebarMenuItem>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={pathname.startsWith('/trading')}
-                    tooltip={{ children: 'Trading' }}
-                  >
-                    <Link href="/trading">
-                      <AreaChart />
-                      <span>Trading</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              )}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname.startsWith('/trading')}
+                  tooltip={{ children: 'Trading' }}
+                >
+                  <Link href="/trading">
+                    <AreaChart />
+                    <span>Trading</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
@@ -162,20 +157,18 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-              {hasInvestorAccess && (
-                <SidebarMenuItem>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={pathname.startsWith('/investor')}
-                    tooltip={{ children: 'Investor Mode' }}
-                  >
-                    <Link href="/investor">
-                      <Briefcase />
-                      <span>Investor Mode</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              )}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname.startsWith('/investor')}
+                  tooltip={{ children: 'Investor Mode' }}
+                >
+                  <Link href="/investor">
+                    <Briefcase />
+                    <span>Investor Mode</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarContent>
 
