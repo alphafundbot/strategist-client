@@ -12,7 +12,7 @@ import { Toaster } from "@/components/ui/toaster";
 export default function AuthenticatedLayout({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
-    const [tier, setTier] = useState<string>('Free+');
+    const [tier, setTier] = useState<string>('Observer');
     const [initials, setInitials] = useState('');
     const router = useRouter();
     const pathname = usePathname();
@@ -25,16 +25,14 @@ export default function AuthenticatedLayout({ children }: { children: ReactNode 
                 const userDoc = await getDoc(userDocRef);
                 if (userDoc.exists()) {
                     const userData = userDoc.data();
-                    const userTier = userData.tier || 'Free+';
+                    const userTier = userData.tier || 'Observer';
                     setTier(userTier);
-                    localStorage.setItem('userTier', userTier); // Keep for other client components
                     
                     const name = userData.name || user.displayName || 'User';
                     const initials = name.split(' ').map((n: string) => n[0]).join('');
                     setInitials(initials);
                 } else {
-                    setTier('Free+');
-                    localStorage.setItem('userTier', 'Free+');
+                    setTier('Observer');
                     setInitials(user.email ? user.email[0].toUpperCase() : 'U');
                 }
             } else {
@@ -61,18 +59,16 @@ export default function AuthenticatedLayout({ children }: { children: ReactNode 
 
     const navItems = [
       { name: 'Dashboard', path: '/dashboard', icon: 'LayoutDashboard' },
-      { name: 'Trading Cockpit', path: '/trading', icon: 'Rocket' },
-      { name: 'Strategy Vaults', path: '/vaults', icon: 'Vault' },
-      { name: 'Asset Universe', path: '/assets', icon: 'Bitcoin' },
-      { name: 'Connect', path: '/connect', icon: 'Plug' },
-      { name: 'Transfers', path: '/transfers', icon: 'ArrowRightLeft' },
+      { name: 'Mutation Generator', path: '/trading', icon: 'FlaskConical' },
+      { name: 'Strategy Vaults', path: '/vaults', icon: 'Archive' },
+      { name: 'ROI Simulation', path: '/simulation', icon: 'BarChart' },
       { name: 'Investor Mode', path: '/investor', icon: 'UserCheck' },
     ];
 
     const bottomNavItems = [
       { name: 'Dashboard', path: '/dashboard', icon: 'LayoutDashboard' },
-      { name: 'Trading', path: '/trading', icon: 'Rocket' },
-      { name: 'Assets', path: '/assets', icon: 'Bitcoin' },
+      { name: 'Generator', path: '/trading', icon: 'FlaskConical' },
+      { name: 'Vaults', path: '/vaults', icon: 'Archive' },
       { name: 'You', path: '/settings', icon: 'User' },
     ];
 
