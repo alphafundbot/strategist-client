@@ -1,6 +1,7 @@
 
 "use client";
 
+import { useEffect, useState } from 'react';
 import WelcomeModal from '@/components/dashboard/welcome-modal';
 import DashboardClient from '@/components/dashboard/dashboard-client';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -11,7 +12,30 @@ interface DashboardPageProps {
   tier?: string | null;
 }
 
-export default function DashboardPage({ tier }: DashboardPageProps) {
+export default function DashboardPage({ tier: initialTier }: DashboardPageProps) {
+    const [tier, setTier] = useState<string | null>(initialTier || null);
+
+    useEffect(() => {
+        if (initialTier) {
+            setTier(initialTier);
+            return;
+        }
+
+        // This effect runs only on the client, after hydration,
+        // as a fallback if props are not passed.
+        const checkTier = () => {
+            const storedTier = localStorage.getItem('userTier');
+            if (storedTier) {
+                setTier(storedTier);
+            } else {
+                // If the value isn't set yet, check again shortly.
+                // The layout component is responsible for setting this value.
+                setTimeout(checkTier, 100);
+            }
+        };
+        checkTier();
+    }, [initialTier]);
+
     return (
         <div className="space-y-8">
             <WelcomeModal />

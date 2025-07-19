@@ -27,16 +27,21 @@ export default function AuthenticatedLayout({ children }: { children: ReactNode 
                     const userData = userDoc.data();
                     const userTier = userData.tier || 'Observer';
                     setTier(userTier);
+                    // Set tier in localStorage for other components that might need it client-side
+                    localStorage.setItem('userTier', userTier);
                     
                     const name = userData.name || user.displayName || 'User';
-                    const initials = name.split(' ').map((n: string) => n[0]).join('');
-                    setInitials(initials);
+                    const initialsValue = name.split(' ').map((n: string) => n[0]).join('');
+                    setInitials(initialsValue);
                 } else {
                     setTier('Observer');
+                    localStorage.setItem('userTier', 'Observer');
                     setInitials(user.email ? user.email[0].toUpperCase() : 'U');
                 }
             } else {
                 setUser(null);
+                // Clear tier from localStorage on sign out
+                localStorage.removeItem('userTier');
                 router.push('/');
             }
             setLoading(false);
