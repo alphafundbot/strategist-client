@@ -198,7 +198,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </Sidebar>
       )}
       <SidebarInset>
-        <div className="flex flex-col h-screen">
+        <div className="flex flex-col h-screen" data-testid="app-layout-container">
           <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center justify-between gap-6 border-b bg-background/80 px-6 backdrop-blur-md">
             <SidebarTrigger className="md:hidden" />
             <div className="flex flex-1 items-center justify-end gap-4 md:gap-6">
