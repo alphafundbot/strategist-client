@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { Globe, TrendingUp, ShieldAlert, BrainCircuit, Users } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const regionTabs = [
   "Global", "North America", "Europe", "Asia", "South America", "Africa", "Oceania"
@@ -20,6 +21,37 @@ const chartData = [
   { date: "May", roi: Math.random() * 10 + 9 },
   { date: "Jun", roi: Math.random() * 10 + 10 },
 ];
+
+const HeatMap = ({ region }: { region: string }) => {
+    const [heatmapData, setHeatmapData] = React.useState<number[][]>([]);
+
+    React.useEffect(() => {
+        const data = Array.from({ length: 5 }, () =>
+            Array.from({ length: 20 }, () => Math.random())
+        );
+        setHeatmapData(data);
+    }, [region]);
+
+    const getColor = (value: number) => {
+        if (value > 0.8) return 'bg-primary/90';
+        if (value > 0.6) return 'bg-primary/70';
+        if (value > 0.4) return 'bg-primary/50';
+        if (value > 0.2) return 'bg-primary/30';
+        return 'bg-primary/10';
+    };
+
+    return (
+        <div className="grid grid-cols-20 grid-rows-5 gap-1 h-full">
+            {heatmapData.flat().map((value, index) => (
+                <div
+                    key={index}
+                    className={cn("rounded-sm w-full h-full", getColor(value))}
+                    title={`Saturation: ${(value * 100).toFixed(0)}%`}
+                />
+            ))}
+        </div>
+    );
+};
 
 const RegionContent = ({ region }: { region: string }) => {
   const [stats, setStats] = React.useState({ volatility: '0.00', sentiment: '0.0', strategists: 0 });
@@ -111,8 +143,8 @@ const RegionContent = ({ region }: { region: string }) => {
                 <CardHeader>
                     <CardTitle className="text-lg">Asset Saturation Heat Map</CardTitle>
                 </CardHeader>
-                <CardContent className="flex items-center justify-center h-28 bg-muted/50 rounded-lg">
-                    <p className="text-muted-foreground text-sm">Live {region} heat map will be displayed here.</p>
+                <CardContent className="flex items-center justify-center h-28 bg-muted/50 rounded-lg p-2">
+                    <HeatMap region={region} />
                 </CardContent>
             </Card>
           </div>
@@ -142,22 +174,22 @@ export default function AssetsPage() {
         defaultValue={activeTab}
         onValueChange={setActiveTab} 
         orientation="vertical"
-        className="grid md:grid-cols-[1fr_auto] gap-8"
+        className="grid md:grid-cols-[auto_1fr] gap-8"
       >
-        <div className="md:col-start-1 md:row-start-1">
-          {regionTabs.map((tab) => (
-            <TabsContent key={tab} value={tab.toLowerCase().replace(/\s+/g, "-")}>
-              {activeTab === tab.toLowerCase().replace(/\s+/g, "-") && <RegionContent region={tab} />}
-            </TabsContent>
-          ))}
-        </div>
-        <TabsList className="flex flex-row md:flex-col md:col-start-2 md:row-start-1 justify-start h-auto md:h-full bg-card/70 backdrop-blur-md p-2 space-x-2 md:space-x-0 md:space-y-2 overflow-x-auto md:overflow-x-hidden md:w-48">
+        <TabsList className="flex flex-row md:flex-col justify-start h-auto md:h-full bg-card/70 backdrop-blur-md p-2 space-x-2 md:space-x-0 md:space-y-2 overflow-x-auto md:overflow-x-hidden md:w-48">
           {regionTabs.map((tab) => (
             <TabsTrigger key={tab} value={tab.toLowerCase().replace(/\s+/g, "-")} className="w-full justify-start text-left py-2 px-4">
               {tab}
             </TabsTrigger>
           ))}
         </TabsList>
+        <div className="w-full">
+          {regionTabs.map((tab) => (
+            <TabsContent key={tab} value={tab.toLowerCase().replace(/\s+/g, "-")} className="mt-0">
+              {activeTab === tab.toLowerCase().replace(/\s+/g, "-") && <RegionContent region={tab} />}
+            </TabsContent>
+          ))}
+        </div>
       </Tabs>
     </div>
   );
