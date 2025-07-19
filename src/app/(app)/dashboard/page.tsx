@@ -10,6 +10,7 @@ export default function DashboardPage() {
     const [tier, setTier] = useState<string | null>(null);
 
     useEffect(() => {
+        // This effect runs only on the client, after hydration
         const storedTier = localStorage.getItem('userTier') || 'Free+';
         setTier(storedTier);
     }, []);
