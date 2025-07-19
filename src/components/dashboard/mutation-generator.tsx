@@ -28,19 +28,23 @@ import { PlusCircle } from "lucide-react"
 import { useEffect, useState } from "react"
 
 const getFormSchema = (tier: string) => {
+    let minRoi = 0;
+    let minMessage = "Must be positive";
     let maxRoi = 100;
-    let message = "Must be 100 or less";
+    let maxMessage = "Must be 100 or less";
 
     if (tier === 'Free+') {
+        minRoi = 4;
+        minMessage = "Free+ tier mutation must have an ROI target of at least 4%.";
         maxRoi = 8;
-        message = "ROI target exceeds Free+ tier limit (8%). Elevate to Gold for 12-24% forecasting and override suppression.";
+        maxMessage = "ROI target exceeds Free+ tier limit (8%). Elevate to Gold for 12-24% forecasting and override suppression.";
     } else if (tier === 'Silver') {
         maxRoi = 18;
-        message = "ROI target exceeds Silver tier limit (18%). Elevate to Gold for unlimited forecasting.";
+        maxMessage = "ROI target exceeds Silver tier limit (18%). Elevate to Gold for unlimited forecasting.";
     }
 
     return z.object({
-        roiTarget: z.coerce.number().min(0, "Must be positive").max(maxRoi, { message }),
+        roiTarget: z.coerce.number().min(minRoi, minMessage).max(maxRoi, { message: maxMessage }),
         entropyRisk: z.coerce.number().min(0, "Must be positive").max(100, "Must be 100 or less"),
     });
 }
@@ -75,7 +79,8 @@ export default function MutationGenerator() {
   
   useEffect(() => {
     form.trigger();
-  }, [form, formSchema]);
+    form.reset({ roiTarget: tier === 'Free+' ? 4 : 10, entropyRisk: 5 });
+  }, [form, formSchema, tier]);
 
 
   function onSubmit(values: z.infer<typeof formSchema>) {
