@@ -8,7 +8,8 @@ import { textToSpeech } from "@/ai/flows/text-to-speech"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Rocket, User, Shield, Gem, Star, Crown, Volume2, Loader2, VolumeX } from "lucide-react"
+import { User, Shield, Gem, Star, Crown, Volume2, Loader2, VolumeX } from "lucide-react"
+import { StrategistLogo } from "@/components/common/strategist-logo"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -113,7 +114,7 @@ export default function LoginPage() {
       <Card className="w-full max-w-md shadow-2xl">
         <CardHeader className="text-center">
           <div className="flex justify-center items-center mb-4">
-            <Rocket className="w-10 h-10 text-primary" />
+            <StrategistLogo className="w-10 h-10 text-primary" />
           </div>
           <CardTitle className="text-3xl font-headline">Strategist Systems™ Cockpit</CardTitle>
           <CardDescription className="pt-2">Select your access tier to begin</CardDescription>

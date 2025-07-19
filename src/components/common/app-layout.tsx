@@ -18,7 +18,6 @@ import {
   Banknote,
   TrendingUp,
   Wallet,
-  BrainCircuit,
 } from 'lucide-react';
 
 import {
@@ -36,6 +35,7 @@ import {
 import { Button } from '@/components/ui/button';
 import React, { useEffect, useState } from 'react';
 import BottomNav from './bottom-nav';
+import { StrategistLogo } from './strategist-logo';
 
 const strategistData: { [key: string]: any } = {
     "Free+": { fingerprint: "Alpha-1", vault: 1000.00, roi: 0 },
@@ -96,7 +96,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <div className="flex items-center gap-2">
               <Button asChild variant="ghost" size="icon">
                 <Link href="/dashboard">
-                  <BrainCircuit />
+                  <StrategistLogo className="text-sidebar-foreground" />
                 </Link>
               </Button>
               <h2 className="text-lg font-semibold tracking-tight">
