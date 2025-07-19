@@ -51,7 +51,7 @@ const RegionContent = ({ region }: { region: string }) => {
               </CardTitle>
             </CardHeader>
             <CardContent className="h-60">
-              <ChartContainer config={{ roi: { label: "ROI", color: "hsl(var(--primary))" } }}>
+              <ChartContainer config={{ roi: { label: "ROI", color: "hsl(var(--accent))" } }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={chartData} margin={{ top: 5, right: 10, left: -10, bottom: 0 }}>
                     <defs>
@@ -142,16 +142,16 @@ export default function AssetsPage() {
         defaultValue={activeTab}
         onValueChange={setActiveTab} 
         orientation="vertical"
-        className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8"
+        className="grid md:grid-cols-[1fr_auto] gap-8"
       >
-        <div className="md:col-start-1">
+        <div className="md:col-start-1 md:row-start-1">
           {regionTabs.map((tab) => (
             <TabsContent key={tab} value={tab.toLowerCase().replace(/\s+/g, "-")}>
               {activeTab === tab.toLowerCase().replace(/\s+/g, "-") && <RegionContent region={tab} />}
             </TabsContent>
           ))}
         </div>
-        <TabsList className="flex flex-row md:flex-col justify-start md:justify-start h-auto md:h-full bg-card/70 backdrop-blur-md p-2 space-x-2 md:space-x-0 md:space-y-2 overflow-x-auto md:overflow-x-hidden md:w-48">
+        <TabsList className="flex flex-row md:flex-col md:col-start-2 md:row-start-1 justify-start h-auto md:h-full bg-card/70 backdrop-blur-md p-2 space-x-2 md:space-x-0 md:space-y-2 overflow-x-auto md:overflow-x-hidden md:w-48">
           {regionTabs.map((tab) => (
             <TabsTrigger key={tab} value={tab.toLowerCase().replace(/\s+/g, "-")} className="w-full justify-start text-left py-2 px-4">
               {tab}

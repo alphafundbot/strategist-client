@@ -94,20 +94,20 @@ export default function LoginPage() {
   }, []);
 
   const tiers = [
-    { 
-      name: "Gold", 
-      icon: <Star className="w-8 h-8 text-amber-500" />,
-      description: "Mutation replay lab, fingerprint evolution, full strategist telemetry"
+    {
+      name: "Gold",
+      icon: <Star className="w-8 h-8 text-amber-400" />,
+      description: "Mutation replay lab, fingerprint evolution, full strategist telemetry, and highest ROI potential (13-18%)."
     },
-    { 
-      name: "Silver", 
+    {
+      name: "Silver",
       icon: <Gem className="w-8 h-8 text-slate-400" />,
-      description: "Pooled vaults, override preview, elevated forecasting"
+      description: "Pooled vaults, override preview, elevated forecasting, and expanded ROI arc (10-12%)."
     },
-    { 
-      name: "Free+", 
-      icon: <Shield className="w-8 h-8 text-orange-600" />,
-      description: "Basic vault access, Everest onboarding, capped forecasting"
+    {
+      name: "Free+",
+      icon: <Shield className="w-8 h-8 text-orange-500" />,
+      description: "Basic vault access, Everest onboarding, and capped forecasting with a foundational ROI arc (4-8%)."
     },
   ]
 
@@ -121,8 +121,8 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-transparent">
-      <Card className="w-full max-w-md shadow-2xl backdrop-blur-md bg-card/80">
+    <div className="flex items-center justify-center min-h-screen bg-transparent p-4">
+      <Card className="w-full max-w-md shadow-2xl backdrop-blur-md bg-card/80 border-primary/20">
         <CardHeader className="text-center">
           <div className="flex justify-center items-center mb-4">
             <StrategistLogo className="w-10 h-10 text-primary" />
@@ -135,7 +135,7 @@ export default function LoginPage() {
             <Button
               key={tier.name}
               onClick={() => handleLogin(tier.name)}
-              className="w-full justify-start h-auto text-left py-4 group bg-background/30"
+              className="w-full justify-start h-auto text-left py-4 group bg-background/50 backdrop-blur-sm border border-transparent hover:border-primary/50 transition-all duration-300"
               variant="outline"
             >
               <div className="flex items-start gap-4">
