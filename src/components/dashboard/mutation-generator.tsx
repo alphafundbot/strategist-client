@@ -64,8 +64,7 @@ const getFormSchema = (tier: string) => {
 export default function MutationGenerator() {
   const { toast } = useToast()
   const [tier, setTier] = useState('Free+');
-  const [formSchema, setFormSchema] = useState(() => getFormSchema('Free+'));
-
+  
   useEffect(() => {
     if (typeof window !== 'undefined') {
         const storedTier = localStorage.getItem('userTier') || 'Free+';
@@ -73,8 +72,10 @@ export default function MutationGenerator() {
     }
   }, []);
   
+  const formSchema = getFormSchema(tier);
+
   const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(getFormSchema(tier)),
+    resolver: zodResolver(formSchema),
     defaultValues: {
       roiTarget: 4,
       entropyRisk: 5,
@@ -83,8 +84,6 @@ export default function MutationGenerator() {
   });
   
   useEffect(() => {
-    const newSchema = getFormSchema(tier);
-    // This is a hack to force re-validation with the new schema context
     form.trigger();
   }, [tier, form]);
   

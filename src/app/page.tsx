@@ -102,7 +102,7 @@ export default function LoginPage() {
     {
       name: "Silver",
       icon: <Gem className="w-8 h-8 text-slate-400" />,
-      description: "Pooled vaults, override preview, elevated forecasting, and expanded ROI arc (10-12%)."
+      description: "Dynamic allocation between 9% and 12% based on conviction, volatility, and asset rating."
     },
     {
       name: "Free+",
