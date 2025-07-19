@@ -4,7 +4,13 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ThemeToggle } from '@/components/settings/theme-toggle';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Code2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
+import { Textarea } from '@/components/ui/textarea';
+import { Code2, UserCircle, Bot } from 'lucide-react';
 import { ClientOnly } from '@/components/common/ClientOnly';
 
 const CodeSnippet = ({ children }: { children: React.ReactNode }) => (
@@ -23,21 +29,73 @@ export default function SettingsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Authentication & Identity</CardTitle>
-          <CardDescription>View your strategist profile and tier information.</CardDescription>
+          <CardTitle className="flex items-center gap-2">
+            <UserCircle className="w-6 h-6" />
+            Authentication & Identity
+          </CardTitle>
+          <CardDescription>View and manage your strategist profile information.</CardDescription>
         </CardHeader>
-        <CardContent>
-          <p className="text-sm text-muted-foreground">Identity settings will be displayed here.</p>
+        <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                    <Label htmlFor="strategist-name">Strategist Name</Label>
+                    <Input id="strategist-name" defaultValue="Gamma-6" />
+                </div>
+                 <div className="space-y-2">
+                    <Label htmlFor="strategist-tier">Current Tier</Label>
+                    <Input id="strategist-tier" defaultValue="Gold" disabled />
+                </div>
+            </div>
+            <div className="space-y-2">
+                <Label htmlFor="strategist-bio">Bio</Label>
+                <Textarea id="strategist-bio" placeholder="Describe your strategy and focus..." defaultValue="Specializing in high-frequency arbitrage and volatility scalping across digital asset pairs." />
+            </div>
+             <Button>Save Profile</Button>
         </CardContent>
       </Card>
       
       <Card>
         <CardHeader>
-          <CardTitle>Narration & Voice Controls</CardTitle>
-          <CardDescription>Customize your AI narration experience.</CardDescription>
+           <CardTitle className="flex items-center gap-2">
+                <Bot className="w-6 h-6" />
+                Narration & Voice Controls
+            </CardTitle>
+          <CardDescription>Customize your Everest AI narration experience.</CardDescription>
         </CardHeader>
-        <CardContent>
-          <p className="text-sm text-muted-foreground">Narration controls will be available here.</p>
+        <CardContent className="space-y-6">
+            <div className="flex items-center justify-between">
+                <Label htmlFor="audio-narration">Enable Audio Narration</Label>
+                <Switch id="audio-narration" defaultChecked />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                    <Label htmlFor="narration-voice">Narration Voice</Label>
+                    <Select defaultValue="everest">
+                        <SelectTrigger id="narration-voice">
+                            <SelectValue placeholder="Select a voice" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="everest">Everest (Default)</SelectItem>
+                            <SelectItem value="sentinel">Sentinel</SelectItem>
+                            <SelectItem value="oracle">Oracle</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
+                 <div className="space-y-2">
+                    <Label htmlFor="narration-speed">Narration Speed</Label>
+                    <Select defaultValue="1">
+                        <SelectTrigger id="narration-speed">
+                            <SelectValue placeholder="Select speed" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="0.75">0.75x</SelectItem>
+                            <SelectItem value="1">1.0x (Normal)</SelectItem>
+                            <SelectItem value="1.25">1.25x</SelectItem>
+                            <SelectItem value="1.5">1.5x</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
+            </div>
         </CardContent>
       </Card>
 
