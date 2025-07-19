@@ -74,7 +74,7 @@ export default function MutationGenerator() {
   }, []);
   
   const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(getFormSchema(tier)),
     defaultValues: {
       roiTarget: 4,
       entropyRisk: 5,
@@ -84,7 +84,6 @@ export default function MutationGenerator() {
   
   useEffect(() => {
     const newSchema = getFormSchema(tier);
-    setFormSchema(newSchema);
     // This is a hack to force re-validation with the new schema context
     form.trigger();
   }, [tier, form]);
