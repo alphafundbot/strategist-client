@@ -1,12 +1,15 @@
 
 "use client";
 
+import { useState, useEffect, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { AreaChart, Archive, FlaskConical, Search } from 'lucide-react';
+import { Archive, FlaskConical, Search, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import VaultRoiChart from '@/components/vaults/vault-roi-chart';
+import { getVaults, getVaultRoiData, Vault, VaultRoiData } from '@/lib/services/vault';
 
 const Section = ({ title, icon, children, className }: { title: string, icon: React.ReactNode, children: React.ReactNode, className?: string }) => (
     <Card className={`bg-card/50 backdrop-blur-sm ${className}`}>
@@ -22,14 +25,40 @@ const Section = ({ title, icon, children, className }: { title: string, icon: Re
     </Card>
 );
 
-const vaultData = [
-    { name: 'Momentum Spike', assets: 4, roi: '18.2%', age: '90d' },
-    { name: 'Pre-Market Volatility', assets: 12, roi: '11.5%', age: '120d' },
-    { name: 'Arbitrage Alpha', assets: 7, roi: '8.9%', age: '210d' },
-    { name: 'Long/Short Equity', assets: 25, roi: '14.1%', age: '365d' },
-];
-
 export default function VaultsPage() {
+    const [vaults, setVaults] = useState<Vault[]>([]);
+    const [selectedVault, setSelectedVault] = useState<Vault | null>(null);
+    const [chartData, setChartData] = useState<VaultRoiData[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [searchTerm, setSearchTerm] = useState('');
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            const vaultsData = await getVaults();
+            setVaults(vaultsData);
+            if (vaultsData.length > 0) {
+                setSelectedVault(vaultsData[0]);
+                const roiData = await getVaultRoiData(vaultsData[0].id);
+                setChartData(roiData);
+            }
+            setLoading(false);
+        };
+        fetchData();
+    }, []);
+
+    const handleSelectVault = async (vault: Vault) => {
+        setSelectedVault(vault);
+        const roiData = await getVaultRoiData(vault.id);
+        setChartData(roiData);
+    };
+
+    const filteredVaults = useMemo(() => {
+        return vaults.filter(vault => 
+            vault.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    }, [vaults, searchTerm]);
+
     return (
         <div className="space-y-6">
             <motion.div 
@@ -55,37 +84,44 @@ export default function VaultsPage() {
                 <div className="lg:col-span-2 space-y-6">
                     <Section title="Vault Explorer" icon={<Search className="w-5 h-5" />}>
                         <div className="mb-4">
-                            <Input placeholder="Search vaults by name or asset..." />
+                            <Input 
+                                placeholder="Search vaults by name..." 
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
                         </div>
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>Vault Name</TableHead>
-                                    <TableHead>Assets</TableHead>
-                                    <TableHead>Avg. ROI</TableHead>
-                                    <TableHead>Age</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {vaultData.map((vault) => (
-                                    <TableRow key={vault.name}>
-                                        <TableCell className="font-medium">{vault.name}</TableCell>
-                                        <TableCell>{vault.assets}</TableCell>
-                                        <TableCell className="text-green-400">{vault.roi}</TableCell>
-                                        <TableCell>{vault.age}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </Section>
-                    <Section title="ROI Visual Map" icon={<AreaChart className="w-5 h-5" />}>
-                        <div className="h-64 p-4 bg-muted/50 rounded-lg flex items-center justify-center border border-dashed">
-                             <div className="text-center">
-                                <AreaChart className="mx-auto h-12 w-12 text-muted-foreground" />
-                                <p className="mt-2 text-sm text-muted-foreground">Historical ROI map will be rendered here.</p>
+                        {loading ? (
+                             <div className="flex justify-center items-center h-48">
+                                <Loader2 className="h-8 w-8 animate-spin" />
                             </div>
-                        </div>
+                        ) : (
+                            <Table>
+                                <TableHeader>
+                                    <TableRow>
+                                        <TableHead>Vault Name</TableHead>
+                                        <TableHead>Assets</TableHead>
+                                        <TableHead>Avg. ROI</TableHead>
+                                        <TableHead>Age</TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {filteredVaults.map((vault) => (
+                                        <TableRow 
+                                            key={vault.id} 
+                                            onClick={() => handleSelectVault(vault)}
+                                            className={`cursor-pointer ${selectedVault?.id === vault.id ? 'bg-muted/50' : ''}`}
+                                        >
+                                            <TableCell className="font-medium">{vault.name}</TableCell>
+                                            <TableCell>{vault.assets}</TableCell>
+                                            <TableCell className="text-green-400">{vault.roi}</TableCell>
+                                            <TableCell>{vault.age}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        )}
                     </Section>
+                    <VaultRoiChart data={chartData} vaultName={selectedVault?.name} />
                 </div>
 
                 <div className="space-y-6">
