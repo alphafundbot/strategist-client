@@ -41,9 +41,9 @@ const getFormSchema = (tier: string) => {
             maxMessage = "ROI target exceeds Free+ tier limit (8%). Elevate to Gold for higher forecasting.";
             break;
         case 'Silver':
-            minRoi = 10;
+            minRoi = 9;
             maxRoi = 12;
-            minMessage = "Silver tier mutation must have an ROI target of at least 10%.";
+            minMessage = "Silver tier mutation must have an ROI target of at least 9%.";
             maxMessage = "ROI target exceeds Silver tier limit (12%). Elevate to Gold for higher forecasting.";
             break;
         case 'Gold':
@@ -91,7 +91,7 @@ export default function MutationGenerator() {
   useEffect(() => {
     const defaultValues: { [key: string]: number } = {
         'Free+': 4,
-        'Silver': 10,
+        'Silver': 9,
         'Gold': 13,
     };
     form.reset({ roiTarget: defaultValues[tier] || 4, entropyRisk: 5 });
