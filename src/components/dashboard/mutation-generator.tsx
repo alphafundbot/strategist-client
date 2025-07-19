@@ -27,6 +27,8 @@ import { useToast } from "@/hooks/use-toast"
 import { PlusCircle, Sparkles, Loader2 } from "lucide-react"
 import { useEffect, useState } from "react"
 import { generateMutationSuggestion } from "@/ai/flows/suggestion-engine"
+import { runMutationEngine } from "@/ai/flows/mutation-engine"
+import { useAuth } from "@/contexts/AuthContext"
 
 const getFormSchema = (tier: string) => {
     let minRoi = 0;
@@ -64,8 +66,10 @@ const getFormSchema = (tier: string) => {
 
 export default function MutationGenerator() {
   const { toast } = useToast()
+  const { user } = useAuth();
   const [tier, setTier] = useState('Free+');
   const [isSuggesting, setIsSuggesting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [suggestion, setSuggestion] = useState<string | null>(null);
   
   useEffect(() => {
@@ -100,13 +104,40 @@ export default function MutationGenerator() {
   }, [form, tier]);
 
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    toast({
-      title: "Mutation Proposed",
-      description: `ROI Target: ${values.roiTarget}%, Entropy Risk: ${values.entropyRisk}%.`,
-    })
-    form.reset()
-    setSuggestion(null);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!user) {
+        toast({ title: "Authentication Error", description: "You must be logged in to propose a mutation.", variant: "destructive"});
+        return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+        const result = await runMutationEngine({
+            strategistId: user.uid,
+            roiDeltaThreshold: values.roiTarget,
+            mutationData: {
+                entropyRisk: values.entropyRisk,
+                proposalTier: tier,
+            }
+        });
+
+        toast({
+            title: "Mutation Engine Activated",
+            description: `Mutation ${result.mutationId} has been successfully created.`,
+        });
+        form.reset();
+        setSuggestion(null);
+
+    } catch (error) {
+        toast({
+            title: "Mutation Failed",
+            description: (error as Error).message,
+            variant: "destructive"
+        })
+    } finally {
+        setIsSubmitting(false);
+    }
   }
 
   const handleGetSuggestion = async () => {
@@ -146,7 +177,7 @@ export default function MutationGenerator() {
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-                <Button type="button" variant="outline" className="w-full" onClick={handleGetSuggestion} disabled={isSuggesting}>
+                <Button type="button" variant="outline" className="w-full" onClick={handleGetSuggestion} disabled={isSuggesting || isSubmitting}>
                     {isSuggesting ? <Loader2 className="mr-2 animate-spin" /> : <Sparkles className="mr-2" />}
                     Get AI Suggestion
                 </Button>
@@ -184,7 +215,8 @@ export default function MutationGenerator() {
             />
           </CardContent>
           <CardFooter>
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" disabled={isSubmitting || isSuggesting}>
+              {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Submit Proposal
             </Button>
           </CardFooter>
