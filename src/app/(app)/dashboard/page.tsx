@@ -40,7 +40,14 @@ export default function DashboardPage() {
 
   const hasAccess = (requiredTiers: string[]) => {
     if (!userTier) return false;
-    return requiredTiers.includes(userTier);
+    
+    const tierOrder = ['Free', 'Free+', 'Silver', 'Gold', 'Elite'];
+    const userTierIndex = tierOrder.indexOf(userTier);
+
+    return requiredTiers.some(requiredTier => {
+        const requiredTierIndex = tierOrder.indexOf(requiredTier);
+        return userTierIndex >= requiredTierIndex;
+    });
   };
 
   if (userTier === null) {
@@ -66,16 +73,16 @@ export default function DashboardPage() {
           {hasAccess(['Elite']) ? <CognitionGraph /> : <LockedFeatureCard featureName="Cognition Graph" />}
         </div>
         <div className="grid auto-rows-fr gap-4 md:gap-8">
-          {hasAccess(['Free+', 'Silver', 'Gold', 'Elite']) ? <MutationGenerator /> : <LockedFeatureCard featureName="Mutation Generator" />}
-          {hasAccess(['Silver', 'Gold', 'Elite']) ? <RationaleNarration /> : <LockedFeatureCard featureName="Rationale Narration" />}
+          {hasAccess(['Free+']) ? <MutationGenerator /> : <LockedFeatureCard featureName="Mutation Generator" />}
+          {hasAccess(['Silver']) ? <RationaleNarration /> : <LockedFeatureCard featureName="Rationale Narration" />}
         </div>
 
         {/* Row 3: Analytics and Tools */}
         <div >
-          {hasAccess(['Silver', 'Gold', 'Elite']) ? <RoiSimulation /> : <LockedFeatureCard featureName="ROI Simulation" />}
+          {hasAccess(['Silver']) ? <RoiSimulation /> : <LockedFeatureCard featureName="ROI Simulation" />}
         </div>
         <div>
-          {hasAccess(['Gold', 'Elite']) ? <ReplayAnnotator /> : <LockedFeatureCard featureName="Replay Annotator" />}
+          {hasAccess(['Gold']) ? <ReplayAnnotator /> : <LockedFeatureCard featureName="Replay Annotator" />}
         </div>
         <div>
           {hasAccess(['Elite']) ? <GlossaryManager /> : <LockedFeatureCard featureName="Glossary Manager" />}
