@@ -37,6 +37,13 @@ import { Button } from '@/components/ui/button';
 import React, { useEffect, useState } from 'react';
 import BottomNav from './bottom-nav';
 
+const strategistData: { [key: string]: any } = {
+    "Free+": { fingerprint: "Alpha-1", vault: 1000.00, roi: 0 },
+    "Silver": { fingerprint: "Beta-3", vault: 12450.00, roi: 14.2 },
+    "Gold": { fingerprint: "Gamma-6", vault: 28900.00, roi: 19.8 },
+    "Omega": { fingerprint: "Omega-9", vault: 102000.00, roi: 31900 },
+}
+
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -77,13 +84,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   
   const hasTradingAccess = isClient && (tier === 'Silver' || tier === 'Gold');
   const hasInvestorAccess = isClient && tier === 'Omega';
-
-  const strategistData: { [key: string]: any } = {
-    "Free+": { fingerprint: "Alpha-1", vault: 1000.00, roi: 0 },
-    "Silver": { fingerprint: "Beta-3", vault: 12450.00, roi: 14.2 },
-    "Gold": { fingerprint: "Gamma-6", vault: 28900.00, roi: 19.8 },
-    "Omega": { fingerprint: "Omega-9", vault: 102000.00, roi: 31900 },
-  }
 
   const currentData = strategistData[tier] || strategistData['Free+'];
 
