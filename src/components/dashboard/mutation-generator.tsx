@@ -24,8 +24,9 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/use-toast"
-import { PlusCircle } from "lucide-react"
+import { PlusCircle, Sparkles, Loader2 } from "lucide-react"
 import { useEffect, useState } from "react"
+import { generateMutationSuggestion } from "@/ai/flows/suggestion-engine"
 
 const getFormSchema = (tier: string) => {
     let minRoi = 0;
@@ -64,6 +65,8 @@ const getFormSchema = (tier: string) => {
 export default function MutationGenerator() {
   const { toast } = useToast()
   const [tier, setTier] = useState('Free+');
+  const [isSuggesting, setIsSuggesting] = useState(false);
+  const [suggestion, setSuggestion] = useState<string | null>(null);
   
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -103,6 +106,29 @@ export default function MutationGenerator() {
       description: `ROI Target: ${values.roiTarget}%, Entropy Risk: ${values.entropyRisk}%.`,
     })
     form.reset()
+    setSuggestion(null);
+  }
+
+  const handleGetSuggestion = async () => {
+    setIsSuggesting(true);
+    setSuggestion(null);
+    try {
+        const result = await generateMutationSuggestion({
+            tier,
+            recentPerformance: "Last 3 mutations showed high alpha in momentum-burst strategies, but failed to capture reversion-to-mean opportunities."
+        });
+        form.setValue("roiTarget", result.suggestedRoi);
+        form.setValue("entropyRisk", result.suggestedEntropy);
+        setSuggestion(result.rationale);
+    } catch (error) {
+        toast({
+            title: "Suggestion Failed",
+            description: "Could not generate an AI suggestion at this time.",
+            variant: "destructive"
+        })
+    } finally {
+        setIsSuggesting(false);
+    }
   }
 
   return (
@@ -113,12 +139,23 @@ export default function MutationGenerator() {
             Propose New Mutation
         </CardTitle>
         <CardDescription>
-          Set ROI targets and entropy risk to generate a new mutation.
+          Set ROI targets and entropy risk or let Everest AI suggest a mutation.
         </CardDescription>
       </CardHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <CardContent className="space-y-4">
+            <div className="space-y-2">
+                <Button type="button" variant="outline" className="w-full" onClick={handleGetSuggestion} disabled={isSuggesting}>
+                    {isSuggesting ? <Loader2 className="mr-2 animate-spin" /> : <Sparkles className="mr-2" />}
+                    Get AI Suggestion
+                </Button>
+                {suggestion && !isSuggesting && (
+                    <div className="p-3 bg-muted/50 rounded-md text-sm text-muted-foreground border border-input mt-2">
+                       <p><span className="font-semibold text-foreground">Everest Suggests:</span> {suggestion}</p>
+                    </div>
+                )}
+            </div>
             <FormField
               control={form.control}
               name="roiTarget"
@@ -126,7 +163,7 @@ export default function MutationGenerator() {
                 <FormItem>
                   <FormLabel>ROI Target (%)</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="e.g. 25" {...field} />
+                    <Input type="number" placeholder="e.g. 15" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
