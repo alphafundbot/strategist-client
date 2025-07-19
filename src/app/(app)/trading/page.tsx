@@ -16,7 +16,7 @@ export default function TradingPage() {
         <h1 className="text-2xl font-semibold">Trading</h1>
         <p className="text-muted-foreground">
           Simulate mutations, monitor override logic, and evolve strategist
-          cognition.
+          cognition via the Everest voice interface.
         </p>
       </div>
 

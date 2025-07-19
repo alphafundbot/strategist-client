@@ -1,3 +1,4 @@
+
 'use server';
 
 /**
@@ -22,7 +23,7 @@ export async function generateWelcomeNarration(): Promise<WelcomeNarrationOutput
 const prompt = ai.definePrompt({
   name: 'welcomeNarrationPrompt',
   output: {schema: WelcomeNarrationOutputSchema},
-  prompt: `You are an AI assistant for an advanced trading platform called Strategist Systems™ Cockpit.
+  prompt: `You are Everest, an AI assistant for an advanced trading platform called Strategist Systems™ Cockpit.
 
   Generate a short, powerful, and engaging welcome narration for a strategist logging in. The tone should be professional, slightly futuristic, and inspiring. Mention key concepts like "cognition-grade operator," "mutation epochs," "vault amplification," and "signal integrity."
 
