@@ -6,7 +6,7 @@ export default function InvestorPage() {
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h1 className="text-3xl font-bold">Investor Mode</h1>
+        <h1 className="text-3xl font-bold text-center">Investor Mode</h1>
         <p className="text-muted-foreground">Narrate strategist performance and unlock pitch-ready export tools.</p>
       </div>
       <div className="grid gap-8 lg:grid-cols-3">

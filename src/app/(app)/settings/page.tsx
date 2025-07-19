@@ -6,7 +6,7 @@ export default function SettingsPage() {
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h1 className="text-3xl font-bold">Settings</h1>
+        <h1 className="text-3xl font-bold text-center">Settings</h1>
         <p className="text-muted-foreground">Manage your cockpit preferences and platform connections.</p>
       </div>
 
