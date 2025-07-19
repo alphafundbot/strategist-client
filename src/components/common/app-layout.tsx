@@ -18,6 +18,9 @@ import {
   Banknote,
   TrendingUp,
   Wallet,
+  Activity,
+  ShieldAlert,
+  Gauge,
 } from 'lucide-react';
 
 import {
@@ -39,10 +42,10 @@ import { StrategistLogo } from './strategist-logo';
 import { cn } from '@/lib/utils';
 
 const strategistData: { [key: string]: any } = {
-    "Free+": { fingerprint: "Alpha-1", vault: 1000.00, roi: 0 },
-    "Silver": { fingerprint: "Beta-3", vault: 12450.00, roi: 14.2 },
-    "Gold": { fingerprint: "Gamma-6", vault: 28900.00, roi: 19.8 },
-    "Omega": { fingerprint: "Omega-9", vault: 102000.00, roi: 31900 },
+    "Free+": { fingerprint: "Alpha-1", vault: 1000.00, roi: 0, growth: 0, volatility: 0.89, entropy: 0.12 },
+    "Silver": { fingerprint: "Beta-3", vault: 12450.00, roi: 14.2, growth: 2.1, volatility: 0.45, entropy: 0.09 },
+    "Gold": { fingerprint: "Gamma-6", vault: 28900.00, roi: 19.8, growth: 4.8, volatility: 0.21, entropy: 0.05 },
+    "Omega": { fingerprint: "Omega-9", vault: 102000.00, roi: 31900, growth: 12.3, volatility: 0.08, entropy: 0.02 },
 }
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
@@ -199,6 +202,18 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                  <div className="flex items-center gap-2">
                     <TrendingUp className="h-5 w-5 text-muted-foreground" />
                     <span>{currentData.roi > 0 ? '+' : ''}{currentData.roi}%</span>
+                </div>
+                 <div className="flex items-center gap-2">
+                    <Activity className="h-5 w-5 text-muted-foreground" />
+                    <span>{currentData.growth > 0 ? '+' : ''}{currentData.growth}%</span>
+                </div>
+                 <div className="flex items-center gap-2">
+                    <ShieldAlert className="h-5 w-5 text-muted-foreground" />
+                    <span>{currentData.volatility}</span>
+                </div>
+                 <div className="flex items-center gap-2">
+                    <Gauge className="h-5 w-5 text-muted-foreground" />
+                    <span>{currentData.entropy}</span>
                 </div>
             </div>
              <div className="flex items-center gap-2">
