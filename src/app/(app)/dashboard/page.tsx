@@ -1,97 +1,66 @@
-
-"use client"
-
-import { useEffect, useState } from 'react';
-import MutationDashboard from '@/components/dashboard/mutation-dashboard';
-import MutationGenerator from '@/components/dashboard/mutation-generator';
-import RationaleNarration from '@/components/dashboard/rationale-narration';
-import CognitionGraph from '@/components/dashboard/cognition-graph';
-import RoiSimulation from '@/components/dashboard/roi-simulation';
-import AuditTrace from '@/components/dashboard/audit-trace';
-import ReplayAnnotator from '@/components/dashboard/replay-annotator';
-import GlossaryManager from '@/components/dashboard/glossary-manager';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Lock } from 'lucide-react';
-
-const LockedFeatureCard = ({ featureName }: { featureName: string }) => (
-  <Card className="shadow-lg h-full flex flex-col items-center justify-center bg-muted/50">
-    <CardHeader>
-      <CardTitle className="flex items-center gap-2 text-muted-foreground">
-        <Lock className="w-6 h-6" />
-        {featureName}
-      </CardTitle>
-    </CardHeader>
-    <CardContent>
-      <p className="text-sm text-muted-foreground">Upgrade your tier to unlock this feature.</p>
-    </CardContent>
-  </Card>
-);
-
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function DashboardPage() {
-  const [userTier, setUserTier] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const storedTier = localStorage.getItem('userTier');
-      setUserTier(storedTier);
-    }
-  }, []);
-
-  const hasAccess = (requiredTiers: string[]) => {
-    if (!userTier) return false;
-    
-    const tierOrder = ['Free', 'Free+', 'Silver', 'Gold', 'Elite'];
-    const userTierIndex = tierOrder.indexOf(userTier);
-
-    return requiredTiers.some(requiredTier => {
-        const requiredTierIndex = tierOrder.indexOf(requiredTier);
-        return userTierIndex >= requiredTierIndex;
-    });
-  };
-
-  if (userTier === null) {
-    // You can render a loading state here if needed
-    return null;
-  }
-
   return (
     <div className="space-y-8">
-       <div>
+      <div>
         <h1 className="text-2xl font-semibold">Dashboard</h1>
-        <p className="text-muted-foreground">Monitor your vault, track mutations, and view your strategist fingerprint.</p>
+        <p className="text-muted-foreground">Monitor strategist fingerprint, vault metrics, and elevation status.</p>
       </div>
 
-      <div className="grid gap-4 md:gap-8 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 auto-rows-fr">
-        {/* Row 1: Main Dashboard */}
-        <div className="xl:col-span-3">
-          <MutationDashboard />
-        </div>
-
-        {/* Row 2: Core Actions */}
-        <div className="xl:col-span-2">
-          {hasAccess(['Elite']) ? <CognitionGraph /> : <LockedFeatureCard featureName="Cognition Graph" />}
-        </div>
-        <div className="grid auto-rows-fr gap-4 md:gap-8">
-          {hasAccess(['Free+']) ? <MutationGenerator /> : <LockedFeatureCard featureName="Mutation Generator" />}
-          {hasAccess(['Silver']) ? <RationaleNarration /> : <LockedFeatureCard featureName="Rationale Narration" />}
-        </div>
-
-        {/* Row 3: Analytics and Tools */}
-        <div >
-          {hasAccess(['Silver']) ? <RoiSimulation /> : <LockedFeatureCard featureName="ROI Simulation" />}
-        </div>
-        <div>
-          {hasAccess(['Gold']) ? <ReplayAnnotator /> : <LockedFeatureCard featureName="Replay Annotator" />}
-        </div>
-        <div>
-          {hasAccess(['Elite']) ? <GlossaryManager /> : <LockedFeatureCard featureName="Glossary Manager" />}
-        </div>
-
-        {/* Row 4: Audit */}
-        <div className="xl:col-span-3">
-          <AuditTrace />
-        </div>
+      <div className="grid gap-4 md:gap-8 grid-cols-1 lg:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Strategist Identity</CardTitle>
+            <CardDescription>
+              View strategist fingerprint traits, mutation status, and current tier.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">
+              Fingerprint modulation history and override audit logs will be available here.
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Vault Balance</CardTitle>
+            <CardDescription>
+              Display current strategist vault balance and funding capacity.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">
+              Real-time vault telemetry will be rendered here.
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>ROI Arc</CardTitle>
+            <CardDescription>
+              Track mutation ROI progression across strategist epochs.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">
+              Cognition graph integration and ROI delta charts will be available here.
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Elevation Forecast</CardTitle>
+            <CardDescription>
+              Visualize path to Silver, Gold, Omega tiers based on strategist performance.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">
+              Tier advancement conditions and projection metrics will be available here.
+            </p>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
