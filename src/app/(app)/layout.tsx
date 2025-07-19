@@ -33,7 +33,6 @@ export default function AuthenticatedLayout({ children }: { children: ReactNode 
                     const initials = name.split(' ').map((n: string) => n[0]).join('');
                     setInitials(initials);
                 } else {
-                    // Handle case where user doc doesn't exist but user is auth'd
                     setTier('Free+');
                     localStorage.setItem('userTier', 'Free+');
                     setInitials(user.email ? user.email[0].toUpperCase() : 'U');
