@@ -21,11 +21,15 @@ export default function Layout({
       const storedTier = localStorage.getItem('userTier');
       if (storedTier) {
         setIsVerified(true);
+        // If the user lands on the root of the authenticated app, redirect to dashboard.
+        if (pathname === '/') {
+          router.replace('/dashboard');
+        }
       } else {
         router.push('/');
       }
     }
-  }, [router]);
+  }, [router, pathname]);
 
   if (!isVerified) {
     return (
