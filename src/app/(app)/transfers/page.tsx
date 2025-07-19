@@ -85,7 +85,7 @@ export default function TransfersPage() {
                             <TableCell className="font-medium">{d.institution}</TableCell>
                             <TableCell>${d.amount.toLocaleString()}</TableCell>
                             <TableCell className="text-right">
-                                <Badge variant={getStatusBadgeVariant(d.status)}>{d.status}</Badge>
+                                <Badge variant={getStatusBadgeVariant(d.status) as any}>{d.status}</Badge>
                             </TableCell>
                         </TableRow>
                     ))}
@@ -115,7 +115,7 @@ export default function TransfersPage() {
                             <TableCell className="font-medium">{w.destination}</TableCell>
                             <TableCell>${w.amount.toLocaleString()}</TableCell>
                             <TableCell className="text-right">
-                               <Badge variant={getStatusBadgeVariant(w.status)}>{w.status}</Badge>
+                               <Badge variant={getStatusBadgeVariant(w.status) as any}>{w.status}</Badge>
                             </TableCell>
                         </TableRow>
                     ))}
@@ -152,7 +152,7 @@ export default function TransfersPage() {
                         <TableCell className="font-medium">{t.institution}</TableCell>
                         <TableCell>${t.amount.toLocaleString()}</TableCell>
                         <TableCell className="text-right">
-                            <Badge variant={getStatusBadgeVariant(t.status)}>{t.status}</Badge>
+                            <Badge variant={getStatusBadgeVariant(t.status) as any}>{t.status}</Badge>
                         </TableCell>
                     </TableRow>
                 ))}
