@@ -93,7 +93,7 @@ export default function TransfersPage() {
           <CardTitle>Transfer History</CardTitle>
           <CardDescription>
             Review your past vault deposits.
-          </Description>
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
