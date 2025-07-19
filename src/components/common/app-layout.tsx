@@ -36,7 +36,6 @@ import {
 import { Button } from '@/components/ui/button';
 import React, { useEffect, useState } from 'react';
 import BottomNav from './bottom-nav';
-import { Badge } from '@/components/ui/badge';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
