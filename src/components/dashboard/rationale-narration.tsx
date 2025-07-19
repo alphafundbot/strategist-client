@@ -27,6 +27,7 @@ export default function RationaleNarration() {
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
+      setIsNarrating(false);
     }
   }
 
@@ -37,7 +38,7 @@ export default function RationaleNarration() {
     if (audioRef.current) {
         audioRef.current = null;
     }
-    setIsNarrating(false);
+    
     try {
       const result = await generateRationaleNarration({
         mutationProposal: "New high-frequency trading algorithm.",
@@ -57,12 +58,16 @@ export default function RationaleNarration() {
 
     if (isNarrating) {
       stopNarration();
-      setIsNarrating(false);
       return;
     }
 
-    if (audioRef.current) {
+    if (audioRef.current && audioRef.current.paused) {
         audioRef.current.play();
+        return;
+    }
+    
+    if(audioRef.current && !audioRef.current.paused) {
+        stopNarration();
         return;
     }
 
@@ -77,6 +82,7 @@ export default function RationaleNarration() {
           setIsNarrating(false);
         };
         audio.onpause = () => {
+            // Only set narrating to false if it's a real pause, not at the end
             if (audio.currentTime !== audio.duration) {
                 setIsNarrating(false);
             }
