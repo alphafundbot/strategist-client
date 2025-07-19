@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useForm } from "react-hook-form"
@@ -119,6 +118,7 @@ export default function MutationGenerator() {
             mutationData: {
                 entropyRisk: values.entropyRisk,
                 proposalTier: tier,
+                suggestionRationale: suggestion || undefined,
             }
         });
 

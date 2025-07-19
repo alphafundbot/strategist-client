@@ -15,7 +15,11 @@ import { storeMutation } from '@/services/mutation-service';
 export const MutationEngineInputSchema = z.object({
   strategistId: z.string().describe('The ID of the strategist initiating the mutation.'),
   roiDeltaThreshold: z.number().describe('The ROI delta that triggers the mutation.'),
-  mutationData: z.any().describe('The data associated with the mutation.'),
+  mutationData: z.object({
+      entropyRisk: z.number().describe("The entropy risk percentage."),
+      proposalTier: z.string().describe("The tier of the strategist at the time of proposal."),
+      suggestionRationale: z.string().optional().describe("The AI-generated rationale, if any, for this mutation."),
+  }),
 });
 export type MutationEngineInput = z.infer<typeof MutationEngineInputSchema>;
 
@@ -55,24 +59,26 @@ export const mutationEngineFlow = ai.defineFlow(
     const mutationId = `mut-${Date.now()}`;
     const snapshotId = `snap-${Date.now()}`;
 
-    // Store mutation under /strategists/{uid}/mutations
-    await storeMutation(input.strategistId, mutationId, {
+    const mutationDetails = {
         ...input.mutationData,
         roiDeltaThreshold: input.roiDeltaThreshold,
         createdAt: new Date().toISOString(),
         snapshotId,
-    });
+    };
 
+    // Store mutation under /strategists/{uid}/mutations
+    await storeMutation(input.strategistId, mutationId, mutationDetails);
 
     const telemetryData = {
         event: 'mutationTriggered',
         strategistId: input.strategistId,
         mutationId,
-        roiDeltaThreshold: input.roiDeltaThreshold,
+        ...mutationDetails,
         timestamp: new Date().toISOString(),
     };
     
-    await logTelemetry(telemetryData);
+    // Log to /telemetry/mutationLogs/{docId}
+    await logTelemetry('mutationLogs', telemetryData);
 
     return {
       mutationId,
