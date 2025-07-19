@@ -22,7 +22,7 @@ export default function AssetsPage() {
 
       <Tabs defaultValue={regionTabs[0].toLowerCase().replace(" ", "-")} className="w-full">
         <div className="flex justify-center">
-            <TabsList className="grid w-full max-w-4xl grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
+            <TabsList className="grid w-full max-w-4xl grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
               {regionTabs.map((tab) => (
                 <TabsTrigger key={tab} value={tab.toLowerCase().replace(" ", "-")}>
                   {tab}
