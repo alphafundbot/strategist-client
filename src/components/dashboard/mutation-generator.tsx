@@ -32,8 +32,8 @@ const getFormSchema = (tier: string) => {
     let message = "Must be 100 or less";
 
     if (tier === 'Free+') {
-        maxRoi = 12;
-        message = "ROI target exceeds Free+ tier limit (12%). Elevate to Gold for unlimited forecasting.";
+        maxRoi = 8;
+        message = "ROI target exceeds Free+ tier limit (8%). Elevate to Gold for 12-24% forecasting and override suppression.";
     } else if (tier === 'Silver') {
         maxRoi = 18;
         message = "ROI target exceeds Silver tier limit (18%). Elevate to Gold for unlimited forecasting.";
@@ -62,7 +62,7 @@ export default function MutationGenerator() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      roiTarget: 10,
+      roiTarget: 4,
       entropyRisk: 5,
     },
     // re-validate when schema changes
