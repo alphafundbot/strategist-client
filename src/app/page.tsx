@@ -95,11 +95,6 @@ export default function LoginPage() {
 
   const tiers = [
     { 
-      name: "Omega", 
-      icon: <Crown className="w-8 h-8 text-yellow-400" />,
-      description: "Full cognition singularity, encrypted exports, tier governance console" 
-    },
-    { 
       name: "Gold", 
       icon: <Star className="w-8 h-8 text-amber-500" />,
       description: "Unlimited ROI, mutation replay lab, strategist fingerprint evolution"

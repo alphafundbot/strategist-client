@@ -30,18 +30,28 @@ import { useEffect, useState } from "react"
 const getFormSchema = (tier: string) => {
     let minRoi = 0;
     let minMessage = "Must be positive";
-    let maxRoi = 100;
-    let maxMessage = "Must be 100 or less";
-
-    if (tier === 'Free+') {
-        minRoi = 4;
-        minMessage = "Free+ tier mutation must have an ROI target of at least 4%.";
-        maxRoi = 8;
-        maxMessage = "ROI target exceeds Free+ tier limit (8%). Elevate to Gold for 12-24% forecasting and override suppression.";
-    } else if (tier === 'Silver') {
-        minRoi = 0;
-        maxRoi = 18;
-        maxMessage = "ROI target exceeds Silver tier limit (18%). Elevate to Gold for unlimited forecasting.";
+    let maxRoi = 20;
+    let maxMessage = "ROI target exceeds 20% cap.";
+    
+    switch (tier) {
+        case 'Free+':
+            minRoi = 4;
+            maxRoi = 8;
+            minMessage = "Free+ tier mutation must have an ROI target of at least 4%.";
+            maxMessage = "ROI target exceeds Free+ tier limit (8%). Elevate to Gold for higher forecasting.";
+            break;
+        case 'Silver':
+            minRoi = 10;
+            maxRoi = 12;
+            minMessage = "Silver tier mutation must have an ROI target of at least 10%.";
+            maxMessage = "ROI target exceeds Silver tier limit (12%). Elevate to Gold for higher forecasting.";
+            break;
+        case 'Gold':
+            minRoi = 13;
+            maxRoi = 18;
+            minMessage = "Gold tier mutation must have an ROI target of at least 13%.";
+            maxMessage = "ROI target exceeds Gold tier limit (18%).";
+            break;
     }
 
     return z.object({
@@ -78,7 +88,12 @@ export default function MutationGenerator() {
   }, [tier]);
   
   useEffect(() => {
-    form.reset({ roiTarget: tier === 'Free+' ? 4 : 10, entropyRisk: 5 });
+    const defaultValues: { [key: string]: number } = {
+        'Free+': 4,
+        'Silver': 10,
+        'Gold': 13,
+    };
+    form.reset({ roiTarget: defaultValues[tier] || 4, entropyRisk: 5 });
   }, [form, tier]);
 
 
