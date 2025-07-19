@@ -21,6 +21,7 @@ import {
   Activity,
   ShieldAlert,
   Gauge,
+  Landmark,
 } from 'lucide-react';
 
 import {
@@ -120,6 +121,18 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                   <Link href="/dashboard">
                     <Home />
                     <span>Dashboard</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+               <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname.startsWith('/vaults')}
+                  tooltip={{ children: 'Collective Vaults' }}
+                >
+                  <Link href="/vaults">
+                    <Landmark />
+                    <span>Vaults</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

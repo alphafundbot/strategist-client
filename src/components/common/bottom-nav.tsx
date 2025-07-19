@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, AreaChart, Banknote, Briefcase } from 'lucide-react';
+import { Home, AreaChart, Banknote, Briefcase, Landmark } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 
@@ -22,9 +22,10 @@ export default function BottomNav() {
 
   const navItems = [
     { href: '/dashboard', icon: Home, label: 'Dashboard', tier: 'all' },
+    { href: '/vaults', icon: Landmark, label: 'Vaults', tier: 'all' },
     { href: '/trading', icon: AreaChart, label: 'Trading', tier: ['Silver', 'Gold'] },
     { href: '/transfers', icon: Banknote, label: 'Transfers', tier: 'all' },
-    { href: '/investor', icon: Briefcase, label: 'Investor', tier: ['Omega'] },
+    { href: '/investor', icon: Briefcase, label: 'Investor', tier: ['Gold'] },
   ];
 
   const filteredNavItems = isClient ? navItems.filter(item => {
@@ -46,12 +47,13 @@ export default function BottomNav() {
               key={item.href}
               href={item.href}
               className={cn(
-                'flex flex-col items-center justify-center gap-1 text-xs transition-colors w-1/4',
+                'flex flex-col items-center justify-center gap-1 text-xs transition-colors',
+                'w-1/5',
                 isActive ? 'text-primary' : 'text-muted-foreground hover:text-primary'
               )}
             >
               <item.icon className="h-6 w-6" />
-              <span>{item.label}</span>
+              <span className="truncate">{item.label}</span>
             </Link>
           );
         })}
