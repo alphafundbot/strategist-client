@@ -25,21 +25,58 @@ import {
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/use-toast"
 import { PlusCircle } from "lucide-react"
+import { useEffect, useState } from "react"
 
-const formSchema = z.object({
-  roiTarget: z.coerce.number().min(0, "Must be positive").max(100, "Must be 100 or less"),
-  entropyRisk: z.coerce.number().min(0, "Must be positive").max(100, "Must be 100 or less"),
-})
+const getFormSchema = (tier: string) => {
+    let maxRoi = 100;
+    let message = "Must be 100 or less";
+
+    if (tier === 'Free+') {
+        maxRoi = 12;
+        message = "ROI target exceeds Free+ tier limit (12%). Elevate to Gold for unlimited forecasting.";
+    } else if (tier === 'Silver') {
+        maxRoi = 18;
+        message = "ROI target exceeds Silver tier limit (18%). Elevate to Gold for unlimited forecasting.";
+    }
+
+    return z.object({
+        roiTarget: z.coerce.number().min(0, "Must be positive").max(maxRoi, { message }),
+        entropyRisk: z.coerce.number().min(0, "Must be positive").max(100, "Must be 100 or less"),
+    });
+}
+
 
 export default function MutationGenerator() {
   const { toast } = useToast()
+  const [tier, setTier] = useState('Free+');
+  const [formSchema, setFormSchema] = useState(getFormSchema('Free+'));
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+        const storedTier = localStorage.getItem('userTier') || 'Free+';
+        setTier(storedTier);
+        setFormSchema(getFormSchema(storedTier));
+    }
+  }, []);
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       roiTarget: 10,
       entropyRisk: 5,
     },
-  })
+    // re-validate when schema changes
+    context: { tier },
+  });
+  
+  useEffect(() => {
+    setFormSchema(getFormSchema(tier));
+  }, [tier]);
+  
+  useEffect(() => {
+    form.trigger();
+  }, [form, formSchema]);
+
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     toast({
