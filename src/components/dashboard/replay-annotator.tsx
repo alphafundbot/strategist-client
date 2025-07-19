@@ -58,32 +58,34 @@ export default function ReplayAnnotator() {
           Review fill accuracy timeline and annotate performance.
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex-grow space-y-4">
-        <ChartContainer config={chartConfig} className="h-48 w-full">
-          <ResponsiveContainer>
-            <LineChart data={timelineData} margin={{ top: 5, right: 20, left: -10, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="time" tickLine={false} axisLine={false} tickMargin={8} fontSize={12}/>
-              <YAxis domain={[90, 100]} unit="%" tickLine={false} axisLine={false} tickMargin={8} fontSize={12} />
-              <Tooltip content={<ChartTooltipContent indicator="line" />} />
-              <Line type="monotone" dataKey="accuracy" stroke="var(--color-accuracy)" strokeWidth={2} dot={true} />
-            </LineChart>
-          </ResponsiveContainer>
-        </ChartContainer>
-        <Textarea 
-          placeholder="Add annotation for mutation BRST-9019..." 
-          className="mt-4 text-sm" 
-          rows={2}
-          value={annotation}
-          onChange={(e) => setAnnotation(e.target.value)}
-        />
+      <CardContent className="flex-grow grid md:grid-cols-2 gap-6 items-center">
+        <div className="h-48 w-full">
+            <ChartContainer config={chartConfig} className="h-full w-full">
+            <ResponsiveContainer>
+                <LineChart data={timelineData} margin={{ top: 5, right: 20, left: -10, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="time" tickLine={false} axisLine={false} tickMargin={8} fontSize={12}/>
+                <YAxis domain={[90, 100]} unit="%" tickLine={false} axisLine={false} tickMargin={8} fontSize={12} />
+                <Tooltip content={<ChartTooltipContent indicator="line" />} />
+                <Line type="monotone" dataKey="accuracy" stroke="var(--color-accuracy)" strokeWidth={2} dot={true} />
+                </LineChart>
+            </ResponsiveContainer>
+            </ChartContainer>
+        </div>
+        <div className="flex flex-col gap-4">
+            <Textarea 
+            placeholder="Add annotation for mutation BRST-9019..." 
+            className="text-sm" 
+            rows={3}
+            value={annotation}
+            onChange={(e) => setAnnotation(e.target.value)}
+            />
+            <Button onClick={handleAddAnnotation} disabled={!annotation.trim()}>
+                <MessageSquarePlus className="w-4 h-4 mr-2" />
+                Add Annotation
+            </Button>
+        </div>
       </CardContent>
-      <CardFooter>
-        <Button className="w-full" onClick={handleAddAnnotation} disabled={!annotation.trim()}>
-            <MessageSquarePlus className="w-4 h-4 mr-2" />
-            Add Annotation
-        </Button>
-      </CardFooter>
     </Card>
   )
 }

@@ -7,7 +7,9 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { PlusCircle, Landmark } from "lucide-react"
+import { PlusCircle, Landmark, Users, PieChart as PieChartIcon, TrendingUp, Shield } from "lucide-react"
+import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from "recharts"
+import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart"
 
 const vaultTypes = [
   "Personal", "Family", "Peer-to-Peer", "Business", "School", "Church", "Nonprofit", 
@@ -15,6 +17,35 @@ const vaultTypes = [
   "Government", "Firm", "Club", "Bank", "Casino", "Wall Street", "Private Equity"
 ];
 
+const myVaults = [
+    {
+        name: "Syndicate Alpha",
+        category: "Firm",
+        balance: 125000,
+        roi: 18.2,
+        members: 5,
+        risk: "Low",
+        memberContributions: [
+            { name: 'You', value: 40000, fill: 'hsl(var(--chart-1))' },
+            { name: 'Strategist B', value: 30000, fill: 'hsl(var(--chart-2))' },
+            { name: 'Strategist C', value: 25000, fill: 'hsl(var(--chart-3))' },
+            { name: 'Strategist D', value: 20000, fill: 'hsl(var(--chart-4))' },
+            { name: 'Strategist E', value: 10000, fill: 'hsl(var(--chart-5))' },
+        ]
+    },
+    {
+        name: "P2P Momentum Fund",
+        category: "Peer-to-Peer",
+        balance: 22450,
+        roi: 9.8,
+        members: 2,
+        risk: "Medium",
+        memberContributions: [
+            { name: 'You', value: 11225, fill: 'hsl(var(--chart-1))' },
+            { name: 'Strategist X', value: 11225, fill: 'hsl(var(--chart-2))' },
+        ]
+    }
+]
 
 export default function VaultsPage() {
 
@@ -49,10 +80,62 @@ export default function VaultsPage() {
                         A list of collective vaults you are a member of.
                     </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-6">
+                   {myVaults.length > 0 ? (
+                       myVaults.map((vault) => (
+                           <Card key={vault.name} className="bg-background/50">
+                               <CardHeader>
+                                   <CardTitle>{vault.name}</CardTitle>
+                                   <CardDescription>{vault.category}</CardDescription>
+                               </CardHeader>
+                               <CardContent className="grid md:grid-cols-2 gap-6 items-center">
+                                   <div>
+                                       <div className="text-3xl font-bold">${vault.balance.toLocaleString()}</div>
+                                       <div className="text-sm text-muted-foreground">Total Vault Balance</div>
+                                       <div className="grid grid-cols-2 gap-4 mt-4 text-sm">
+                                           <div className="flex items-center gap-2">
+                                               <TrendingUp className="w-4 h-4 text-accent"/>
+                                               <div>
+                                                   <div className="font-semibold">{vault.roi}%</div>
+                                                   <div className="text-muted-foreground">ROI</div>
+                                               </div>
+                                           </div>
+                                            <div className="flex items-center gap-2">
+                                               <Users className="w-4 h-4 text-muted-foreground"/>
+                                               <div>
+                                                   <div className="font-semibold">{vault.members}</div>
+                                                   <div className="text-muted-foreground">Members</div>
+                                               </div>
+                                           </div>
+                                            <div className="flex items-center gap-2">
+                                               <Shield className="w-4 h-4 text-muted-foreground"/>
+                                               <div>
+                                                   <div className="font-semibold">{vault.risk}</div>
+                                                   <div className="text-muted-foreground">Risk Level</div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div className="h-48">
+                                       <ResponsiveContainer width="100%" height="100%">
+                                           <PieChart>
+                                               <Tooltip content={<ChartTooltipContent hideLabel />} />
+                                               <Pie data={vault.memberContributions} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={40} outerRadius={60} paddingAngle={5}>
+                                                   {vault.memberContributions.map((entry, index) => (
+                                                       <Cell key={`cell-${index}`} fill={entry.fill} />
+                                                   ))}
+                                               </Pie>
+                                           </PieChart>
+                                       </ResponsiveContainer>
+                                   </div>
+                               </CardContent>
+                           </Card>
+                       ))
+                   ) : (
                     <div className="text-center text-muted-foreground py-8">
                         <p>You have not joined any collective vaults yet.</p>
                     </div>
+                   )}
                 </CardContent>
             </Card>
         </TabsContent>
