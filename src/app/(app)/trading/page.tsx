@@ -1,4 +1,6 @@
 
+'use client';
+
 import AuditTrace from '@/components/dashboard/audit-trace';
 import CognitionGraph from '@/components/dashboard/cognition-graph';
 import GlossaryManager from '@/components/dashboard/glossary-manager';
