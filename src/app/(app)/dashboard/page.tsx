@@ -1,6 +1,6 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Shield, TrendingUp, Zap, User, Banknote } from 'lucide-react';
+import { User, Banknote, TrendingUp, Zap } from 'lucide-react';
 
 export default function DashboardPage() {
   return (
