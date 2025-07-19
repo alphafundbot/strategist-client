@@ -29,7 +29,7 @@ const getStatusBadgeVariant = (status: string) => {
         default:
             return 'outline';
     }
-}
+};
 
 export default function TransfersPage() {
   return (
