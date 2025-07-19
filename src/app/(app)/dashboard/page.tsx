@@ -1,19 +1,47 @@
 
-"use client";
+import { cookies } from 'next/headers';
+import { getAuth } from 'firebase-admin/auth';
+import { getFirestore } from 'firebase-admin/firestore';
+import { app } from '@/lib/firebase-admin-app'; // Import admin app
 
-import { useEffect, useState } from 'react';
 import WelcomeModal from '@/components/dashboard/welcome-modal';
 import DashboardClient from '@/components/dashboard/dashboard-client';
 import { Skeleton } from '@/components/ui/skeleton';
 
+async function getTierForUser(uid: string): Promise<string> {
+    try {
+        const db = getFirestore(app);
+        const userDoc = await db.collection('users').doc(uid).get();
+        if (userDoc.exists) {
+            return userDoc.data()?.tier || 'Free+';
+        }
+        return 'Free+'; // Default if no profile found
+    } catch (error) {
+        console.error("Error fetching user tier from Firestore:", error);
+        return 'Free+'; // Fallback on error
+    }
+}
 
-export default function DashboardPage() {
-    const [tier, setTier] = useState<string | null>(null);
+async function getAuthenticatedUserTier(): Promise<string> {
+    const session = cookies().get('session')?.value || '';
 
-    useEffect(() => {
-        const storedTier = localStorage.getItem('userTier') || 'Free+';
-        setTier(storedTier);
-    }, []);
+    if (!session) {
+        return 'Free+'; // Default for unauthenticated users
+    }
+
+    try {
+        const decodedClaims = await getAuth(app).verifySessionCookie(session, true);
+        const tier = await getTierForUser(decodedClaims.uid);
+        return tier;
+    } catch (error) {
+        console.error("Session verification failed or user not found:", error);
+        return 'Free+';
+    }
+}
+
+
+export default async function DashboardPage() {
+    const tier = await getAuthenticatedUserTier();
 
     return (
         <div className="space-y-8">
@@ -46,3 +74,4 @@ export default function DashboardPage() {
         </div>
     );
 }
+

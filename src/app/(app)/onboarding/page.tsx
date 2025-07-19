@@ -16,6 +16,10 @@ import ExperienceStep from '@/components/onboarding/experience-step';
 import StyleStep from '@/components/onboarding/style-step';
 import MotivationStep from '@/components/onboarding/motivation-step';
 import SummaryStep from '@/components/onboarding/summary-step';
+import { useAuth } from '@/contexts/AuthContext';
+import { doc, setDoc } from 'firebase/firestore';
+import { firestore } from '@/lib/firebase';
+import { useToast } from '@/hooks/use-toast';
 
 const steps = [
   { id: 'welcome', component: WelcomeStep, title: 'Welcome' },
@@ -28,7 +32,10 @@ const steps = [
 
 export default function OnboardingPage() {
   const router = useRouter();
+  const { user } = useAuth();
+  const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(0);
+  const [isDeploying, setIsDeploying] = useState(false);
   const [formData, setFormData] = useState({
     goals: 'mutation',
     experience: 'novice',
@@ -48,10 +55,34 @@ export default function OnboardingPage() {
     }
   };
 
-  const handleDeploy = () => {
-    // In a real app, save formData to Firestore under `/users/{uid}/onboarding`
-    console.log("Onboarding data:", formData);
-    router.push('/dashboard');
+  const handleDeploy = async () => {
+    if (!user) {
+        toast({ title: "Authentication Error", description: "User not found. Please log in again.", variant: "destructive" });
+        return;
+    }
+    setIsDeploying(true);
+    
+    try {
+        const userTier = localStorage.getItem('userTier') || 'Free+';
+        const profileData = {
+            ...formData,
+            tier: userTier,
+            onboarded: true,
+            createdAt: new Date().toISOString(),
+        };
+
+        // Persist to Firestore
+        await setDoc(doc(firestore, "users", user.uid), profileData);
+
+        console.log("Onboarding data saved to Firestore:", profileData);
+        router.push('/dashboard');
+
+    } catch (error) {
+        console.error("Failed to save onboarding data:", error);
+        toast({ title: "Deployment Failed", description: "Could not save your profile. Please try again.", variant: "destructive" });
+    } finally {
+        setIsDeploying(false);
+    }
   };
   
   const handleUpdate = (field: keyof typeof formData, value: string) => {
@@ -96,7 +127,7 @@ export default function OnboardingPage() {
         </CardContent>
 
         <CardFooter className="flex justify-between border-t pt-4">
-          <Button variant="ghost" onClick={handleBack} disabled={currentStep === 0}>
+          <Button variant="ghost" onClick={handleBack} disabled={currentStep === 0 || isDeploying}>
             <ArrowLeft className="mr-2" /> Back
           </Button>
           {currentStep < steps.length - 1 ? (
@@ -104,7 +135,7 @@ export default function OnboardingPage() {
               Next <ArrowRight className="ml-2" />
             </Button>
           ) : (
-            <Button onClick={handleDeploy} className="bg-green-600 hover:bg-green-700">
+            <Button onClick={handleDeploy} disabled={isDeploying} className="bg-green-600 hover:bg-green-700">
               Deploy My Cockpit <Check className="ml-2" />
             </Button>
           )}
