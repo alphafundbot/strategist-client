@@ -197,41 +197,43 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </Sidebar>
       )}
       <SidebarInset>
-        <header className="sticky top-0 z-10 flex h-16 items-center justify-between gap-6 border-b bg-background/80 px-6 backdrop-blur-md">
-          <SidebarTrigger className="md:hidden" />
-          <div className="flex flex-1 items-center justify-end gap-4 md:gap-6">
-            <div className="hidden md:flex items-center gap-6 text-sm font-medium">
-                <div className="flex items-center gap-2">
-                    <Wallet className="h-5 w-5 text-muted-foreground" />
-                    <span>${currentData.vault.toLocaleString()}</span>
-                </div>
-                 <div className="flex items-center gap-2">
-                    <TrendingUp className="h-5 w-5 text-muted-foreground" />
-                    <span>{currentData.roi > 0 ? '+' : ''}{currentData.roi}%</span>
-                </div>
-                 <div className="flex items-center gap-2">
-                    <Activity className="h-5 w-5 text-muted-foreground" />
-                    <span>{currentData.growth > 0 ? '+' : ''}{currentData.growth}%</span>
-                </div>
-                 <div className="flex items-center gap-2">
-                    <ShieldAlert className="h-5 w-5 text-muted-foreground" />
-                    <span>{currentData.volatility}</span>
-                </div>
-                 <div className="flex items-center gap-2">
-                    <Gauge className="h-5 w-5 text-muted-foreground" />
-                    <span>{currentData.entropy}</span>
-                </div>
+        <div className="flex flex-col h-screen">
+          <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center justify-between gap-6 border-b bg-background/80 px-6 backdrop-blur-md">
+            <SidebarTrigger className="md:hidden" />
+            <div className="flex flex-1 items-center justify-end gap-4 md:gap-6">
+              <div className="hidden md:flex items-center gap-6 text-sm font-medium">
+                  <div className="flex items-center gap-2">
+                      <Wallet className="h-5 w-5 text-muted-foreground" />
+                      <span>${currentData.vault.toLocaleString()}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                      <TrendingUp className="h-5 w-5 text-muted-foreground" />
+                      <span>{currentData.roi > 0 ? '+' : ''}{currentData.roi}%</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                      <Activity className="h-5 w-5 text-muted-foreground" />
+                      <span>{currentData.growth > 0 ? '+' : ''}{currentData.growth}%</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                      <ShieldAlert className="h-5 w-5 text-muted-foreground" />
+                      <span>{currentData.volatility}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                      <Gauge className="h-5 w-5 text-muted-foreground" />
+                      <span>{currentData.entropy}</span>
+                  </div>
+              </div>
+              <div className="flex items-center gap-2">
+                  {tierIcons[tier] || <User className="h-5 w-5" />}
+                  <div className="flex flex-col text-left">
+                    <span className="font-semibold text-sm">{currentData.fingerprint}</span>
+                    <span className="text-xs text-muted-foreground">{tier || 'User'} Tier</span>
+                  </div>
+              </div>
             </div>
-             <div className="flex items-center gap-2">
-                {tierIcons[tier] || <User className="h-5 w-5" />}
-                <div className="flex flex-col text-left">
-                  <span className="font-semibold text-sm">{currentData.fingerprint}</span>
-                  <span className="text-xs text-muted-foreground">{tier || 'User'} Tier</span>
-                </div>
-            </div>
-          </div>
-        </header>
-        <main className="flex-1 p-6 lg:p-8 pb-20 md:pb-8">{children}</main>
+          </header>
+          <main className="flex-1 overflow-y-auto p-6 lg:p-8 pb-20 md:pb-8">{children}</main>
+        </div>
         {showSidebar && <BottomNav />}
       </SidebarInset>
     </SidebarProvider>
