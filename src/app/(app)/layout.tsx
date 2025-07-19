@@ -68,6 +68,7 @@ export default function AuthenticatedLayout({ children }: { children: ReactNode 
       { name: 'Strategy Vaults', path: '/vaults', icon: 'Archive' },
       { name: 'ROI Simulation', path: '/simulation', icon: 'BarChart' },
       { name: 'Investor Mode', path: '/investor', icon: 'UserCheck' },
+      { name: 'Settings', path: '/settings', icon: 'Settings' },
     ];
 
     const bottomNavItems = [
