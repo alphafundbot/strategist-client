@@ -10,9 +10,16 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { User, Shield, Gem, Star, Crown, Volume2, Loader2, VolumeX } from "lucide-react"
 import { StrategistLogo } from "@/components/common/strategist-logo"
 import { cn } from "@/lib/utils"
+import { getAuth, signInWithCustomToken } from "firebase/auth"
+import { app } from "@/lib/firebase"
+import { useToast } from "@/hooks/use-toast"
+
+const auth = getAuth(app);
 
 export default function LoginPage() {
   const router = useRouter()
+  const { toast } = useToast();
+  const [isLoggingIn, setIsLoggingIn] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isGeneratingText, setIsGeneratingText] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -25,12 +32,38 @@ export default function LoginPage() {
     setIsLoading(false);
   }
 
-  const handleLogin = (tier: string) => {
+  const handleLogin = async (tier: string) => {
     stopNarration();
-    if (typeof window !== 'undefined') {
-      localStorage.setItem("userTier", tier)
+    setIsLoggingIn(tier);
+    
+    try {
+      // In a real app, the UID would come from a secure source after user verification.
+      // For this simulation, we'll use a static UID based on tier.
+      const uid = `${tier.toLowerCase()}-user-` + new Date().getTime();
+
+      const response = await fetch(`/api/token?uid=${uid}`);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to get auth token.');
+      }
+      const { token } = await response.json();
+      
+      await signInWithCustomToken(auth, token);
+      
+      if (typeof window !== 'undefined') {
+        localStorage.setItem("userTier", tier)
+      }
+      router.push("/onboarding")
+
+    } catch (error) {
+       console.error("Authentication failed:", error);
+       toast({
+         title: "Authentication Failed",
+         description: (error as Error).message,
+         variant: "destructive",
+       });
+       setIsLoggingIn(null);
     }
-    router.push("/onboarding")
   }
 
   const handleWalkthrough = async () => {
@@ -139,26 +172,34 @@ export default function LoginPage() {
               key={tier.name}
               aria-label={`Select ${tier.name} Tier`}
               onClick={() => handleLogin(tier.name)}
+              disabled={!!isLoggingIn}
               className={cn(
                 "w-full justify-start h-auto text-left py-4 group transition-all duration-300 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F1115]",
                 tier.style
               )}
               variant="default"
             >
-              <div className="flex items-start gap-4">
-                <div className="w-8 h-8 shrink-0 group-hover:scale-110 transition-transform flex items-center justify-center">
-                    {tier.icon}
+              {isLoggingIn === tier.name ? (
+                <div className="flex items-center justify-center w-full">
+                  <Loader2 className="mr-2 h-6 w-6 animate-spin" />
+                  <span>Authenticating...</span>
                 </div>
-                <div>
-                    <p className="font-semibold text-lg">{tier.name} Tier</p>
-                    <p className="text-xs font-normal whitespace-normal opacity-90">{tier.description}</p>
+              ) : (
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 shrink-0 group-hover:scale-110 transition-transform flex items-center justify-center">
+                      {tier.icon}
+                  </div>
+                  <div>
+                      <p className="font-semibold text-lg">{tier.name} Tier</p>
+                      <p className="text-xs font-normal whitespace-normal opacity-90">{tier.description}</p>
+                  </div>
                 </div>
-              </div>
+              )}
             </Button>
           ))}
         </CardContent>
         <CardFooter className="flex-col gap-4">
-             <Button onClick={handleWalkthrough} disabled={isLoading} variant="ghost" className="w-full text-[#A8B2BC] hover:bg-[#2A9D8F]/20 hover:text-white">
+             <Button onClick={handleWalkthrough} disabled={isLoading || !!isLoggingIn} variant="ghost" className="w-full text-[#A8B2BC] hover:bg-[#2A9D8F]/20 hover:text-white">
               {isLoading && !(audioRef.current && !audioRef.current.paused) ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : (audioRef.current && !audioRef.current.paused) ? (

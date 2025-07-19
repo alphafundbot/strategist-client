@@ -6,6 +6,9 @@ import AppLayout from '@/components/common/app-layout';
 import VoiceControlFab from '@/components/common/voice-control-fab';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import { signOut } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
 
 export default function Layout({
   children,
@@ -14,27 +17,33 @@ export default function Layout({
 }) {
   const router = useRouter();
   const pathname = usePathname();
-  const [isVerified, setIsVerified] = useState(false);
-
+  const { user, loading } = useAuth();
+  
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const storedTier = localStorage.getItem('userTier');
-      if (storedTier) {
-        setIsVerified(true);
-        // If the user lands on the root of the authenticated app, redirect to dashboard.
-        if (pathname === '/') {
-          router.replace('/dashboard');
-        }
-      } else {
+    if (!loading) {
+      if (!user) {
+        // If user is not logged in, clear tier and redirect to login
+        localStorage.removeItem('userTier');
         router.push('/');
+      } else {
+         // If user is logged in, but there's no tier, they need to start over
+        const storedTier = localStorage.getItem('userTier');
+        if (!storedTier) {
+            signOut(auth).finally(() => {
+                 router.push('/');
+            });
+        }
       }
     }
-  }, [router, pathname]);
+  }, [user, loading, router, pathname]);
 
-  if (!isVerified) {
+  if (loading || !user) {
     return (
-        <div className="flex h-screen w-full items-center justify-center">
-            <div className="animate-pulse rounded-md bg-muted h-32 w-full max-w-sm"></div>
+        <div className="flex h-screen w-full items-center justify-center bg-background">
+            <div className="flex flex-col items-center gap-4">
+                <div className="animate-pulse rounded-full bg-muted h-16 w-16"></div>
+                <div className="animate-pulse rounded-md bg-muted h-8 w-48"></div>
+            </div>
         </div>
     );
   }
