@@ -6,7 +6,7 @@ import { User, Banknote, TrendingUp, Zap, Gauge, ShieldAlert, Activity } from 'l
 import { useEffect, useState } from 'react';
 
 const strategistData: { [key: string]: any } = {
-    "Free+": { fingerprint: "Alpha-1", vault: 1000.00, roi: 8, nextTier: "Silver", requirement: "3 mutations with ROI ≥ 12%", growth: 0, volatility: 0.89, entropy: 0.12 },
+    "Free+": { fingerprint: "Alpha-1", vault: 1000.00, roi: 8, nextTier: "Silver", requirement: "3 mutations with ROI ≥ 12%", growth: 0.2, volatility: 0.89, entropy: 0.12 },
     "Silver": { fingerprint: "Beta-3", vault: 12450.00, roi: 12, nextTier: "Gold", requirement: "Vault ≥ $25K & ROI ≥ 18%", growth: 2.1, volatility: 0.45, entropy: 0.09 },
     "Gold": { fingerprint: "Gamma-6", vault: 28900.00, roi: 18, nextTier: "Omega", requirement: "Manual unlock only", growth: 4.8, volatility: 0.21, entropy: 0.05 },
 }
@@ -102,7 +102,7 @@ export default function DashboardPage() {
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm font-medium">Signal Entropy</CardTitle>
                             <Gauge className="h-4 w-4 text-muted-foreground" />
-                        </CardHeader>
+                        </d'CardHeader>
                         <CardContent>
                             <div className="text-2xl font-bold">{currentData.entropy}</div>
                             <p className="text-xs text-muted-foreground">Cognitive noise suppression</p>
