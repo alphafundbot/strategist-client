@@ -12,7 +12,7 @@ export default function TradingPage() {
   return (
     <div className="relative space-y-8">
       <div className="text-center">
-        <h1 className="text-3xl font-bold">Trading</h1>
+        <h1 className="text-3xl font-bold">Trading Cockpit</h1>
         <p className="text-muted-foreground">
           Simulate mutations, monitor override logic, and evolve strategist
           cognition via the Everest voice interface.
