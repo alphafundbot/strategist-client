@@ -8,3 +8,4 @@ import '@/ai/flows/text-to-speech.ts';
 import '@/ai/flows/simulation-selector.ts';
 import '@/ai/flows/welcome-narration.ts';
 import '@/ai/flows/strategist-briefing-generator.ts';
+import '@/ai/flows/mutation-engine.ts';
