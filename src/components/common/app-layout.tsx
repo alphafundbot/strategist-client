@@ -10,7 +10,6 @@ import {
   Crown,
   User,
   Eye,
-  Rocket,
   Settings,
   Star,
   Gem,
@@ -19,6 +18,7 @@ import {
   Banknote,
   TrendingUp,
   Wallet,
+  BrainCircuit,
 } from 'lucide-react';
 
 import {
@@ -96,7 +96,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <div className="flex items-center gap-2">
               <Button asChild variant="ghost" size="icon">
                 <Link href="/dashboard">
-                  <Rocket />
+                  <BrainCircuit />
                 </Link>
               </Button>
               <h2 className="text-lg font-semibold tracking-tight">
