@@ -1,9 +1,9 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import PlaidLinkButton from '@/components/transfers/plaid-link-button';
 import AccountList from '@/components/transfers/account-list';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
+import { Banknote, History, LinkIcon } from 'lucide-react';
 
 const getStatusBadgeVariant = (status: string) => {
     switch (status.toLowerCase()) {
@@ -36,15 +36,21 @@ export default function TransfersPage() {
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h1 className="text-3xl font-bold">Transfers</h1>
-        <p className="text-muted-foreground">Manage your connected accounts and vault deposits.</p>
+        <h1 className="text-3xl font-bold flex items-center justify-center gap-2">
+          <Banknote className="w-8 h-8" />
+          Vault Funding
+        </h1>
+        <p className="text-muted-foreground">Manage your connected accounts and secure vault deposits.</p>
       </div>
 
       <Card>
         <CardHeader>
           <div className="flex justify-between items-center">
             <div>
-              <CardTitle>Connected Accounts</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <LinkIcon className="w-6 h-6" />
+                Connected Accounts
+              </CardTitle>
               <CardDescription>
                 Link your external financial accounts to fund your vault.
               </CardDescription>
@@ -90,7 +96,10 @@ export default function TransfersPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Transfer History</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            <History className="w-6 h-6" />
+            Transfer History
+          </CardTitle>
           <CardDescription>
             Review your past vault deposits.
           </CardDescription>
