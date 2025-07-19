@@ -1,6 +1,5 @@
 
 "use client"
-import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState, useRef, useEffect } from "react"
 import { generateWelcomeNarration } from "@/ai/flows/welcome-narration"
@@ -31,7 +30,7 @@ export default function LoginPage() {
     if (typeof window !== 'undefined') {
       localStorage.setItem("userTier", tier)
     }
-    router.push("/dashboard")
+    router.push("/onboarding")
   }
 
   const handleWalkthrough = async () => {
