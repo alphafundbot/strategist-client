@@ -46,7 +46,13 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     if (typeof window !== 'undefined') {
       const storedTier = localStorage.getItem('userTier');
       if (storedTier) {
-        setTier(storedTier);
+        if (storedTier === 'Omega') {
+            console.log("ISO/IEC 27001 Protocol: Omega tier access is restricted to manual-only. Redirecting.");
+            localStorage.removeItem('userTier');
+            router.push('/');
+        } else {
+            setTier(storedTier);
+        }
       } else {
         router.push('/');
       }
