@@ -1,9 +1,10 @@
 
 "use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { User, Banknote, TrendingUp, Zap, Gauge, ShieldAlert, Activity } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import WelcomeModal from '@/components/dashboard/welcome-modal';
 
 const strategistData: { [key: string]: any } = {
     "Free+": { fingerprint: "Alpha-1", vault: 1000.00, roi: 8, nextTier: "Silver", requirement: "3 mutations with ROI ≥ 12%", growth: 0.2, volatility: 0.89, entropy: 0.12 },
@@ -41,6 +42,7 @@ export default function DashboardPage() {
 
     return (
         <div className="space-y-8">
+            <WelcomeModal />
             <div className="text-center">
                 <h1 className="text-3xl font-bold">Dashboard</h1>
                 <p className="text-muted-foreground">Monitor strategist fingerprint, vault metrics, and evolution protocol.</p>
