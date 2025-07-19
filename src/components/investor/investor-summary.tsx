@@ -41,7 +41,7 @@ export default function InvestorSummary() {
   }
 
   return (
-    <Card className="shadow-lg flex flex-col">
+    <Card className="shadow-lg flex flex-col h-full">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
             <FileText className="w-6 h-6" />
