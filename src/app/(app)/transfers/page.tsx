@@ -20,6 +20,7 @@ const withdrawals = [
 const history = [
     { type: "Deposit", date: "2025-07-18", institution: "JPMorgan Chase", amount: 10200.00, status: "Settled" },
     { type: "Withdrawal", date: "2025-07-18", institution: "Chase", amount: 5000.00, status: "Completed" },
+    { type: "Withdrawal", date: "2025-07-16", institution: "Fidelity", amount: 12500.00, status: "Completed" },
     { type: "Deposit", date: "2025-07-15", institution: "Bank of America", amount: 78901.23, status: "Settled" },
     { type: "Withdrawal", date: "2025-07-14", institution: "PayPal", amount: 1200.00, status: "Failed" },
 ];
