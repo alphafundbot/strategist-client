@@ -5,27 +5,27 @@
 
 @layer base {
   :root {
-    --background: 270 60% 97%; /* Very light purple #F3E5F5 */
-    --foreground: 276 36% 15%;
-    --card: 270 60% 97%;
-    --card-foreground: 276 36% 15%;
-    --popover: 270 60% 97%;
-    --popover-foreground: 276 36% 15%;
-    --primary: 262 52% 47%; /* Deep purple #673AB7 */
+    --background: 220 29% 96%; /* #F5F7FA */
+    --foreground: 210 50% 15%;
+    --card: 0 0% 100%; /* #FFFFFF */
+    --card-foreground: 210 50% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 50% 15%;
+    --primary: 204 70% 53%; /* #3399CC */
     --primary-foreground: 0 0% 98%;
-    --secondary: 270 20% 90%;
-    --secondary-foreground: 276 36% 15%;
-    --muted: 270 20% 90%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 175 100% 27%; /* Teal #009688 */
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%; /* #616161 */
+    --accent: 5 100% 69%; /* #FF6F61 */
     --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 270 20% 85%;
-    --input: 270 20% 85%;
-    --ring: 262 52% 47%;
-    --chart-1: 262 52% 47%;
-    --chart-2: 175 100% 27%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 204 70% 53%;
+    --chart-1: 204 70% 53%;
+    --chart-2: 5 100% 69%;
     --chart-3: 43 96% 56%;
     --chart-4: 173 58% 50%;
     --chart-5: 0 0% 80%;
@@ -39,21 +39,21 @@
     --card-foreground: 0 0% 98%;
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 263 89% 71%;
-    --primary-foreground: 263 89% 10%;
+    --primary: 204 70% 53%; /* #3399CC */
+    --primary-foreground: 0 0% 98%;
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
-    --accent: 204 70% 53%; /* Muted Blue #3399CC */
+    --accent: 5 100% 69%; /* #FF6F61 */
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
-    --ring: 263 89% 71%;
-    --chart-1: 263 89% 71%;
-    --chart-2: 204 70% 53%;
+    --ring: 204 70% 53%;
+    --chart-1: 204 70% 53%;
+    --chart-2: 5 100% 69%;
     --chart-3: 43 96% 56%;
     --chart-4: 173 58% 50%;
     --chart-5: 0 0% 80%;
