@@ -34,7 +34,7 @@ const RegionContent = ({ region }: { region: string }) => {
   }, [region]);
 
   return (
-    <Card className="border-primary/20 bg-card/50 backdrop-blur-xl">
+    <Card className="border-primary/20 bg-card/50 backdrop-blur-xl h-full">
       <CardHeader>
         <CardTitle>{region} Asset Feed</CardTitle>
         <CardDescription>
@@ -55,7 +55,7 @@ const RegionContent = ({ region }: { region: string }) => {
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={chartData} margin={{ top: 5, right: 10, left: -10, bottom: 0 }}>
                     <defs>
-                      <linearGradient id={`color-roi-${region}`} x1="0" y1="0" x2="0" y2="1">
+                      <linearGradient id={`color-roi-${region.replace(/\s+/g, "-")}`} x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="var(--color-roi)" stopOpacity={0.8} />
                         <stop offset="95%" stopColor="var(--color-roi)" stopOpacity={0.1} />
                       </linearGradient>
@@ -64,7 +64,7 @@ const RegionContent = ({ region }: { region: string }) => {
                     <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} fontSize={12} />
                     <YAxis unit="%" tickLine={false} axisLine={false} tickMargin={8} fontSize={12} />
                     <Tooltip content={<ChartTooltipContent indicator="line" />} />
-                    <Area type="monotone" dataKey="roi" stroke="var(--color-roi)" fillOpacity={1} fill={`url(#color-roi-${region})`} />
+                    <Area type="monotone" dataKey="roi" stroke="var(--color-roi)" fillOpacity={1} fill={`url(#color-roi-${region.replace(/\s+/g, "-")})`} />
                   </AreaChart>
                 </ResponsiveContainer>
               </ChartContainer>
@@ -138,21 +138,26 @@ export default function AssetsPage() {
         </p>
       </div>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <div className="flex justify-center pb-4">
-            <TabsList className="grid w-full max-w-4xl grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 h-auto">
-              {regionTabs.map((tab) => (
-                <TabsTrigger key={tab} value={tab.toLowerCase().replace(/\s+/g, "-")} className="py-2">
-                  {tab}
-                </TabsTrigger>
-              ))}
-            </TabsList>
+      <Tabs 
+        defaultValue={activeTab}
+        onValueChange={setActiveTab} 
+        orientation="vertical"
+        className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8"
+      >
+        <div className="md:col-start-1">
+          {regionTabs.map((tab) => (
+            <TabsContent key={tab} value={tab.toLowerCase().replace(/\s+/g, "-")}>
+              {activeTab === tab.toLowerCase().replace(/\s+/g, "-") && <RegionContent region={tab} />}
+            </TabsContent>
+          ))}
         </div>
-        {regionTabs.map((tab) => (
-          <TabsContent key={tab} value={tab.toLowerCase().replace(/\s+/g, "-")}>
-            {activeTab === tab.toLowerCase().replace(/\s+/g, "-") && <RegionContent region={tab} />}
-          </TabsContent>
-        ))}
+        <TabsList className="flex flex-row md:flex-col justify-start md:justify-start h-auto md:h-full bg-card/70 backdrop-blur-md p-2 space-x-2 md:space-x-0 md:space-y-2 overflow-x-auto md:overflow-x-hidden md:w-48">
+          {regionTabs.map((tab) => (
+            <TabsTrigger key={tab} value={tab.toLowerCase().replace(/\s+/g, "-")} className="w-full justify-start text-left py-2 px-4">
+              {tab}
+            </TabsTrigger>
+          ))}
+        </TabsList>
       </Tabs>
     </div>
   );
