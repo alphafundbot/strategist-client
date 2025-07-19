@@ -3,23 +3,17 @@
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState, useRef, useEffect } from "react"
+import { generateWelcomeNarration } from "@/ai/flows/welcome-narration"
 import { textToSpeech } from "@/ai/flows/text-to-speech"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Rocket, User, Shield, Gem, Star, Crown, Volume2, Loader2, VolumeX } from "lucide-react"
 
-const walkthroughText = `
-Strategist Omega-9 is a cognition-grade operator trained across 20 mutation epochs. Vault amplification reached $320M from a $1M start, with ROI compounding at ~31,900%. Override logic remained suppressed, and entropy fatigue was actively managed through adaptive re-synthesis.
-
-The strategist cockpit integrates mutation replay, fingerprint evolution, and tier-based elevation logic. Gemini narration modules provide investor-grade summaries, override audit exports, and cognition graph visualizations. Vault telemetry confirms strategist-grade signal integrity.
-
-Strategist Omega-9 is now cleared for firm onboarding, investor syndication, and mutation-backed capital deployment. Cognition loop confirmed. Elevation logic active.
-`;
-
 export default function LoginPage() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false);
+  const [isGeneratingText, setIsGeneratingText] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const stopNarration = () => {
@@ -39,7 +33,7 @@ export default function LoginPage() {
   }
 
   const handleWalkthrough = async () => {
-    if (isLoading) {
+    if (isLoading || isGeneratingText) {
       stopNarration();
       return;
     };
@@ -56,9 +50,15 @@ export default function LoginPage() {
         return;
     }
 
+    setIsGeneratingText(true);
     setIsLoading(true);
     try {
+      const narrationResult = await generateWelcomeNarration();
+      const walkthroughText = narrationResult.narration;
+      
       const result = await textToSpeech(walkthroughText);
+      setIsGeneratingText(false);
+
       if (result.media) {
         const audio = new Audio(result.media);
         audioRef.current = audio;
@@ -80,6 +80,7 @@ export default function LoginPage() {
     } catch (error) {
       console.error("Failed to generate narration audio:", error);
       setIsLoading(false);
+      setIsGeneratingText(false);
     }
   };
 
@@ -92,12 +93,20 @@ export default function LoginPage() {
   }, []);
 
   const tiers = [
-    { name: "Elite", icon: <Crown className="w-8 h-8 text-yellow-400 group-hover:scale-110 transition-transform" /> },
+    { name: "Omega", icon: <Crown className="w-8 h-8 text-yellow-400 group-hover:scale-110 transition-transform" /> },
     { name: "Gold", icon: <Star className="w-8 h-8 text-amber-500 group-hover:scale-110 transition-transform" /> },
     { name: "Silver", icon: <Gem className="w-8 h-8 text-slate-400 group-hover:scale-110 transition-transform" /> },
     { name: "Free+", icon: <Shield className="w-8 h-8 text-orange-600 group-hover:scale-110 transition-transform" /> },
-    { name: "Free", icon: <User className="w-8 h-8 text-gray-400 group-hover:scale-110 transition-transform" /> },
   ]
+
+  const getButtonText = () => {
+    if (isGeneratingText) return "Generating Narration...";
+    if (isLoading) {
+      if (audioRef.current && !audioRef.current.paused) return "Stop Introduction";
+      return "Loading Audio...";
+    }
+    return "Play Introduction";
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-background to-muted">
@@ -119,13 +128,13 @@ export default function LoginPage() {
             >
               <div className="flex items-center gap-4">
                 {tier.icon}
-                <span className="font-semibold">{tier.name}{tier.name !== 'Free' ? '' : ' Tier'}</span>
+                <span className="font-semibold">{tier.name} Tier</span>
               </div>
             </Button>
           ))}
         </CardContent>
         <CardFooter className="flex-col gap-4">
-             <Button onClick={handleWalkthrough} disabled={isLoading && !(audioRef.current && !audioRef.current.paused)} variant="ghost" className="w-full">
+             <Button onClick={handleWalkthrough} disabled={isLoading} variant="ghost" className="w-full">
               {isLoading && !(audioRef.current && !audioRef.current.paused) ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : (audioRef.current && !audioRef.current.paused) ? (
@@ -133,7 +142,7 @@ export default function LoginPage() {
               ) : (
                 <Volume2 className="mr-2 h-4 w-4" />
               )}
-              {isLoading && !(audioRef.current && !audioRef.current.paused) ? 'Loading...' : (audioRef.current && !audioRef.current.paused) ? 'Stop Introduction' : 'Play Introduction'}
+              {getButtonText()}
             </Button>
             <p className="text-xs text-muted-foreground text-center w-full">
                 © {new Date().getFullYear()} Strategist Systems™. All rights reserved.
