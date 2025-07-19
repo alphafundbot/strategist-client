@@ -139,10 +139,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
-                  isActive={pathname.startsWith('/page')}
+                  isActive={pathname.startsWith('/trading')}
                   tooltip={{ children: 'Trading' }}
                 >
-                  <Link href="/page">
+                  <Link href="/trading">
                     <AreaChart />
                     <span>Trading</span>
                   </Link>

@@ -13,7 +13,7 @@ export default function BottomNav() {
   const navItems = [
     { href: '/dashboard', icon: Home, label: 'Dashboard' },
     { href: '/vaults', icon: Landmark, label: 'Vaults' },
-    { href: '/page', icon: AreaChart, label: 'Trading' },
+    { href: '/trading', icon: AreaChart, label: 'Trading' },
     { href: '/connect', icon: Zap, label: 'Connect' },
     { href: '/assets', icon: CandlestickChart, label: 'Assets' },
     { href: '/transfers', icon: Banknote, label: 'Transfers' },
