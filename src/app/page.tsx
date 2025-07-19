@@ -94,10 +94,26 @@ export default function LoginPage() {
   }, []);
 
   const tiers = [
-    { name: "Omega", icon: <Crown className="w-8 h-8 text-yellow-400 group-hover:scale-110 transition-transform" /> },
-    { name: "Gold", icon: <Star className="w-8 h-8 text-amber-500 group-hover:scale-110 transition-transform" /> },
-    { name: "Silver", icon: <Gem className="w-8 h-8 text-slate-400 group-hover:scale-110 transition-transform" /> },
-    { name: "Free+", icon: <Shield className="w-8 h-8 text-orange-600 group-hover:scale-110 transition-transform" /> },
+    { 
+      name: "Omega", 
+      icon: <Crown className="w-8 h-8 text-yellow-400" />,
+      description: "Full cognition singularity, encrypted exports, tier governance console" 
+    },
+    { 
+      name: "Gold", 
+      icon: <Star className="w-8 h-8 text-amber-500" />,
+      description: "Unlimited ROI, mutation replay lab, strategist fingerprint evolution"
+    },
+    { 
+      name: "Silver", 
+      icon: <Gem className="w-8 h-8 text-slate-400" />,
+      description: "ROI up to 18%, pooled vaults, override suppression preview"
+    },
+    { 
+      name: "Free+", 
+      icon: <Shield className="w-8 h-8 text-orange-600" />,
+      description: "ROI forecasting up to 8%, basic vault access, Everest voice onboarding"
+    },
   ]
 
   const getButtonText = () => {
@@ -124,12 +140,17 @@ export default function LoginPage() {
             <Button
               key={tier.name}
               onClick={() => handleLogin(tier.name)}
-              className="w-full justify-start text-lg py-8 group bg-background/30"
+              className="w-full justify-start h-auto text-left py-4 group bg-background/30"
               variant="outline"
             >
-              <div className="flex items-center gap-4">
-                {tier.icon}
-                <span className="font-semibold">{tier.name} Tier</span>
+              <div className="flex items-start gap-4">
+                <div className="w-8 h-8 shrink-0 group-hover:scale-110 transition-transform flex items-center justify-center">
+                    {tier.icon}
+                </div>
+                <div>
+                    <p className="font-semibold text-lg">{tier.name} Tier</p>
+                    <p className="text-xs text-muted-foreground font-normal whitespace-normal">{tier.description}</p>
+                </div>
               </div>
             </Button>
           ))}
