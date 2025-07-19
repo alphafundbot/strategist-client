@@ -65,13 +65,14 @@ export default function OnboardingPage() {
   return (
     <div className="flex justify-center items-start py-8 md:py-12 bg-transparent">
       <Card className="w-full max-w-2xl shadow-xl bg-card backdrop-blur-md">
-        <CardHeader>
-          <div className="flex items-center gap-2 mb-2">
+        <CardHeader className="text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <Sparkles className="w-6 h-6 text-primary" />
-            <CardTitle className="text-2xl">Cockpit Personalization</CardTitle>
+            <CardTitle className="text-2xl font-bold">Cockpit Personalization</CardTitle>
           </div>
           <CardDescription>
-            Answer a few optional questions to tailor your strategist experience. This will adapt your UI, narration, and module priority.
+            Answer these optional questions to tailor your strategist experience.
+            This will adapt your UI, narration, and module priority.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
