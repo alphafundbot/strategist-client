@@ -1,4 +1,5 @@
 
+
 import AppLayout from '@/components/common/app-layout';
 
 export default function Layout({
@@ -14,3 +15,4 @@ export default function Layout({
     </AppLayout>
   );
 }
+
