@@ -2,7 +2,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -43,7 +43,7 @@ export default function VaultsPage() {
           <TabsTrigger value="create-vault">Create Vault</TabsTrigger>
         </TabsList>
         <TabsContent value="my-vaults">
-            <Card>
+            <Card className="bg-card/70 backdrop-blur-md">
                 <CardHeader>
                     <CardTitle>My Collective Vaults</CardTitle>
                     <CardDescription>
@@ -58,7 +58,7 @@ export default function VaultsPage() {
             </Card>
         </TabsContent>
         <TabsContent value="create-vault">
-           <Card>
+           <Card className="bg-card/70 backdrop-blur-md">
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                     <PlusCircle className="w-6 h-6" />
@@ -96,10 +96,12 @@ export default function VaultsPage() {
                             Invite strategists via email. You can also invite them later.
                         </p>
                     </div>
+                </CardContent>
+                 <CardFooter>
                     <Button type="submit" className="w-full md:w-auto">
                         Create Vault
                     </Button>
-                </CardContent>
+                </CardFooter>
             </form>
            </Card>
         </TabsContent>
