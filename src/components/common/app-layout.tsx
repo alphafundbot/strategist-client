@@ -36,6 +36,7 @@ import { Button } from '@/components/ui/button';
 import React, { useEffect, useState } from 'react';
 import BottomNav from './bottom-nav';
 import { StrategistLogo } from './strategist-logo';
+import { cn } from '@/lib/utils';
 
 const strategistData: { [key: string]: any } = {
     "Free+": { fingerprint: "Alpha-1", vault: 1000.00, roi: 0 },
@@ -83,7 +84,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   };
   
   const hasTradingAccess = isClient && (tier === 'Silver' || tier === 'Gold');
-  const hasInvestorAccess = isClient && tier === 'Omega';
+  const hasInvestorAccess = isClient && tier === 'Gold';
 
   const currentData = strategistData[tier] || strategistData['Free+'];
   const showSidebar = pathname !== '/onboarding';

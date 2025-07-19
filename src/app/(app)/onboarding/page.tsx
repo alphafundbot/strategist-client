@@ -63,8 +63,8 @@ export default function OnboardingPage() {
   ];
 
   return (
-    <div className="flex justify-center items-start py-8 md:py-12">
-      <Card className="w-full max-w-2xl shadow-xl">
+    <div className="flex justify-center items-start py-8 md:py-12 bg-transparent">
+      <Card className="w-full max-w-2xl shadow-xl backdrop-blur-md bg-card">
         <CardHeader>
           <div className="flex items-center gap-2 mb-2">
             <Sparkles className="w-6 h-6 text-primary" />
@@ -81,7 +81,7 @@ export default function OnboardingPage() {
               <p className="text-sm text-muted-foreground mb-4">{q.description}</p>
               <RadioGroup defaultValue={q.options[0].value} className="gap-3">
                 {q.options.map((opt) => (
-                  <Label key={opt.value} className="flex items-center gap-3 font-normal p-3 border rounded-md hover:bg-muted/50 transition-colors cursor-pointer">
+                  <Label key={opt.value} className="flex items-center gap-3 font-normal p-3 border rounded-md hover:bg-muted/50 transition-colors cursor-pointer bg-background/30">
                     <RadioGroupItem value={opt.value} id={`${q.id}-${opt.value}`} />
                     <span>{opt.label}</span>
                   </Label>

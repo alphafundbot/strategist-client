@@ -110,8 +110,8 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-background to-muted">
-      <Card className="w-full max-w-md shadow-2xl">
+    <div className="flex items-center justify-center min-h-screen bg-transparent">
+      <Card className="w-full max-w-md shadow-2xl backdrop-blur-md bg-card">
         <CardHeader className="text-center">
           <div className="flex justify-center items-center mb-4">
             <StrategistLogo className="w-10 h-10 text-primary" />
@@ -124,7 +124,7 @@ export default function LoginPage() {
             <Button
               key={tier.name}
               onClick={() => handleLogin(tier.name)}
-              className="w-full justify-start text-lg py-8 group"
+              className="w-full justify-start text-lg py-8 group bg-background/30"
               variant="outline"
             >
               <div className="flex items-center gap-4">
