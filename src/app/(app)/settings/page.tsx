@@ -1,5 +1,6 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { ThemeToggle } from '@/components/settings/theme-toggle';
 
 export default function SettingsPage() {
   return (
@@ -35,7 +36,7 @@ export default function SettingsPage() {
           <CardDescription>Personalize the look and feel of your cockpit.</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-muted-foreground">Theme options will be available here.</p>
+          <ThemeToggle />
         </CardContent>
       </Card>
 
