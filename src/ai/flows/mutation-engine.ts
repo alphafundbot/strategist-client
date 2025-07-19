@@ -15,6 +15,7 @@ import { storeMutation } from '@/services/mutation-service';
 export const MutationEngineInputSchema = z.object({
   strategistId: z.string().describe('The ID of the strategist initiating the mutation.'),
   roiDeltaThreshold: z.number().describe('The ROI delta that triggers the mutation.'),
+  parentMutationId: z.string().optional().describe('The ID of the parent mutation to establish a lineage.'),
   mutationData: z.object({
       entropyRisk: z.number().describe("The entropy risk percentage."),
       proposalTier: z.string().describe("The tier of the strategist at the time of proposal."),
@@ -25,8 +26,13 @@ export type MutationEngineInput = z.infer<typeof MutationEngineInputSchema>;
 
 export const MutationEngineOutputSchema = z.object({
   mutationId: z.string().describe('The ID of the newly created mutation.'),
-  status: z.string().describe('The status of the mutation process.'),
   snapshotId: z.string().describe('The ID of the created snapshot for rollback.'),
+  status: z.string().describe('The status of the mutation process.'),
+  paths: z.object({
+    mutationPath: z.string().describe('The Firestore path to the mutation document.'),
+    snapshotPath: z.string().describe('The Firestore path to the snapshot document.'),
+    telemetryPath: z.string().describe('The Firestore path to the telemetry log document.'),
+  }),
 });
 export type MutationEngineOutput = z.infer<typeof MutationEngineOutputSchema>;
 
@@ -62,12 +68,17 @@ export const mutationEngineFlow = ai.defineFlow(
     const mutationDetails = {
         ...input.mutationData,
         roiDeltaThreshold: input.roiDeltaThreshold,
+        parentMutationId: input.parentMutationId,
         createdAt: new Date().toISOString(),
         snapshotId,
+        strategyTags: ["volatility-blind", "momentum-burst"], // Placeholder for AI-derived tags
     };
 
     // Store mutation under /strategists/{uid}/mutations
-    await storeMutation(input.strategistId, mutationId, mutationDetails);
+    const mutationPath = await storeMutation(input.strategistId, mutationId, mutationDetails);
+    
+    // Placeholder for snapshot creation
+    const snapshotPath = `/snapshots/${input.strategistId}/${mutationId}`;
 
     const telemetryData = {
         event: 'mutationTriggered',
@@ -78,12 +89,17 @@ export const mutationEngineFlow = ai.defineFlow(
     };
     
     // Log to /telemetry/mutationLogs/{docId}
-    await logTelemetry('mutationLogs', telemetryData);
+    const telemetryPath = await logTelemetry('mutationLogs', telemetryData);
 
     return {
       mutationId,
-      status: 'success',
       snapshotId,
+      status: 'success',
+      paths: {
+        mutationPath,
+        snapshotPath, // Placeholder path
+        telemetryPath,
+      },
     };
   }
 );
