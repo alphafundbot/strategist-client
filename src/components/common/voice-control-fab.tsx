@@ -21,26 +21,28 @@ export default function VoiceControlFab() {
   };
 
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            size="icon"
-            onClick={handleMicClick}
-            className={cn(
-              "h-16 w-16 rounded-full shadow-2xl z-10",
-              "bg-background border-2 border-primary/50 text-primary-foreground",
-              "hover:bg-accent/10 hover:border-primary transition-all",
-              isListening && "ring-4 ring-primary/50 ring-offset-2 ring-offset-background animate-pulse"
-            )}
-          >
-            <Mic className="h-8 w-8 text-primary" />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent side="top" className="bg-card backdrop-blur-sm border-primary/30">
-          <p>Voice Commands</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <div className="fixed bottom-6 right-6 z-50 md:bottom-8 md:right-8">
+        <TooltipProvider>
+        <Tooltip>
+            <TooltipTrigger asChild>
+            <Button
+                size="icon"
+                onClick={handleMicClick}
+                className={cn(
+                "h-16 w-16 rounded-full shadow-2xl z-10",
+                "bg-background border-2 border-primary/50 text-primary-foreground",
+                "hover:bg-accent/10 hover:border-primary transition-all",
+                isListening && "ring-4 ring-primary/50 ring-offset-2 ring-offset-background animate-pulse"
+                )}
+            >
+                <Mic className="h-8 w-8 text-primary" />
+            </Button>
+            </TooltipTrigger>
+            <TooltipContent side="left" className="bg-card backdrop-blur-sm border-primary/30">
+            <p>Voice Commands</p>
+            </TooltipContent>
+        </Tooltip>
+        </TooltipProvider>
+    </div>
   );
 }

@@ -1,4 +1,5 @@
 import AppLayout from '@/components/common/app-layout';
+import VoiceControlFab from '@/components/common/voice-control-fab';
 
 export default function Layout({
   children,
@@ -8,6 +9,7 @@ export default function Layout({
   return (
     <AppLayout>
         {children}
+        <VoiceControlFab />
     </AppLayout>
   );
 }

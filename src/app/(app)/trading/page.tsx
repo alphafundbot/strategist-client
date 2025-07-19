@@ -7,7 +7,6 @@ import MutationGenerator from '@/components/dashboard/mutation-generator';
 import RationaleNarration from '@/components/dashboard/rationale-narration';
 import ReplayAnnotator from '@/components/dashboard/replay-annotator';
 import RoiSimulation from '@/components/dashboard/roi-simulation';
-import VoiceControlFab from '@/components/common/voice-control-fab';
 
 export default function TradingPage() {
   return (
@@ -35,9 +34,6 @@ export default function TradingPage() {
       <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
         <CognitionGraph />
         <ReplayAnnotator />
-      </div>
-      <div className="flex justify-center py-4">
-        <VoiceControlFab />
       </div>
     </div>
   );
