@@ -50,7 +50,7 @@ export default function CognitionGraph() {
       <CardContent className="flex-grow space-y-4">
         <div className="aspect-video w-full bg-muted rounded-lg flex items-center justify-center">
             <Image 
-                src="https://images.unsplash.com/photo-1678846375533-8a37f48d35f4?q=80&w=600"
+                src="https://placehold.co/600x400.png"
                 width={600}
                 height={400}
                 alt="Cognition graph"
