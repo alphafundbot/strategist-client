@@ -39,12 +39,13 @@ const getFormSchema = (tier: string) => {
         maxRoi = 8;
         maxMessage = "ROI target exceeds Free+ tier limit (8%). Elevate to Gold for 12-24% forecasting and override suppression.";
     } else if (tier === 'Silver') {
+        minRoi = 0;
         maxRoi = 18;
         maxMessage = "ROI target exceeds Silver tier limit (18%). Elevate to Gold for unlimited forecasting.";
     }
 
     return z.object({
-        roiTarget: z.coerce.number().min(minRoi, minMessage).max(maxRoi, { message: maxMessage }),
+        roiTarget: z.coerce.number().min(minRoi, { message: minMessage }).max(maxRoi, { message: maxMessage }),
         entropyRisk: z.coerce.number().min(0, "Must be positive").max(100, "Must be 100 or less"),
     });
 }
@@ -53,13 +54,12 @@ const getFormSchema = (tier: string) => {
 export default function MutationGenerator() {
   const { toast } = useToast()
   const [tier, setTier] = useState('Free+');
-  const [formSchema, setFormSchema] = useState(getFormSchema('Free+'));
+  const [formSchema, setFormSchema] = useState(() => getFormSchema('Free+'));
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
         const storedTier = localStorage.getItem('userTier') || 'Free+';
         setTier(storedTier);
-        setFormSchema(getFormSchema(storedTier));
     }
   }, []);
   
@@ -69,18 +69,17 @@ export default function MutationGenerator() {
       roiTarget: 4,
       entropyRisk: 5,
     },
-    // re-validate when schema changes
     context: { tier },
   });
   
   useEffect(() => {
-    setFormSchema(getFormSchema(tier));
+    const newSchema = getFormSchema(tier);
+    setFormSchema(newSchema);
   }, [tier]);
   
   useEffect(() => {
-    form.trigger();
     form.reset({ roiTarget: tier === 'Free+' ? 4 : 10, entropyRisk: 5 });
-  }, [form, formSchema, tier]);
+  }, [form, tier]);
 
 
   function onSubmit(values: z.infer<typeof formSchema>) {
