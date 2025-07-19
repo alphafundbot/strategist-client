@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { ThemeToggle } from '@/components/settings/theme-toggle';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Code2 } from 'lucide-react';
+import { ClientOnly } from '@/components/common/ClientOnly';
 
 const CodeSnippet = ({ children }: { children: React.ReactNode }) => (
     <pre className="p-4 bg-muted/50 rounded-md text-sm overflow-x-auto">
@@ -46,7 +47,9 @@ export default function SettingsPage() {
           <CardDescription>Personalize the look and feel of your cockpit.</CardDescription>
         </CardHeader>
         <CardContent>
-          <ThemeToggle />
+          <ClientOnly>
+            <ThemeToggle />
+          </ClientOnly>
         </CardContent>
       </Card>
 
