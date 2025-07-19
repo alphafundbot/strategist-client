@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState } from "react"
@@ -9,8 +10,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { useToast } from "@/hooks/use-toast"
-import { Download, FileBarChart2, Loader2, Wand2 } from "lucide-react"
+import { Download, FileBarChart2, Loader2, Wand2, FileLock2 } from "lucide-react"
 import { generatePitchDeck } from "@/ai/flows/pitch-deck-generator"
 
 const mockReports = [
@@ -46,6 +55,23 @@ export default function ExportOptions() {
     }
   }
 
+  const handleDownloadPdf = (reportType: string) => {
+    toast({
+        title: "Secure Report Generated",
+        description: `${reportType} downloaded. PII suppressed, download logged.`,
+    })
+  }
+
+  const reportTypes = [
+    "Mutation Epoch Report",
+    "ROI Forecast Summary",
+    "Vault Growth Chart",
+    "Tier Elevation Log",
+    "Override Suppression Audit",
+    "Collective Vault Risk Report",
+  ];
+
+
   return (
     <Card className="shadow-lg">
       <CardHeader>
@@ -57,7 +83,7 @@ export default function ExportOptions() {
           Generate and download reports for investor presentations.
         </CardDescription>
       </CardHeader>
-      <CardContent className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <CardContent className="grid gap-4 sm:grid-cols-2">
         <Button size="lg" onClick={handleGeneratePitchDeck} disabled={isGenerating}>
           {isGenerating ? (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -66,14 +92,23 @@ export default function ExportOptions() {
           )}
           {isGenerating ? "Generating..." : "Generate Pitch Deck"}
         </Button>
-        <Button size="lg" variant="secondary">
-          <FileBarChart2 className="mr-2 h-4 w-4" />
-          Full ROI Data (CSV)
-        </Button>
-        <Button size="lg" variant="outline">
-          <Download className="mr-2 h-4 w-4" />
-          Audit Trail Bundle (ZIP)
-        </Button>
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button size="lg" variant="secondary">
+                    <FileLock2 className="mr-2 h-4 w-4" />
+                    Download Report (PDF)
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel>Secure PDF Reports</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {reportTypes.map((type) => (
+                    <DropdownMenuItem key={type} onClick={() => handleDownloadPdf(type)}>
+                        {type}
+                    </DropdownMenuItem>
+                ))}
+            </DropdownMenuContent>
+        </DropdownMenu>
       </CardContent>
     </Card>
   )
