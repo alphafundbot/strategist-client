@@ -4,7 +4,7 @@
 
 import AppLayout from '@/components/common/app-layout';
 import VoiceControlFab from '@/components/common/voice-control-fab';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function Layout({
@@ -13,6 +13,7 @@ export default function Layout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
   const [isVerified, setIsVerified] = useState(false);
 
   useEffect(() => {
@@ -33,11 +34,13 @@ export default function Layout({
         </div>
     );
   }
+  
+  const showFullLayout = pathname !== '/onboarding';
 
   return (
     <AppLayout>
         {children}
-        <VoiceControlFab />
+        {showFullLayout && <VoiceControlFab />}
     </AppLayout>
   );
 }
