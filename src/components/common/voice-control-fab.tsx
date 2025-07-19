@@ -21,7 +21,7 @@ export default function VoiceControlFab() {
   };
 
   return (
-    <div className="fixed bottom-20 md:bottom-6 left-1/2 -translate-x-1/2 z-50">
+    <div className="fixed bottom-24 md:bottom-6 left-1/2 -translate-x-1/2 z-50">
         <TooltipProvider>
         <Tooltip>
             <TooltipTrigger asChild>
@@ -39,7 +39,7 @@ export default function VoiceControlFab() {
             </Button>
             </TooltipTrigger>
             <TooltipContent side="top" className="bg-card backdrop-blur-sm border-primary/30">
-            <p>Voice Commands</p>
+            <p>Tap to narrate</p>
             </TooltipContent>
         </Tooltip>
         </TooltipProvider>
