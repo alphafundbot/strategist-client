@@ -77,7 +77,7 @@ export default function DashboardPage() {
             </div>
             
             <div>
-                <h2 className="text-xl font-semibold mt-8 mb-2">Evolution Protocol Metrics</h2>
+                <h2 className="text-xl font-semibold mt-8 mb-2 text-center md:text-left">Evolution Protocol Metrics</h2>
                 <div className="grid gap-6 md:grid-cols-3">
                     <Card>
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

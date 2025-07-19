@@ -64,7 +64,7 @@ export default function OnboardingPage() {
 
   return (
     <div className="flex justify-center items-start py-8 md:py-12 bg-transparent">
-      <Card className="w-full max-w-2xl shadow-xl bg-card backdrop-blur-md">
+      <Card className="w-full max-w-2xl shadow-xl bg-card/80 backdrop-blur-md">
         <CardHeader className="text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
             <Sparkles className="w-6 h-6 text-primary" />
