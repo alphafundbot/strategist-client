@@ -37,7 +37,7 @@ export default function CognitionGraph() {
   }
 
   return (
-    <Card className="shadow-lg flex flex-col h-full">
+    <Card className="shadow-lg flex flex-col">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
             <GitFork className="w-6 h-6" />

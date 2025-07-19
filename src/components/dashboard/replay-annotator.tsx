@@ -48,7 +48,7 @@ export default function ReplayAnnotator() {
   }
 
   return (
-    <Card className="shadow-lg flex flex-col h-full">
+    <Card className="shadow-lg flex flex-col">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
             <PlayCircle className="w-6 h-6" />
