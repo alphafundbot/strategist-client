@@ -10,6 +10,7 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 import { logTelemetry } from '@/services/telemetry-service';
+import { storeMutation } from '@/services/mutation-service';
 
 export const MutationEngineInputSchema = z.object({
   strategistId: z.string().describe('The ID of the strategist initiating the mutation.'),
@@ -55,8 +56,12 @@ export const mutationEngineFlow = ai.defineFlow(
     const snapshotId = `snap-${Date.now()}`;
 
     // Store mutation under /strategists/{uid}/mutations
-    // In a real app, this would be a Firestore write operation.
-    console.log(`Storing mutation ${mutationId} for strategist ${input.strategistId}.`);
+    await storeMutation(input.strategistId, mutationId, {
+        ...input.mutationData,
+        roiDeltaThreshold: input.roiDeltaThreshold,
+        createdAt: new Date().toISOString(),
+        snapshotId,
+    });
 
 
     const telemetryData = {
