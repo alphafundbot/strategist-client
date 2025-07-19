@@ -28,8 +28,9 @@ export default function VoiceControlFab() {
             size="icon"
             onClick={handleMicClick}
             className={cn(
-              "fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-2xl z-30 bg-card/80 backdrop-blur-sm border-primary/20 hover:bg-primary/20",
-              "transition-all duration-300",
+              "fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-2xl z-30",
+              "bg-background border-2 border-primary/50 text-primary-foreground",
+              "hover:bg-accent/10 hover:border-primary transition-all",
               isListening && "ring-4 ring-primary/50 ring-offset-2 ring-offset-background animate-pulse"
             )}
           >
