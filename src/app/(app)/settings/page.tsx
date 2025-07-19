@@ -10,8 +10,9 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
-import { Code2, UserCircle, Bot } from 'lucide-react';
+import { Code2, UserCircle, Bot, SlidersHorizontal } from 'lucide-react';
 import { ClientOnly } from '@/components/common/ClientOnly';
+import { useEffect, useState } from 'react';
 
 const CodeSnippet = ({ children }: { children: React.ReactNode }) => (
     <pre className="p-4 bg-muted/50 rounded-md text-sm overflow-x-auto">
@@ -20,6 +21,15 @@ const CodeSnippet = ({ children }: { children: React.ReactNode }) => (
 );
 
 export default function SettingsPage() {
+  const [tier, setTier] = useState('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedTier = localStorage.getItem('userTier') || 'Free+';
+      setTier(storedTier);
+    }
+  }, []);
+
   return (
     <div className="space-y-8">
       <div className="text-center">
@@ -43,7 +53,7 @@ export default function SettingsPage() {
                 </div>
                  <div className="space-y-2">
                     <Label htmlFor="strategist-tier">Current Tier</Label>
-                    <Input id="strategist-tier" defaultValue="Gold" disabled />
+                    <Input id="strategist-tier" defaultValue={tier} disabled />
                 </div>
             </div>
             <div className="space-y-2">
@@ -98,6 +108,27 @@ export default function SettingsPage() {
             </div>
         </CardContent>
       </Card>
+
+      {tier === 'Silver' && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <SlidersHorizontal className="w-6 h-6" />
+              Tier Configuration
+            </CardTitle>
+            <CardDescription>Manage tier-specific trading parameters.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-between">
+              <div>
+                <Label htmlFor="silver-override" className="font-bold">Dynamic Sizing Override</Label>
+                <p className="text-sm text-muted-foreground">Revert to a fixed 10% allocation instead of the 9-12% dynamic range.</p>
+              </div>
+              <Switch id="silver-override" />
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       <Card>
         <CardHeader>
