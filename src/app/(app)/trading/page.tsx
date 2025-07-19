@@ -7,10 +7,11 @@ import MutationGenerator from '@/components/dashboard/mutation-generator';
 import RationaleNarration from '@/components/dashboard/rationale-narration';
 import ReplayAnnotator from '@/components/dashboard/replay-annotator';
 import RoiSimulation from '@/components/dashboard/roi-simulation';
+import VoiceControlFab from '@/components/common/voice-control-fab';
 
 export default function TradingPage() {
   return (
-    <div className="space-y-8">
+    <div className="relative space-y-8">
       <div>
         <h1 className="text-2xl font-semibold">Trading</h1>
         <p className="text-muted-foreground">
@@ -35,6 +36,7 @@ export default function TradingPage() {
         <CognitionGraph />
         <ReplayAnnotator />
       </div>
+      <VoiceControlFab />
     </div>
   );
 }
