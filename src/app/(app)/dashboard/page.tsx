@@ -1,29 +1,17 @@
 
 "use client";
 
-import { useEffect, useState } from 'react';
 import WelcomeModal from '@/components/dashboard/welcome-modal';
 import DashboardClient from '@/components/dashboard/dashboard-client';
 import { Skeleton } from '@/components/ui/skeleton';
+import { User } from 'firebase/auth';
 
-export default function DashboardPage() {
-    const [tier, setTier] = useState<string | null>(null);
+interface DashboardPageProps {
+  user?: User | null;
+  tier?: string | null;
+}
 
-    useEffect(() => {
-        // This effect runs only on the client, after hydration
-        const checkTier = () => {
-            const storedTier = localStorage.getItem('userTier');
-            if (storedTier) {
-                setTier(storedTier);
-            } else {
-                // If the value isn't set yet, check again shortly.
-                // The layout component is responsible for setting this value.
-                setTimeout(checkTier, 100);
-            }
-        };
-        checkTier();
-    }, []);
-
+export default function DashboardPage({ tier }: DashboardPageProps) {
     return (
         <div className="space-y-8">
             <WelcomeModal />

@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useEffect, useState, ReactNode } from 'react';
+import { useEffect, useState, ReactNode, Children, cloneElement, isValidElement } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
@@ -27,7 +27,7 @@ export default function AuthenticatedLayout({ children }: { children: ReactNode 
                     const userData = userDoc.data();
                     const userTier = userData.tier || 'Free+';
                     setTier(userTier);
-                    localStorage.setItem('userTier', userTier);
+                    localStorage.setItem('userTier', userTier); // Keep for other client components
                     
                     const name = userData.name || user.displayName || 'User';
                     const initials = name.split(' ').map((n: string) => n[0]).join('');
@@ -76,6 +76,14 @@ export default function AuthenticatedLayout({ children }: { children: ReactNode 
       { name: 'You', path: '/settings', icon: 'User' },
     ];
 
+    const childrenWithProps = Children.map(children, child => {
+      if (isValidElement(child)) {
+        // @ts-ignore
+        return cloneElement(child, { user, tier });
+      }
+      return child;
+    });
+
     return (
         <AppLayout
             userInitials={initials}
@@ -85,7 +93,7 @@ export default function AuthenticatedLayout({ children }: { children: ReactNode 
             activePath={pathname}
         >
             <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
-                {children}
+                {childrenWithProps}
             </main>
             <Toaster />
         </AppLayout>
