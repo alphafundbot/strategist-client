@@ -57,19 +57,47 @@ const HeatMap = ({ region }: { region: string }) => {
 const RegionContent = ({ region }: { region: string }) => {
   const [stats, setStats] = React.useState({ volatility: '0.00', sentiment: '0.0', strategists: 0 });
   const [chartData, setChartData] = React.useState<any[]>([]);
+  const [scale, setScale] = React.useState(1);
+  const initialDistance = React.useRef(0);
+
+  const getDistance = (touches: React.TouchList) => {
+    const [touch1, touch2] = [touches[0], touches[1]];
+    return Math.hypot(touch1.clientX - touch2.clientX, touch1.clientY - touch2.clientY);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 2) {
+      initialDistance.current = getDistance(e.touches);
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (e.touches.length === 2) {
+      const newDistance = getDistance(e.touches);
+      const newScale = scale * (newDistance / initialDistance.current);
+      setScale(Math.min(Math.max(1, newScale), 3)); // Clamp scale between 1x and 3x
+      initialDistance.current = newDistance;
+    }
+  };
+
 
   React.useEffect(() => {
-    // This ensures that the random data is generated only on the client side, avoiding hydration mismatches.
     setStats({
       volatility: (Math.random() * 0.5 + 0.1).toFixed(2),
       sentiment: (Math.random() * 50 + 50).toFixed(1),
       strategists: Math.floor(Math.random() * 500 + 50)
     });
     setChartData(generateChartData());
+    setScale(1); // Reset scale when region changes
   }, [region]);
 
   return (
-    <Card className="border-primary/20 bg-card/50 backdrop-blur-xl h-full">
+    <Card className="border-primary/20 bg-card/50 backdrop-blur-xl h-full overflow-hidden">
+        <div 
+            style={{ transform: `scale(${scale})`, transformOrigin: 'center', transition: 'transform 0.1s' }}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+        >
       <CardHeader>
         <CardTitle>{region} Asset Feed</CardTitle>
         <CardDescription>
@@ -154,6 +182,7 @@ const RegionContent = ({ region }: { region: string }) => {
 
         </div>
       </CardContent>
+      </div>
     </Card>
   )
 }
