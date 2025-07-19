@@ -27,7 +27,7 @@ export default function VaultRoiChart({ data, vaultName, isLoading }: VaultRoiCh
                 <div className="h-64">
                     {isLoading ? (
                         <div className="flex justify-center items-center h-full">
-                           <Loader2 className="h-8 w-8 animate-spin" />
+                           <Loader2 className="h-8 w-8 animate-spin text-primary" />
                        </div>
                     ) : hasData ? (
                         <ResponsiveContainer width="100%" height="100%">
@@ -56,7 +56,9 @@ export default function VaultRoiChart({ data, vaultName, isLoading }: VaultRoiCh
                         <div className="h-full p-4 bg-muted/50 rounded-lg flex items-center justify-center border border-dashed">
                              <div className="text-center">
                                 <AreaChartIcon className="mx-auto h-12 w-12 text-muted-foreground" />
-                                <p className="mt-2 text-sm text-muted-foreground">Historical ROI map will be rendered here.</p>
+                                <p className="mt-2 text-sm text-muted-foreground">
+                                    {vaultName ? `No ROI data available for ${vaultName}.` : 'Select a vault to see its ROI.'}
+                                </p>
                             </div>
                         </div>
                     )}

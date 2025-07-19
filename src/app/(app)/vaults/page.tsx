@@ -29,27 +29,31 @@ export default function VaultsPage() {
     const [vaults, setVaults] = useState<Vault[]>([]);
     const [selectedVault, setSelectedVault] = useState<Vault | null>(null);
     const [chartData, setChartData] = useState<VaultRoiData[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [loadingVaults, setLoadingVaults] = useState(true);
+    const [loadingChart, setLoadingChart] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
-            setLoading(true);
+            setLoadingVaults(true);
             const vaultsData = await getVaults();
             setVaults(vaultsData);
             if (vaultsData.length > 0) {
                 // Automatically select the first vault on initial load
                 handleSelectVault(vaultsData[0]);
             }
-            setLoading(false);
+            setLoadingVaults(false);
         };
         fetchData();
     }, []);
 
     const handleSelectVault = async (vault: Vault) => {
         setSelectedVault(vault);
+        setLoadingChart(true);
+        setChartData([]); // Clear previous data
         const roiData = await getVaultRoiData(vault.id);
         setChartData(roiData);
+        setLoadingChart(false);
     };
 
     const filteredVaults = useMemo(() => {
@@ -89,7 +93,7 @@ export default function VaultsPage() {
                                 onChange={(e) => setSearchTerm(e.target.value)}
                             />
                         </div>
-                        {loading ? (
+                        {loadingVaults ? (
                              <div className="flex justify-center items-center h-48">
                                 <Loader2 className="h-8 w-8 animate-spin" />
                             </div>
@@ -105,7 +109,7 @@ export default function VaultsPage() {
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        {filteredVaults.map((vault) => (
+                                        {filteredVaults.length > 0 ? filteredVaults.map((vault) => (
                                             <TableRow 
                                                 key={vault.id} 
                                                 onClick={() => handleSelectVault(vault)}
@@ -116,13 +120,19 @@ export default function VaultsPage() {
                                                 <TableCell className="hidden md:table-cell text-green-400">{vault.roi}</TableCell>
                                                 <TableCell className="text-right">{vault.age}</TableCell>
                                             </TableRow>
-                                        ))}
+                                        )) : (
+                                            <TableRow>
+                                                <TableCell colSpan={4} className="h-24 text-center">
+                                                    No vaults found.
+                                                </TableCell>
+                                            </TableRow>
+                                        )}
                                     </TableBody>
                                 </Table>
                             </div>
                         )}
                     </Section>
-                    <VaultRoiChart data={chartData} vaultName={selectedVault?.name} isLoading={!selectedVault && loading} />
+                    <VaultRoiChart data={chartData} vaultName={selectedVault?.name} isLoading={loadingChart} />
                 </div>
 
                 <div className="space-y-6">

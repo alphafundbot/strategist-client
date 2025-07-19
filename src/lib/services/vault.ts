@@ -1,7 +1,7 @@
 
 "use server";
 
-import { db } from '@/lib/firebase/server';
+import { db } from '@/lib/firebase/client';
 import { collection, getDocs, doc, getDoc, query, orderBy } from 'firebase/firestore';
 
 export interface Vault {
@@ -16,19 +16,6 @@ export interface VaultRoiData {
     month: string;
     roi: number;
 }
-
-// NOTE: In a real application, you would implement seeding or a creation UI.
-// For now, we assume the data has been seeded in Firestore.
-// Example structure:
-// /vaults/{vaultId} (document)
-//   - name: "Momentum Spike"
-//   - assets: 4
-//   - roi: "18.2%"
-//   - age: "90d"
-//   /vaults/{vaultId}/roiData/{monthDoc} (sub-collection)
-//     - month: "Jan"
-//     - roi: 12
-//     - order: 1
 
 export async function getVaults(): Promise<Vault[]> {
     try {
@@ -48,9 +35,12 @@ export async function getVaults(): Promise<Vault[]> {
 export async function getVaultRoiData(vaultId: string): Promise<VaultRoiData[]> {
     try {
         const roiCollection = collection(db, 'vaults', vaultId, 'roiData');
-        // Order by a field to ensure chronological data
         const roiQuery = query(roiCollection, orderBy('order', 'asc'));
         const roiSnapshot = await getDocs(roiQuery);
+        if (roiSnapshot.empty) {
+            console.log(`No ROI data found for vault ${vaultId}`);
+            return [];
+        }
         const roiData = roiSnapshot.docs.map(doc => doc.data() as VaultRoiData);
         return roiData;
     } catch (error) {
