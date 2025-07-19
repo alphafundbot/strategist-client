@@ -41,6 +41,7 @@ import React, { useEffect, useState } from 'react';
 import BottomNav from './bottom-nav';
 import { StrategistLogo } from './strategist-logo';
 import { cn } from '@/lib/utils';
+import { ThemeToggle } from '../settings/theme-toggle';
 
 const strategistData: { [key: string]: any } = {
     "Free+": { fingerprint: "Alpha-1", vault: 1000.00, roi: 0, growth: 0, volatility: 0.89, entropy: 0.12 },
@@ -223,6 +224,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                       <span>{currentData.entropy}</span>
                   </div>
               </div>
+              <ThemeToggle />
               <div className="flex items-center gap-2">
                   {tierIcons[tier] || <User className="h-5 w-5" />}
                   <div className="flex flex-col text-left">
