@@ -39,8 +39,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const [tier, setTier] = useState('');
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
     if (typeof window !== 'undefined') {
       const storedTier = localStorage.getItem('userTier');
       if (storedTier) {
@@ -64,6 +66,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     Silver: <Gem className="h-5 w-5 text-slate-400" />,
     'Free+': <Shield className="h-5 w-5 text-orange-600" />,
   };
+  
+  const hasTradingAccess = isClient && (tier === 'Silver' || tier === 'Gold' || tier === 'Omega');
+  const hasInvestorAccess = isClient && (tier === 'Silver' || tier === 'Gold' || tier === 'Omega');
 
   return (
     <SidebarProvider>
@@ -95,18 +100,20 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname.startsWith('/trading')}
-                tooltip={{ children: 'Trading' }}
-              >
-                <Link href="/trading">
-                  <AreaChart />
-                  <span>Trading</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
+            {hasTradingAccess && (
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname.startsWith('/trading')}
+                  tooltip={{ children: 'Trading' }}
+                >
+                  <Link href="/trading">
+                    <AreaChart />
+                    <span>Trading</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            )}
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
@@ -119,18 +126,20 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname.startsWith('/investor')}
-                tooltip={{ children: 'Investor Mode' }}
-              >
-                <Link href="/investor">
-                  <Briefcase />
-                  <span>Investor Mode</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
+            {hasInvestorAccess && (
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname.startsWith('/investor')}
+                  tooltip={{ children: 'Investor Mode' }}
+                >
+                  <Link href="/investor">
+                    <Briefcase />
+                    <span>Investor Mode</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            )}
           </SidebarMenu>
         </SidebarContent>
 
