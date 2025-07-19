@@ -16,14 +16,18 @@ export default function DashboardPage() {
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
-        setIsClient(true);
         if (typeof window !== 'undefined') {
             const storedTier = localStorage.getItem('userTier') || 'Free+';
             setTier(storedTier);
         }
+        setIsClient(true);
     }, []);
 
     const currentData = strategistData[tier] || strategistData['Free+'];
+
+    if (!isClient) {
+        return null; // or a skeleton loader
+    }
 
     return (
         <div className="space-y-8">
