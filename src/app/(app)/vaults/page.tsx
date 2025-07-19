@@ -38,9 +38,8 @@ export default function VaultsPage() {
             const vaultsData = await getVaults();
             setVaults(vaultsData);
             if (vaultsData.length > 0) {
-                setSelectedVault(vaultsData[0]);
-                const roiData = await getVaultRoiData(vaultsData[0].id);
-                setChartData(roiData);
+                // Automatically select the first vault on initial load
+                handleSelectVault(vaultsData[0]);
             }
             setLoading(false);
         };
@@ -95,33 +94,35 @@ export default function VaultsPage() {
                                 <Loader2 className="h-8 w-8 animate-spin" />
                             </div>
                         ) : (
-                            <Table>
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead>Vault Name</TableHead>
-                                        <TableHead>Assets</TableHead>
-                                        <TableHead>Avg. ROI</TableHead>
-                                        <TableHead>Age</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {filteredVaults.map((vault) => (
-                                        <TableRow 
-                                            key={vault.id} 
-                                            onClick={() => handleSelectVault(vault)}
-                                            className={`cursor-pointer ${selectedVault?.id === vault.id ? 'bg-muted/50' : ''}`}
-                                        >
-                                            <TableCell className="font-medium">{vault.name}</TableCell>
-                                            <TableCell>{vault.assets}</TableCell>
-                                            <TableCell className="text-green-400">{vault.roi}</TableCell>
-                                            <TableCell>{vault.age}</TableCell>
+                            <div className="rounded-md border">
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHead>Vault Name</TableHead>
+                                            <TableHead className="hidden sm:table-cell">Assets</TableHead>
+                                            <TableHead className="hidden md:table-cell">Avg. ROI</TableHead>
+                                            <TableHead className="text-right">Age</TableHead>
                                         </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {filteredVaults.map((vault) => (
+                                            <TableRow 
+                                                key={vault.id} 
+                                                onClick={() => handleSelectVault(vault)}
+                                                className={`cursor-pointer ${selectedVault?.id === vault.id ? 'bg-muted/50' : ''}`}
+                                            >
+                                                <TableCell className="font-medium">{vault.name}</TableCell>
+                                                <TableCell className="hidden sm:table-cell">{vault.assets}</TableCell>
+                                                <TableCell className="hidden md:table-cell text-green-400">{vault.roi}</TableCell>
+                                                <TableCell className="text-right">{vault.age}</TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </div>
                         )}
                     </Section>
-                    <VaultRoiChart data={chartData} vaultName={selectedVault?.name} />
+                    <VaultRoiChart data={chartData} vaultName={selectedVault?.name} isLoading={!selectedVault && loading} />
                 </div>
 
                 <div className="space-y-6">

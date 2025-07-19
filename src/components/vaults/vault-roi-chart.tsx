@@ -9,9 +9,10 @@ import { AreaChart as AreaChartIcon, Loader2 } from 'lucide-react';
 interface VaultRoiChartProps {
     data: VaultRoiData[];
     vaultName?: string;
+    isLoading?: boolean;
 }
 
-export default function VaultRoiChart({ data, vaultName }: VaultRoiChartProps) {
+export default function VaultRoiChart({ data, vaultName, isLoading }: VaultRoiChartProps) {
     const hasData = data && data.length > 0;
 
     return (
@@ -24,7 +25,11 @@ export default function VaultRoiChart({ data, vaultName }: VaultRoiChartProps) {
             </CardHeader>
             <CardContent>
                 <div className="h-64">
-                    {hasData ? (
+                    {isLoading ? (
+                        <div className="flex justify-center items-center h-full">
+                           <Loader2 className="h-8 w-8 animate-spin" />
+                       </div>
+                    ) : hasData ? (
                         <ResponsiveContainer width="100%" height="100%">
                             <AreaChart data={data} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
                                 <defs>
@@ -42,7 +47,7 @@ export default function VaultRoiChart({ data, vaultName }: VaultRoiChartProps) {
                                         borderColor: "hsl(var(--border))",
                                         color: "hsl(var(--foreground))"
                                     }}
-                                    formatter={(value) => [`${value}%`, 'ROI']}
+                                    formatter={(value: number) => [`${value.toFixed(1)}%`, 'ROI']}
                                 />
                                 <Area type="monotone" dataKey="roi" stroke="hsl(var(--primary))" fillOpacity={1} fill="url(#colorRoi)" name="ROI" />
                             </AreaChart>
