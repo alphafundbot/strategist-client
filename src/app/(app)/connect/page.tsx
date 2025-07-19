@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
-import { Power, Link, Zap } from "lucide-react";
+import { Power, Link as LinkIcon, Zap } from "lucide-react";
 
 const platforms = [
   { name: "Binance", status: "Connected", logo: "B" },
@@ -94,7 +94,7 @@ export default function ConnectPage() {
                 variant={platform.status === 'Connected' ? "destructive" : "default"} 
                 className="w-full"
               >
-                {platform.status === 'Connected' ? <Power className="mr-2" /> : <Link className="mr-2" />}
+                {platform.status === 'Connected' ? <Power className="mr-2" /> : <LinkIcon className="mr-2" />}
                 {platform.status === 'Connected' ? 'Disconnect' : 'Connect'}
               </Button>
             </CardFooter>
