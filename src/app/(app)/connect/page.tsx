@@ -74,9 +74,9 @@ export default function ConnectPage() {
                 <PlatformLogo logo={platform.logo} status={platform.status} />
                 <div className="flex-grow">
                     <CardTitle>{platform.name}</CardTitle>
-                    <CardDescription className="flex items-center gap-1.5">
+                    <div className="text-sm text-muted-foreground">
                        <Badge variant={getStatusBadgeVariant(platform.status) as any}>{platform.status}</Badge>
-                    </CardDescription>
+                    </div>
                 </div>
             </CardHeader>
             <CardContent className="flex-grow space-y-4 text-sm">
