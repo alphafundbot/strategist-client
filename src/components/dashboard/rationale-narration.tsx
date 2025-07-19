@@ -107,7 +107,7 @@ export default function RationaleNarration() {
 
 
   return (
-    <Card className="shadow-lg flex flex-col h-full">
+    <Card className="shadow-lg">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
             <BrainCircuit className="w-6 h-6" />
@@ -117,7 +117,7 @@ export default function RationaleNarration() {
           AI-generated logic summary for a mutation proposal.
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex-grow space-y-4">
+      <CardContent className="space-y-4">
         {isLoading && (
             <div className="space-y-4">
                 <Skeleton className="h-4 w-full" />
@@ -128,7 +128,7 @@ export default function RationaleNarration() {
         )}
         {narration && !isLoading && (
           <div className="space-y-4">
-            <div className="flex items-start gap-4">
+            <div className="flex items-start gap-4 flex-grow">
               <p className="flex-grow text-sm text-muted-foreground">{narration.rationale}</p>
               <Button size="icon" variant="ghost" onClick={handleNarrate} disabled={isLoading}>
                 {isNarrating ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}

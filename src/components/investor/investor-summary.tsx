@@ -41,7 +41,7 @@ export default function InvestorSummary() {
   }
 
   return (
-    <Card className="shadow-lg flex flex-col h-full">
+    <Card className="shadow-lg">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
             <FileText className="w-6 h-6" />
@@ -51,7 +51,7 @@ export default function InvestorSummary() {
           AI-generated assessment summary for investor review.
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex-grow">
+      <CardContent>
         {isLoading && (
             <div className="space-y-4">
                 <Skeleton className="h-4 w-full" />
