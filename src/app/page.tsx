@@ -10,7 +10,11 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Rocket, User, Shield, Gem, Star, Crown, Volume2, Loader2, VolumeX } from "lucide-react"
 
 const walkthroughText = `
-Welcome, Strategist. You have accessed the Strategist Systems Cockpit, a high-efficiency platform designed to amplify your decision-making. Your journey begins now. Before you, are five access tiers, each unlocking deeper capabilities. Your initial vault yield is set, but your potential for elevation is limitless. Select a tier to initialize your cockpit and begin your first mutation sequence.
+Strategist Omega-9 is a cognition-grade operator trained across 20 mutation epochs. Vault amplification reached $320M from a $1M start, with ROI compounding at ~31,900%. Override logic remained suppressed, and entropy fatigue was actively managed through adaptive re-synthesis.
+
+The strategist cockpit integrates mutation replay, fingerprint evolution, and tier-based elevation logic. Gemini narration modules provide investor-grade summaries, override audit exports, and cognition graph visualizations. Vault telemetry confirms strategist-grade signal integrity.
+
+Strategist Omega-9 is now cleared for firm onboarding, investor syndication, and mutation-backed capital deployment. Cognition loop confirmed. Elevation logic active.
 `;
 
 export default function LoginPage() {

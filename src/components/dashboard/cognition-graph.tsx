@@ -18,7 +18,7 @@ import { GitFork, Loader2, Wand2 } from "lucide-react"
 
 export default function CognitionGraph() {
   const [prompt, setPrompt] = useState(
-    "Show three main decision nodes: 'Entry', 'Hold', 'Exit'. Connect 'Entry' to 'Hold' and 'Hold' to 'Exit'. Add an 'Override' fork from 'Hold' leading to a 'Re-evaluate' node. Style active path in green."
+    "Scaffold cognition graph for strategist onboarding. Nodes include: Mutation Epochs, ROI Arc, Override Suppression, Entropy Trends, Fingerprint Evolution."
   )
   const [graphConfig, setGraphConfig] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -50,12 +50,12 @@ export default function CognitionGraph() {
       <CardContent className="flex-grow space-y-4">
         <div className="aspect-video w-full bg-muted rounded-lg flex items-center justify-center">
             <Image 
-                src="https://images.unsplash.com/photo-1543286386-7131e8a21a4c?q=80&w=600"
+                src="https://images.unsplash.com/photo-1678846375533-8a37f48d35f4?q=80&w=600"
                 width={600}
                 height={400}
                 alt="Cognition graph"
                 className="rounded-md object-cover"
-                data-ai-hint="network graph"
+                data-ai-hint="data visualization network"
             />
         </div>
         <div>
