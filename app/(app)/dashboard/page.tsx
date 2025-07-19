@@ -11,8 +11,17 @@ export default function DashboardPage() {
 
     useEffect(() => {
         // This effect runs only on the client, after hydration
-        const storedTier = localStorage.getItem('userTier') || 'Free+';
-        setTier(storedTier);
+        const checkTier = () => {
+            const storedTier = localStorage.getItem('userTier');
+            if (storedTier) {
+                setTier(storedTier);
+            } else {
+                // If the value isn't set yet, check again shortly.
+                // The layout component is responsible for setting this value.
+                setTimeout(checkTier, 100);
+            }
+        };
+        checkTier();
     }, []);
 
     return (
@@ -28,18 +37,18 @@ export default function DashboardPage() {
             ) : (
                 <div className="space-y-8">
                     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-                        <Skeleton className="h-28" />
-                        <Skeleton className="h-28" />
-                        <Skeleton className="h-28" />
-                        <Skeleton className="h-28" />
+                        <Skeleton className="h-28 rounded-lg" />
+                        <Skeleton className="h-28 rounded-lg" />
+                        <Skeleton className="h-28 rounded-lg" />
+                        <Skeleton className="h-28 rounded-lg" />
                     </div>
-                    <div>
-                         <h2 className="text-xl font-semibold mt-8 mb-4 text-center md:text-left"><Skeleton className="h-6 w-1/2 mx-auto md:mx-0" /></h2>
-                         <div className="grid gap-6 md:grid-cols-3">
-                             <Skeleton className="h-28" />
-                             <Skeleton className="h-28" />
-                             <Skeleton className="h-28" />
-                         </div>
+                    <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+                        <div className="lg:col-span-3">
+                             <Skeleton className="h-80 rounded-lg" />
+                        </div>
+                         <div className="lg:col-span-2">
+                             <Skeleton className="h-80 rounded-lg" />
+                        </div>
                     </div>
                 </div>
             )}
