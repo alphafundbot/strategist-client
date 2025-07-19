@@ -13,7 +13,7 @@ const regionTabs = [
   "Global", "North America", "Europe", "Asia", "South America", "Africa", "Oceania"
 ];
 
-const chartData = [
+const generateChartData = () => [
   { date: "Jan", roi: Math.random() * 10 + 5 },
   { date: "Feb", roi: Math.random() * 10 + 6 },
   { date: "Mar", roi: Math.random() * 10 + 7 },
@@ -21,6 +21,7 @@ const chartData = [
   { date: "May", roi: Math.random() * 10 + 9 },
   { date: "Jun", roi: Math.random() * 10 + 10 },
 ];
+
 
 const HeatMap = ({ region }: { region: string }) => {
     const [heatmapData, setHeatmapData] = React.useState<number[][]>([]);
@@ -55,6 +56,7 @@ const HeatMap = ({ region }: { region: string }) => {
 
 const RegionContent = ({ region }: { region: string }) => {
   const [stats, setStats] = React.useState({ volatility: '0.00', sentiment: '0.0', strategists: 0 });
+  const [chartData, setChartData] = React.useState<any[]>([]);
 
   React.useEffect(() => {
     // This ensures that the random data is generated only on the client side, avoiding hydration mismatches.
@@ -63,6 +65,7 @@ const RegionContent = ({ region }: { region: string }) => {
       sentiment: (Math.random() * 50 + 50).toFixed(1),
       strategists: Math.floor(Math.random() * 500 + 50)
     });
+    setChartData(generateChartData());
   }, [region]);
 
   return (
