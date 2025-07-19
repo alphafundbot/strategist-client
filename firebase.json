@@ -1,0 +1,27 @@
+
+{
+  "hosting": {
+    "source": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "frameworksBackend": {
+      "region": "us-central1"
+    },
+    "rewrites": [
+      {
+        "source": "/api/**",
+        "run": {
+          "serviceId": "strategist-api-service",
+          "region": "us-east4"
+        }
+      },
+      {
+        "source": "**",
+        "function": "server"
+      }
+    ]
+  }
+}
