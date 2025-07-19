@@ -16,24 +16,31 @@ export default function DashboardPage() {
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
+        setIsClient(true);
         if (typeof window !== 'undefined') {
             const storedTier = localStorage.getItem('userTier') || 'Free+';
             setTier(storedTier);
         }
-        setIsClient(true);
     }, []);
 
     const currentData = strategistData[tier] || strategistData['Free+'];
 
     if (!isClient) {
-        return null; // or a skeleton loader
+        return (
+            <div className="space-y-8">
+                <div className="text-center">
+                    <h1 className="text-3xl font-bold">Dashboard</h1>
+                    <div className="text-muted-foreground">Monitor strategist fingerprint, vault metrics, and evolution protocol.</div>
+                </div>
+            </div>
+        ); 
     }
 
     return (
         <div className="space-y-8">
             <div className="text-center">
                 <h1 className="text-3xl font-bold">Dashboard</h1>
-                <p className="text-muted-foreground">Monitor strategist fingerprint, vault metrics, and evolution protocol.</p>
+                <div className="text-muted-foreground">Monitor strategist fingerprint, vault metrics, and evolution protocol.</div>
             </div>
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
