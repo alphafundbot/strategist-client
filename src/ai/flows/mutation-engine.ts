@@ -48,6 +48,25 @@ async function checkCooldown(strategistId: string): Promise<boolean> {
   return true;
 }
 
+const inferTagsPrompt = ai.definePrompt({
+    name: 'inferTagsPrompt',
+    input: { schema: z.object({
+        roi: z.number(),
+        entropy: z.number(),
+        rationale: z.string().optional(),
+    }) },
+    output: { schema: z.object({ tags: z.array(z.string()) }) },
+    prompt: `Based on the following mutation profile, generate 2-3 concise, lowercase, hyphenated strategy tags (e.g., "volatility-blind", "momentum-burst").
+
+    - ROI Target: {{roi}}%
+    - Entropy Risk: {{entropy}}%
+    - Rationale: {{rationale}}
+
+    Analyze the profile to infer the likely trading strategy.
+    `,
+});
+
+
 export const mutationEngineFlow = ai.defineFlow(
   {
     name: 'mutationEngineFlow',
@@ -61,6 +80,14 @@ export const mutationEngineFlow = ai.defineFlow(
         throw new Error(`Strategist ${input.strategistId} is on cooldown.`);
     }
 
+    const { output: tagsOutput } = await inferTagsPrompt({
+        roi: input.roiDeltaThreshold,
+        entropy: input.mutationData.entropyRisk,
+        rationale: input.mutationData.suggestionRationale,
+    });
+
+    const strategyTags = tagsOutput?.tags || [];
+
     // Placeholder for mutation logic
     const mutationId = `mut-${Date.now()}`;
     const snapshotId = `snap-${Date.now()}`;
@@ -71,14 +98,14 @@ export const mutationEngineFlow = ai.defineFlow(
         parentMutationId: input.parentMutationId,
         createdAt: new Date().toISOString(),
         snapshotId,
-        strategyTags: ["volatility-blind", "momentum-burst"], // Placeholder for AI-derived tags
+        strategyTags,
     };
 
     // Store mutation under /strategists/{uid}/mutations
     const mutationPath = await storeMutation(input.strategistId, mutationId, mutationDetails);
     
     // Placeholder for snapshot creation
-    const snapshotPath = `/snapshots/${input.strategistId}/${mutationId}`;
+    const snapshotPath = `/snapshots/${input.strategistId}/${snapshotId}`;
 
     const telemetryData = {
         event: 'mutationTriggered',
