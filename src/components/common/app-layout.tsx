@@ -191,10 +191,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </Sidebar>
       )}
       <SidebarInset>
-        <header className="sticky top-0 z-10 flex h-16 items-center justify-between gap-4 border-b bg-background/80 px-4 backdrop-blur-md sm:px-6">
+        <header className="sticky top-0 z-10 flex h-16 items-center justify-between gap-6 border-b bg-background/80 px-6 backdrop-blur-md">
           <SidebarTrigger className="md:hidden" />
           <div className="flex flex-1 items-center justify-end gap-4 md:gap-6">
-            <div className="hidden md:flex items-center gap-4 text-sm font-medium">
+            <div className="hidden md:flex items-center gap-6 text-sm font-medium">
                 <div className="flex items-center gap-2">
                     <Wallet className="h-5 w-5 text-muted-foreground" />
                     <span>${currentData.vault.toLocaleString()}</span>
@@ -225,7 +225,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             </div>
           </div>
         </header>
-        <main className="flex-1 p-4 sm:px-6 sm:py-4 pb-20 md:pb-4">{children}</main>
+        <main className="flex-1 p-6 lg:p-8 pb-20 md:pb-8">{children}</main>
         {showSidebar && <BottomNav />}
       </SidebarInset>
     </SidebarProvider>

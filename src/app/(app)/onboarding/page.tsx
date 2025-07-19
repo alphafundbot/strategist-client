@@ -64,7 +64,7 @@ export default function OnboardingPage() {
 
   return (
     <div className="flex justify-center items-start py-8 md:py-12 bg-transparent">
-      <Card className="w-full max-w-2xl shadow-xl backdrop-blur-md bg-card">
+      <Card className="w-full max-w-2xl shadow-xl bg-card backdrop-blur-md">
         <CardHeader>
           <div className="flex items-center gap-2 mb-2">
             <Sparkles className="w-6 h-6 text-primary" />
@@ -74,7 +74,7 @@ export default function OnboardingPage() {
             Answer a few optional questions to tailor your strategist experience. This will adapt your UI, narration, and module priority.
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-8">
+        <CardContent className="space-y-6">
           {questions.map((q) => (
             <div key={q.id}>
               <h3 className="font-semibold">{q.title}</h3>

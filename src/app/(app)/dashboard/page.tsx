@@ -33,7 +33,7 @@ export default function DashboardPage() {
                 <p className="text-muted-foreground">Monitor strategist fingerprint, vault metrics, and elevation status.</p>
             </div>
 
-            <div className="grid gap-4 md:gap-8 grid-cols-1 lg:grid-cols-2">
+            <div className="grid gap-6 md:gap-8 grid-cols-1 lg:grid-cols-2">
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">Strategist Identity</CardTitle>
