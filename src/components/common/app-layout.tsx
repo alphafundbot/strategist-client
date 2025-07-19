@@ -86,103 +86,106 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const hasInvestorAccess = isClient && tier === 'Omega';
 
   const currentData = strategistData[tier] || strategistData['Free+'];
+  const showSidebar = pathname !== '/onboarding';
 
   return (
     <SidebarProvider>
-      <Sidebar>
-        <SidebarHeader>
-          <div className="flex items-center gap-2">
-            <Button asChild variant="ghost" size="icon">
-              <Link href="/dashboard">
-                <Rocket />
-              </Link>
-            </Button>
-            <h2 className="text-lg font-semibold tracking-tight">
-              Strategist Systems
-            </h2>
-          </div>
-        </SidebarHeader>
-
-        <SidebarContent>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname.startsWith('/dashboard')}
-                tooltip={{ children: 'Dashboard' }}
-              >
+      {showSidebar && (
+        <Sidebar>
+          <SidebarHeader>
+            <div className="flex items-center gap-2">
+              <Button asChild variant="ghost" size="icon">
                 <Link href="/dashboard">
-                  <Home />
-                  <span>Dashboard</span>
+                  <Rocket />
                 </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            {hasTradingAccess && (
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  asChild
-                  isActive={pathname.startsWith('/trading')}
-                  tooltip={{ children: 'Trading' }}
-                >
-                  <Link href="/trading">
-                    <AreaChart />
-                    <span>Trading</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            )}
-            <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname.startsWith('/transfers')}
-                tooltip={{ children: 'Transfers' }}
-              >
-                <Link href="/transfers">
-                  <Banknote />
-                  <span>Transfers</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            {hasInvestorAccess && (
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  asChild
-                  isActive={pathname.startsWith('/investor')}
-                  tooltip={{ children: 'Investor Mode' }}
-                >
-                  <Link href="/investor">
-                    <Briefcase />
-                    <span>Investor Mode</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            )}
-          </SidebarMenu>
-        </SidebarContent>
+              </Button>
+              <h2 className="text-lg font-semibold tracking-tight">
+                Strategist Systems
+              </h2>
+            </div>
+          </SidebarHeader>
 
-        <SidebarFooter>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname.startsWith('/settings')}
-                tooltip={{ children: 'Settings' }}
-              >
-                <Link href="/settings">
-                  <Settings />
-                  <span>Settings</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton onClick={handleLogout} tooltip={{ children: 'Logout' }}>
-                <LogOut />
-                <span>Logout</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarFooter>
-      </Sidebar>
+          <SidebarContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname.startsWith('/dashboard')}
+                  tooltip={{ children: 'Dashboard' }}
+                >
+                  <Link href="/dashboard">
+                    <Home />
+                    <span>Dashboard</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              {hasTradingAccess && (
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={pathname.startsWith('/trading')}
+                    tooltip={{ children: 'Trading' }}
+                  >
+                    <Link href="/trading">
+                      <AreaChart />
+                      <span>Trading</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              )}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname.startsWith('/transfers')}
+                  tooltip={{ children: 'Transfers' }}
+                >
+                  <Link href="/transfers">
+                    <Banknote />
+                    <span>Transfers</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              {hasInvestorAccess && (
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={pathname.startsWith('/investor')}
+                    tooltip={{ children: 'Investor Mode' }}
+                  >
+                    <Link href="/investor">
+                      <Briefcase />
+                      <span>Investor Mode</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              )}
+            </SidebarMenu>
+          </SidebarContent>
+
+          <SidebarFooter>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname.startsWith('/settings')}
+                  tooltip={{ children: 'Settings' }}
+                >
+                  <Link href="/settings">
+                    <Settings />
+                    <span>Settings</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton onClick={handleLogout} tooltip={{ children: 'Logout' }}>
+                  <LogOut />
+                  <span>Logout</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarFooter>
+        </Sidebar>
+      )}
       <SidebarInset>
         <header className="sticky top-0 z-10 flex h-16 items-center justify-between gap-4 border-b bg-background/80 px-4 backdrop-blur-sm sm:px-6">
           <SidebarTrigger className="md:hidden" />
@@ -207,7 +210,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           </div>
         </header>
         <main className="flex-1 p-4 sm:px-6 sm:py-4 pb-20 md:pb-4">{children}</main>
-        <BottomNav />
+        {showSidebar && <BottomNav />}
       </SidebarInset>
     </SidebarProvider>
   );

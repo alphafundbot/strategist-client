@@ -29,7 +29,7 @@ export default function LoginPage() {
     if (typeof window !== 'undefined') {
       localStorage.setItem("userTier", tier)
     }
-    router.push("/dashboard")
+    router.push("/onboarding")
   }
 
   const handleWalkthrough = async () => {
