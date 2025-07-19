@@ -36,7 +36,7 @@ export default function VoiceControlFab() {
             <Mic className="h-7 w-7 text-primary" />
           </Button>
         </TooltipTrigger>
-        <TooltipContent side="left" className="bg-background/80 backdrop-blur-sm border-primary/30">
+        <TooltipContent side="left" className="bg-card backdrop-blur-sm border-primary/30">
           <p>Voice Commands</p>
         </TooltipContent>
       </Tooltip>
