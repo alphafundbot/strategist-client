@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Line, LineChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 import { ChartConfig, ChartContainer, ChartTooltipContent } from "@/components/ui/chart"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
@@ -61,13 +61,19 @@ export default function ReplayAnnotator() {
         <div className="h-48 w-full">
             <ChartContainer config={chartConfig} className="h-full w-full">
             <ResponsiveContainer>
-                <LineChart data={timelineData} margin={{ top: 5, right: 20, left: -10, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="time" tickLine={false} axisLine={false} tickMargin={8} fontSize={12}/>
-                <YAxis domain={[90, 100]} unit="%" tickLine={false} axisLine={false} tickMargin={8} fontSize={12} />
-                <Tooltip content={<ChartTooltipContent indicator="line" />} />
-                <Line type="monotone" dataKey="accuracy" stroke="var(--color-accuracy)" strokeWidth={2} dot={true} />
-                </LineChart>
+                <AreaChart data={timelineData} margin={{ top: 5, right: 20, left: -10, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="colorAccuracy" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="var(--color-accuracy)" stopOpacity={0.8}/>
+                      <stop offset="95%" stopColor="var(--color-accuracy)" stopOpacity={0.1}/>
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="time" tickLine={false} axisLine={false} tickMargin={8} fontSize={12}/>
+                  <YAxis domain={[90, 100]} unit="%" tickLine={false} axisLine={false} tickMargin={8} fontSize={12} />
+                  <Tooltip content={<ChartTooltipContent indicator="line" />} />
+                  <Area type="monotone" dataKey="accuracy" stroke="var(--color-accuracy)" fillOpacity={1} fill="url(#colorAccuracy)" />
+                </AreaChart>
             </ResponsiveContainer>
             </ChartContainer>
         </div>
