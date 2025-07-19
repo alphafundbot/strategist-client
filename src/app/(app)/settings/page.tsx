@@ -110,8 +110,6 @@ getTelemetry();`}
         </CardContent>
       </Card>
 
-      <ExportOptions />
-
     </div>
   );
 }
