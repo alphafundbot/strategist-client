@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, AreaChart, Banknote, Briefcase, Landmark, CandlestickChart } from 'lucide-react';
+import { Home, AreaChart, Banknote, Briefcase, Landmark, CandlestickChart, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 
@@ -12,8 +12,8 @@ export default function BottomNav() {
  
   const navItems = [
     { href: '/dashboard', icon: Home, label: 'Dashboard' },
-    { href: '/vaults', icon: Landmark, label: 'Vaults' },
     { href: '/trading', icon: AreaChart, label: 'Trading' },
+    { href: '/connect', icon: Zap, label: 'Connect' },
     { href: '/assets', icon: CandlestickChart, label: 'Assets' },
     { href: '/transfers', icon: Banknote, label: 'Transfers' },
     { href: '/investor', icon: Briefcase, label: 'Investor' },
@@ -30,7 +30,7 @@ export default function BottomNav() {
               href={item.href}
               className={cn(
                 'flex flex-col items-center justify-center gap-1 text-xs transition-colors',
-                'w-1/6', // Adjusted for 6 items
+                'w-1/6', 
                 isActive ? 'text-primary' : 'text-muted-foreground hover:text-primary'
               )}
             >

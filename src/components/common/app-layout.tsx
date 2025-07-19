@@ -23,6 +23,7 @@ import {
   Gauge,
   Landmark,
   CandlestickChart,
+  Zap,
 } from 'lucide-react';
 
 import {
@@ -144,6 +145,18 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                   <Link href="/trading">
                     <AreaChart />
                     <span>Trading</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+               <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname.startsWith('/connect')}
+                  tooltip={{ children: 'Connect' }}
+                >
+                  <Link href="/connect">
+                    <Zap />
+                    <span>Connect</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
