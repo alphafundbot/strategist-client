@@ -10,8 +10,8 @@ import RoiSimulation from '@/components/dashboard/roi-simulation';
 export default function TradingPage() {
   return (
     <div className="relative space-y-8">
-      <div>
-        <h1 className="text-2xl font-semibold">Trading</h1>
+      <div className="text-center">
+        <h1 className="text-3xl font-bold">Trading</h1>
         <p className="text-muted-foreground">
           Simulate mutations, monitor override logic, and evolve strategist
           cognition via the Everest voice interface.

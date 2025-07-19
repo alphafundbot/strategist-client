@@ -26,9 +26,9 @@ export default function VaultsPage() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-semibold flex items-center gap-2">
-            <Landmark className="w-6 h-6" />
+      <div className="text-center">
+        <h1 className="text-3xl font-bold flex items-center justify-center gap-2">
+            <Landmark className="w-8 h-8" />
             Collective Vaults
         </h1>
         <p className="text-muted-foreground">
@@ -37,7 +37,7 @@ export default function VaultsPage() {
       </div>
 
       <Tabs defaultValue="my-vaults" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 max-w-md">
+        <TabsList className="grid w-full grid-cols-2 max-w-md mx-auto">
           <TabsTrigger value="my-vaults">My Vaults</TabsTrigger>
           <TabsTrigger value="create-vault">Create Vault</TabsTrigger>
         </TabsList>

@@ -34,8 +34,8 @@ const getStatusBadgeVariant = (status: string) => {
 export default function TransfersPage() {
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-semibold">Transfers</h1>
+      <div className="text-center">
+        <h1 className="text-3xl font-bold">Transfers</h1>
         <p className="text-muted-foreground">Manage your connected accounts and vault deposits.</p>
       </div>
 
@@ -92,7 +92,7 @@ export default function TransfersPage() {
           <CardTitle>Transfer History</CardTitle>
           <CardDescription>
             Review your past vault deposits.
-          </CardDescription>
+          </Description>
         </CardHeader>
         <CardContent>
           <Table>
