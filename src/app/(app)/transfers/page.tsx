@@ -34,7 +34,7 @@ export default function TransfersPage() {
              <CardDescription>
                 Securely transfer funds to your vault.
             </CardDescription>
-          </Header>
+          </CardHeader>
           <CardContent>
              <p className="text-sm text-muted-foreground">The vault deposit flow will be available here.</p>
           </CardContent>
