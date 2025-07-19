@@ -9,6 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Archive, FlaskConical, Search, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import VaultRoiChart from '@/components/vaults/vault-roi-chart';
+import SimulationPanel from '@/components/vaults/simulation-panel';
 import { getVaults, getVaultRoiData, Vault, VaultRoiData } from '@/lib/services/vault';
 
 const Section = ({ title, icon, children, className }: { title: string, icon: React.ReactNode, children: React.ReactNode, className?: string }) => (
@@ -145,13 +146,7 @@ export default function VaultsPage() {
                         </div>
                     </Section>
                     <Section title="Simulation Panel" icon={<FlaskConical className="w-5 h-5" />}>
-                         <div className="h-48 p-4 bg-muted/50 rounded-lg flex items-center justify-center border border-dashed">
-                             <div className="text-center">
-                                <FlaskConical className="mx-auto h-12 w-12 text-muted-foreground" />
-                                <p className="mt-2 text-sm text-muted-foreground">Load a strategy to run new simulations.</p>
-                                <Button variant="secondary" size="sm" className="mt-4">Load Strategy</Button>
-                            </div>
-                        </div>
+                         <SimulationPanel />
                     </Section>
                 </div>
             </motion.div>
