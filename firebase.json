@@ -19,6 +19,14 @@
         }
       },
       {
+        "source": "/__/firebase/init.json",
+        "destination": "/__/firebase/init.json"
+      },
+      {
+        "source": "/__/firebase/**",
+        "destination": "/__/firebase/init.json"
+      },
+      {
         "source": "**",
         "function": "server"
       }
