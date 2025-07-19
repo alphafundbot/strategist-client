@@ -73,8 +73,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     'Free+': <Shield className="h-5 w-5 text-orange-600" />,
   };
   
-  const hasTradingAccess = isClient && (tier === 'Silver' || tier === 'Gold' || tier === 'Omega');
-  const hasInvestorAccess = isClient && (tier === 'Silver' || tier === 'Gold' || tier === 'Omega');
+  const hasTradingAccess = isClient && (tier === 'Silver' || tier === 'Gold');
+  const hasInvestorAccess = isClient && tier === 'Omega';
 
   return (
     <SidebarProvider>

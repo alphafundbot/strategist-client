@@ -22,9 +22,9 @@ export default function BottomNav() {
 
   const navItems = [
     { href: '/dashboard', icon: Home, label: 'Dashboard', tier: 'all' },
-    { href: '/trading', icon: AreaChart, label: 'Trading', tier: ['Silver', 'Gold', 'Omega'] },
+    { href: '/trading', icon: AreaChart, label: 'Trading', tier: ['Silver', 'Gold'] },
     { href: '/transfers', icon: Banknote, label: 'Transfers', tier: 'all' },
-    { href: '/investor', icon: Briefcase, label: 'Investor', tier: ['Silver', 'Gold', 'Omega'] },
+    { href: '/investor', icon: Briefcase, label: 'Investor', tier: ['Omega'] },
   ];
 
   const filteredNavItems = isClient ? navItems.filter(item => {
