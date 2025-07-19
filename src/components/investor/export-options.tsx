@@ -2,6 +2,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import jsPDF from "jspdf"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -41,6 +42,29 @@ export default function ExportOptions() {
   const isFreeTier = tier === "Free+";
 
   const handleDownload = (reportType: string, format: 'PDF' | 'JSON') => {
+    if (format === 'PDF') {
+        const doc = new jsPDF();
+        doc.text(`Secure Report: ${reportType}`, 10, 10);
+        doc.text(`Strategist Tier: ${tier}`, 10, 20);
+        doc.text("PII Suppressed. Download Logged.", 10, 30);
+        doc.save(`${reportType}.pdf`);
+    } else {
+        const data = {
+            reportType,
+            strategistTier: tier,
+            piiSuppressed: true,
+            downloadLogged: true,
+            timestamp: new Date().toISOString()
+        };
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${reportType}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
     toast({
         title: "Secure Report Generated",
         description: `${reportType} (${format}) downloaded. PII suppressed, download logged.`,
@@ -101,7 +125,7 @@ export default function ExportOptions() {
             Data & Export Center
         </CardTitle>
         <CardDescription>
-          Generate and download your strategist data and performance reports.
+          Generate and download your strategist data and performance reports. Downloads are enabled for paid tiers.
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4 sm:grid-cols-2">

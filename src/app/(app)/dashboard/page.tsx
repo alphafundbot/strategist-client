@@ -9,7 +9,6 @@ const strategistData: { [key: string]: any } = {
     "Free+": { fingerprint: "Alpha-1", vault: 1000.00, roi: 8, nextTier: "Silver", requirement: "3 mutations with ROI ≥ 12%", growth: 0, volatility: 0.89, entropy: 0.12 },
     "Silver": { fingerprint: "Beta-3", vault: 12450.00, roi: 12, nextTier: "Gold", requirement: "Vault ≥ $25K & ROI ≥ 18%", growth: 2.1, volatility: 0.45, entropy: 0.09 },
     "Gold": { fingerprint: "Gamma-6", vault: 28900.00, roi: 18, nextTier: "Omega", requirement: "Manual unlock only", growth: 4.8, volatility: 0.21, entropy: 0.05 },
-    "Omega": { fingerprint: "Omega-9", vault: 102000.00, roi: 20, nextTier: "N/A", requirement: "ISO/IEC 27001 Sealed", growth: 12.3, volatility: 0.08, entropy: 0.02 },
 }
 
 export default function DashboardPage() {
