@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
-import { Power, Link, Zap, Repeat } from "lucide-react";
+import { Power, Link, Zap } from "lucide-react";
 
 const platforms = [
   { name: "Binance", status: "Connected", logo: "B" },
