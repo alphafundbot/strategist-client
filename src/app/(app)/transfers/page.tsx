@@ -35,7 +35,7 @@ export default function TransfersPage() {
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h1 className="text-3xl font-bold">Transfers</h1>
+        <h1 className="text-3xl font-bold text-center">Transfers</h1>
         <p className="text-muted-foreground">Manage your connected accounts and vault deposits.</p>
       </div>
 
