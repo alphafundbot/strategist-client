@@ -8,6 +8,8 @@ import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase/client';
 import AppLayout from '@/components/layout/app-layout';
 import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from '@/context/ThemeContext';
+import { APP_VERSION } from '@/lib/version';
 
 export default function AuthenticatedLayout({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
@@ -98,6 +100,7 @@ export default function AuthenticatedLayout({ children }: { children: ReactNode 
     const currentTier = tier; // Use the 'tier' state derived from authentication
 
     return (
+      <ThemeProvider>
         <div className={`flex h-screen text-foreground ${tierStyles[currentTier as keyof typeof tierStyles]}`}>
             <AppLayout
                 userInitials={initials}
@@ -108,7 +111,9 @@ export default function AuthenticatedLayout({ children }: { children: ReactNode 
             >
                 {childrenWithProps}
                 <Toaster />
+                <span className="text-xs text-gray-500 dark:text-gray-400">v{APP_VERSION}</span>
             </AppLayout>
         </div>
+      </ThemeProvider>
     );
 }

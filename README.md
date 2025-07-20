@@ -1,4 +1,4 @@
-# 1. Find Listening Ports and Owning Processes
+cle# 1. Find Listening Ports and Owning Processes
 
 ```bash
 sudo lsof -iTCP -sTCP:LISTEN -Pn

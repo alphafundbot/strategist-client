@@ -1,14 +1,18 @@
-# .idx/dev.nix
+# .idx/dev.nix  (or rename to shell.nix)
 { pkgs ? import <nixpkgs> {} }:
 
 pkgs.mkShell {
   buildInputs = [
-    pkgs.python311
+    pkgs.nodejs        # Node.js runtime
+    pkgs.yarn           # Yarn package manager
+    pkgs.python311      # Python 3.11
     pkgs.python311Packages.pip
   ];
 
-  # Optional: simple confirmation on shell entry
   shellHook = ''
-    echo "🚀 Python 3.11 + pip dev shell active"
+    echo "🚀 Dev shell active:"
+    echo "   • node $(node --version)"
+    echo "   • yarn $(yarn --version)"
+    echo "   • python $(python --version)"
   '';
 }
