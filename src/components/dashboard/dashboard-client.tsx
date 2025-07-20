@@ -28,6 +28,15 @@ export default function DashboardClient({ tier }: DashboardClientProps) {
         visible: { y: 0, opacity: 1 }
     };
 
+    // Mock data for the stats cards
+    const statsData = {
+        totalAUM: 1250000,
+        activeMutations: 42,
+        averageROI: 12.5,
+        strategistTier: tier as 'Observer' | 'Advisor' | 'Elite'
+    };
+
+
     return (
         <motion.div 
             className="space-y-8"
@@ -36,7 +45,7 @@ export default function DashboardClient({ tier }: DashboardClientProps) {
             animate="visible"
         >
             <motion.div variants={itemVariants}>
-                <StatsCards tier={tier} />
+                <StatsCards {...statsData} />
             </motion.div>
             
             <motion.div 
