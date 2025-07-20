@@ -1,4 +1,4 @@
-# .idx/dev.nix
+# minimal-shell.nix
 { pkgs ? import <nixpkgs> {} }:
 
 pkgs.mkShell {
@@ -7,8 +7,7 @@ pkgs.mkShell {
     pkgs.python311Packages.pip
   ];
 
-  # Optional: simple confirmation on shell entry
   shellHook = ''
-    echo "🚀 Python 3.11 + pip dev shell active"
+    echo "🚀 Minimal Python 3.11 shell with pip active"
   '';
 }
