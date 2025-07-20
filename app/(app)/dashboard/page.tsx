@@ -5,12 +5,24 @@ import { useEffect, useState } from 'react';
 import WelcomeModal from '@/components/dashboard/welcome-modal';
 import DashboardClient from '@/components/dashboard/dashboard-client';
 import { Skeleton } from '@/components/ui/skeleton';
+import { User } from 'firebase/auth';
 
-export default function DashboardPage() {
-    const [tier, setTier] = useState<string | null>(null);
+interface DashboardPageProps {
+  user?: User | null;
+  tier?: string | null;
+}
+
+export default function DashboardPage({ tier: initialTier }: DashboardPageProps) {
+    const [tier, setTier] = useState<string | null>(initialTier || null);
 
     useEffect(() => {
-        // This effect runs only on the client, after hydration
+        if (initialTier) {
+            setTier(initialTier);
+            return;
+        }
+
+        // This effect runs only on the client, after hydration,
+        // as a fallback if props are not passed.
         const checkTier = () => {
             const storedTier = localStorage.getItem('userTier');
             if (storedTier) {
@@ -22,7 +34,7 @@ export default function DashboardPage() {
             }
         };
         checkTier();
-    }, []);
+    }, [initialTier]);
 
     return (
         <div className="space-y-8">
