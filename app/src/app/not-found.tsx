@@ -17,17 +17,17 @@ export default function NotFound() {
   }, [pathname]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-black text-white p-4">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-background text-foreground p-4 relative">
       <div className="flex items-center space-x-4 text-center">
         <h1 className="text-2xl font-medium tracking-wider">404</h1>
-        <div className="h-8 w-px bg-gray-600" />
-        <p className="text-sm text-gray-400">
+        <div className="h-8 w-px bg-muted-foreground/50" />
+        <p className="text-sm text-muted-foreground">
           this page could not be found.
         </p>
       </div>
        <Link
         href="/dashboard"
-        className="absolute bottom-8 left-8 flex h-10 w-10 items-center justify-center rounded-full border border-gray-800 text-sm font-bold text-gray-500 transition-colors hover:bg-gray-900 hover:text-white"
+        className="absolute bottom-8 left-8 flex h-10 w-10 items-center justify-center rounded-full border border-border text-sm font-bold text-muted-foreground transition-colors hover:bg-muted"
         aria-label="Go to Dashboard"
       >
         N
