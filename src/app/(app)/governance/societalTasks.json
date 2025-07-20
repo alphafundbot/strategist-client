@@ -1,0 +1,23 @@
+
+[
+  { "id": 1,   "description": "Define Digital Citizen identity schema in Firestore" },
+  { "id": 2,   "description": "Onboard Ethics Council Agent with UN charter ingestion" },
+  { "id": 3,   "description": "Build Consensus Broker Agent role registry" },
+  { "id": 4,   "description": "Ingest public census data into Societal FS collection" },
+  { "id": 5,   "description": "Create `digitalLawbooks/{lawId}` schema for JSON statutes" },
+  { "id": 6,   "description": "Cloud Function to propose new statute entries" },
+  { "id": 7,   "description": "Voting Engine Agent: weighted stake-based voting logic" },
+  { "id": 8,   "description": "Broadcast active proposals to public Transparency Portal" },
+  { "id": 9,   "description": "Design Reputation Ledger with blockchain hash audit" },
+  { "id": 10,  "description": "Reputation Manager Agent: score calculations based on compliance" },
+  { "id": 11,  "description": "Social Capital staking smart contracts interface" },
+  { "id": 12,  "description": "Trust Escrow Agent: milestone-based fund release logic" },
+  { "id": 13,  "description": "Synthetic Legislature Agent: Gemini-powered bill drafting" },
+  { "id": 14,  "description": "Legal Compliance API: auto-validate new statutes against corpora" },
+  { "id": 15,  "description": "Ethical Guardrail Monitor: continuous social impact scoring" },
+  { "id": 16,  "description": "Build pilot UI for local-municipality governance simulation" },
+  { "id": 17,  "description": "Consensus Broker Agent: stakeholder influence graph build" },
+  { "id": 18,  "description": "Digital Citizen onboarding flow with verifiable credentials" },
+  { "id": 19,  "description": "Ingest NGO policy docs into Feature Store embeddings" },
+  { "id": 20,  "description": "Firestore rules: only Council Agents can amend lawbooks" }
+]
