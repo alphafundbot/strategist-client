@@ -74,27 +74,33 @@ export default function SettingsPage() {
                 <CardHeader>
                     <CardTitle>System Blueprints</CardTitle>
                     <CardDescription>
-                        Seed the project blueprints into Firestore to track completion.
+                        Seed the project blueprints into Firestore to track completion. This is a one-time operation.
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-4 p-4 border rounded-lg bg-background">
+                        <div className="flex-1">
+                            <h3 className="font-semibold">Firebase Studio Blueprint (500 Tasks)</h3>
+                            <p className="text-sm text-muted-foreground">
+                                Injects the master checklist for the cockpit buildout.
+                            </p>
+                        </div>
                         <Button onClick={handleSeedStudioTasks} disabled={isSeedingStudio || isSeedingSocietal}>
                             {isSeedingStudio ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                            Seed Firebase Studio Tasks (500)
+                            Seed Cockpit Tasks
                         </Button>
-                         <p className="text-sm text-muted-foreground">
-                           Injects the master checklist for the cockpit buildout.
-                        </p>
                     </div>
-                     <div className="flex items-center space-x-4">
+                     <div className="flex items-center space-x-4 p-4 border rounded-lg bg-background">
+                         <div className="flex-1">
+                            <h3 className="font-semibold">Societal Singularity Blueprint (20 Tasks)</h3>
+                            <p className="text-sm text-muted-foreground">
+                            Injects the governance blueprint for societal evolution.
+                            </p>
+                        </div>
                         <Button onClick={handleSeedSocietalTasks} disabled={isSeedingStudio || isSeedingSocietal} variant="secondary">
                             {isSeedingSocietal ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                            Seed Societal Singularity Tasks (20)
+                            Seed Governance Tasks
                         </Button>
-                         <p className="text-sm text-muted-foreground">
-                           Injects the governance blueprint for societal evolution.
-                        </p>
                     </div>
                 </CardContent>
             </Card>

@@ -8,7 +8,7 @@ export default function AdminPage() {
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             <div>
             <h1 className="text-3xl font-bold">Execution Backlog</h1>
-            <p className="text-muted-foreground">Live status of all project and societal blueprints.</p>
+            <p className="text-muted-foreground">Live status of all project and societal blueprints, tracked from Firestore.</p>
             </div>
       </motion.div>
       <TaskBoard />

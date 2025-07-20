@@ -11,10 +11,10 @@ import {
   updateDoc
 } from 'firebase/firestore'
 import { db } from '@/lib/firebase/client';
-import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { motion } from 'framer-motion';
 
 type Task = {
   id: string
@@ -26,9 +26,11 @@ type Task = {
 function useTasks(collectionName: string) {
   const [tasks, setTasks] = useState<Task[]>([])
   useEffect(() => {
+    // A query that does nothing if the collection name is invalid.
+    if (!collectionName) return;
     const q = query(
       collection(db, collectionName),
-      orderBy('createdAt', 'asc')
+      orderBy('id', 'asc')
     )
     const unsubscribe = onSnapshot(q, snap => {
       const list: Task[] = []
@@ -66,9 +68,12 @@ export default function TaskBoard() {
   const TaskList = ({ tasks, collectionName }: { tasks: Task[], collectionName: string}) => (
      <ScrollArea className="h-[400px] pr-4">
         <div className="space-y-2">
-        {tasks.map(task => (
-            <div
+        {tasks.map((task, index) => (
+            <motion.div
             key={task.id}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.02 }}
             className="flex justify-between items-center p-2 border rounded-lg hover:bg-muted/50 transition-colors"
             >
             <span className="text-sm flex-1 pr-4">{task.id}. {task.description}</span>
@@ -80,7 +85,7 @@ export default function TaskBoard() {
             >
                 {task.status}
             </Button>
-            </div>
+            </motion.div>
         ))}
         </div>
     </ScrollArea>
@@ -89,7 +94,7 @@ export default function TaskBoard() {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-       <Card>
+       <Card className="bg-card/50 backdrop-blur-sm">
             <CardHeader>
                 <CardTitle>Firebase Studio Blueprint</CardTitle>
             </CardHeader>
@@ -97,7 +102,7 @@ export default function TaskBoard() {
                  <TaskList tasks={studioTasks} collectionName="firebaseStudioTasks" />
             </CardContent>
        </Card>
-        <Card>
+        <Card className="bg-card/50 backdrop-blur-sm">
             <CardHeader>
                 <CardTitle>Societal Singularity Blueprint</CardTitle>
             </CardHeader>
