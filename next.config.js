@@ -1,9 +1,10 @@
-/** @type {import('next').NextConfig} */
 const nextConfig = {
-  // experimental: {
-  //   allowedDevOrigins: ["http://localhost:9003"],
-  // },
-  reactStrictMode: true,
-};
-
-module.exports = nextConfig;
+  experimental: {
+    serverActions: {} // already fine
+  },
+  allowedDevOrigins: [
+    "http://localhost:3000",
+    "https://3000-firebase-studio-*.cloudworkstations.dev"
+  ]
+}
+module.exports = nextConfig
