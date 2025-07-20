@@ -67,6 +67,7 @@ export default function AuthenticatedLayout({ children }: { children: ReactNode 
       { name: 'Mutation Generator', path: '/trading', icon: 'FlaskConical' },
       { name: 'Strategy Vaults', path: '/vaults', icon: 'Archive' },
       { name: 'ROI Simulation', path: '/simulation', icon: 'BarChart' },
+      { name: 'Governance', path: '/governance', icon: 'Scale' },
       { name: 'Investor Mode', path: '/investor', icon: 'UserCheck' },
       { name: 'Settings', path: '/settings', icon: 'Settings' },
     ];
