@@ -1,11 +1,10 @@
 {
+  "functions": {
+    "source": "functions",
+    "runtime": "nodejs18"
+  },
   "hosting": {
-    "public": ".next",
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
+    "public": "out",
+    "rewrites": [{ "source": "**", "destination": "/index.html" }]
   }
 }
