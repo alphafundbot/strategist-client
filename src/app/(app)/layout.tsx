@@ -69,6 +69,7 @@ export default function AuthenticatedLayout({ children }: { children: ReactNode 
       { name: 'ROI Simulation', path: '/simulation', icon: 'BarChart' },
       { name: 'Governance', path: '/governance', icon: 'Scale' },
       { name: 'Investor Mode', path: '/investor', icon: 'UserCheck' },
+      { name: 'Admin', path: '/admin', icon: 'Shield' },
       { name: 'Settings', path: '/settings', icon: 'Settings' },
     ];
 
