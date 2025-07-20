@@ -1,0 +1,13 @@
+
+[
+  { "id": 1,   "description": "Refine Ethics Council Agent’s UN charter ingestion to support multi-lingual PDF parsing" },
+  { "id": 2,   "description": "Add versioned rollback for `digitalLawbooks` entries on invalid amendment proposals" },
+  { "id": 3,   "description": "Optimize Consensus Broker Agent graph algorithm for 1M+ stakeholder nodes" },
+  { "id": 4,   "description": "Implement streaming update of public census data via Cloud Pub/Sub" },
+  { "id": 5,   "description": "Enforce granular Firestore security rules on `digitalLawbooks/{lawId}` for Council Agent roles" },
+  { "id": 6,   "description": "Build offline-first PWA UI for Transparency Portal with IndexedDB caching" },
+  { "id": 7,   "description": "Tune Reputation Ledger writes to avoid hot-shard on high-frequency score updates" },
+  { "id": 8,   "description": "Integrate Privacy-Preserving Analytics (differential privacy) for social sentiment tracking" },
+  { "id": 9,   "description": "Add audit-grade tamper-evidence by hashing each `auditTrail` doc into a Merkle tree" },
+  { "id": 10,  "description": "Automate JSON Schema validation for new statute proposals before commit" }
+]
