@@ -1,15 +1,11 @@
 
 "use client";
 
-import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Bot, ThumbsUp, ThumbsDown, Scale, Loader2 } from 'lucide-react';
+import { Bot, ThumbsUp, ThumbsDown, Scale } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useToast } from "@/components/ui/use-toast";
-import { seedSocietalSingularityTasks } from '@/ai/flows/seed-societal-tasks-flow';
-
 
 const proposals = [
   {
@@ -55,29 +51,6 @@ const getStatusBadgeVariant = (status: string) => {
 };
 
 export default function GovernancePage() {
-  const [isSeeding, setIsSeeding] = useState(false);
-  const { toast } = useToast();
-
-  const handleSeedTasks = async () => {
-    setIsSeeding(true);
-    try {
-      const result = await seedSocietalSingularityTasks();
-      toast({
-        title: "Blueprint Seeded",
-        description: `${result.seeded} tasks have been added to the 'societalSingularityTasks' collection in Firestore.`,
-      });
-    } catch (error) {
-      console.error("Error seeding tasks:", error);
-      toast({
-        variant: "destructive",
-        title: "Seeding Failed",
-        description: "There was an error seeding the Societal Singularity blueprint.",
-      });
-    } finally {
-      setIsSeeding(false);
-    }
-  };
-
   return (
     <div className="space-y-6">
       <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
@@ -86,10 +59,6 @@ export default function GovernancePage() {
                 <h1 className="text-3xl font-bold">Governance Fabric</h1>
                 <p className="text-muted-foreground">Active proposals, voting tallies, and agent-authored rationales shaping the new social contract.</p>
             </div>
-            <Button onClick={handleSeedTasks} disabled={isSeeding} variant="outline">
-                {isSeeding ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                Seed Blueprint
-            </Button>
         </div>
       </motion.div>
 

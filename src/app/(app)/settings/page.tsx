@@ -8,13 +8,15 @@ import { Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from "@/components/ui/use-toast";
 import { seedFirebaseStudioTasks } from '@/ai/flows/seed-tasks-flow';
+import { seedSocietalSingularityTasks } from '@/ai/flows/seed-societal-tasks-flow';
 
 export default function SettingsPage() {
-  const [isSeeding, setIsSeeding] = useState(false);
+  const [isSeedingStudio, setIsSeedingStudio] = useState(false);
+  const [isSeedingSocietal, setIsSeedingSocietal] = useState(false);
   const { toast } = useToast();
 
-  const handleSeedTasks = async () => {
-    setIsSeeding(true);
+  const handleSeedStudioTasks = async () => {
+    setIsSeedingStudio(true);
     try {
       const result = await seedFirebaseStudioTasks();
       toast({
@@ -22,14 +24,34 @@ export default function SettingsPage() {
         description: `${result.seeded} tasks have been added to the 'firebaseStudioTasks' collection in Firestore.`,
       });
     } catch (error) {
-      console.error("Error seeding tasks:", error);
+      console.error("Error seeding Studio tasks:", error);
       toast({
         variant: "destructive",
         title: "Seeding Failed",
         description: "There was an error seeding the Firebase Studio blueprint.",
       });
     } finally {
-      setIsSeeding(false);
+      setIsSeedingStudio(false);
+    }
+  };
+  
+  const handleSeedSocietalTasks = async () => {
+    setIsSeedingSocietal(true);
+    try {
+      const result = await seedSocietalSingularityTasks();
+      toast({
+        title: "Blueprint Seeded",
+        description: `${result.seeded} tasks have been added to the 'societalSingularityTasks' collection in Firestore.`,
+      });
+    } catch (error) {
+      console.error("Error seeding Societal tasks:", error);
+      toast({
+        variant: "destructive",
+        title: "Seeding Failed",
+        description: "There was an error seeding the Societal Singularity blueprint.",
+      });
+    } finally {
+      setIsSeedingSocietal(false);
     }
   };
 
@@ -55,14 +77,23 @@ export default function SettingsPage() {
                         Seed the project blueprints into Firestore to track completion.
                     </CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="space-y-4">
                     <div className="flex items-center space-x-4">
-                        <Button onClick={handleSeedTasks} disabled={isSeeding}>
-                            {isSeeding ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                        <Button onClick={handleSeedStudioTasks} disabled={isSeedingStudio || isSeedingSocietal}>
+                            {isSeedingStudio ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                             Seed Firebase Studio Tasks (500)
                         </Button>
                          <p className="text-sm text-muted-foreground">
-                           Injects the master checklist into the `firebaseStudioTasks` collection.
+                           Injects the master checklist for the cockpit buildout.
+                        </p>
+                    </div>
+                     <div className="flex items-center space-x-4">
+                        <Button onClick={handleSeedSocietalTasks} disabled={isSeedingStudio || isSeedingSocietal} variant="secondary">
+                            {isSeedingSocietal ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                            Seed Societal Singularity Tasks (20)
+                        </Button>
+                         <p className="text-sm text-muted-foreground">
+                           Injects the governance blueprint for societal evolution.
                         </p>
                     </div>
                 </CardContent>
