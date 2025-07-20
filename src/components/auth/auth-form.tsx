@@ -127,7 +127,7 @@ export default function AuthForm() {
         {!isLogin && (
           <div>
             <Label htmlFor="tier">Access Tier</Label>
-            <Select onValueChange={(value) => setValue('tier', value as 'Observer' | 'Advisor' | 'Elite')} value={selectedTier}>
+            <Select onValueChange={(value) => setValue('tier', value as 'Observer' | 'Advisor' | 'Elite')} defaultValue={selectedTier}>
               <SelectTrigger>
                 <SelectValue placeholder="Select your access tier" />
               </SelectTrigger>
