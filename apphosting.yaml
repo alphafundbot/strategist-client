@@ -5,3 +5,10 @@ runConfig:
   # Increase this value if you'd like to automatically spin up
   # more instances in response to increased traffic.
   maxInstances: 1
+  # Pin the release to a specific version to ensure stability
+  pinRelease: true
+
+# Required for Genkit to work with App Hosting
+requiredAPIs:
+  - run.googleapis.com
+  - artifactregistry.googleapis.com
