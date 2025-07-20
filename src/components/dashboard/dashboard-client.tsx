@@ -6,6 +6,10 @@ import PerformanceChart from '@/components/dashboard/performance-chart';
 import RecentActivity from '@/components/dashboard/recent-activity';
 import StrategyAllocation from '@/components/dashboard/strategy-allocation';
 import { motion } from 'framer-motion';
+import ROIWidget from '@/components/stubs/ui/ROIWidget'; // Added import
+import MutationFeed from '@/components/stubs/ui/MutationFeed'; // Added import
+import StrategistEscalation from '@/components/dashboard/strategistEscalation'; // Added import
+import StrategistActions from '@/components/dashboard/StrategistActions'; // Added import
 
 interface DashboardClientProps {
     tier: string;
@@ -62,6 +66,24 @@ export default function DashboardClient({ tier }: DashboardClientProps) {
             
             <motion.div variants={itemVariants}>
                 <RecentActivity />
+            </motion.div>
+
+            {/* Added stub components */}
+            <motion.div variants={itemVariants}>
+                <ROIWidget />
+            </motion.div>
+            <motion.div variants={itemVariants}>
+                <MutationFeed />
+            </motion.div>
+
+            {/* Added StrategistEscalation component */}
+            <motion.div variants={itemVariants}>
+                <StrategistEscalation />
+            </motion.div>
+
+            {/* Added StrategistActions component */}
+            <motion.div variants={itemVariants}>
+                <StrategistActions />
             </motion.div>
         </motion.div>
     );

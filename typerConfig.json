@@ -1,0 +1,16 @@
+{
+  "activeWireframe": "test",
+  "components": {
+    "Sidebar": {
+      "status": "bound",
+      "path": "src/components/layout/sidebar.tsx"
+    },
+    "ROIWidget": {
+      "status": "missing"
+    },
+    "MutationFeed": {
+      "status": "missing"
+    }
+  },
+  "lastSyncedAt": "2025-07-20T17:25:41.000Z"
+}

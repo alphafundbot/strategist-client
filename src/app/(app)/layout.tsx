@@ -88,16 +88,27 @@ export default function AuthenticatedLayout({ children }: { children: ReactNode 
       return child;
     });
 
+    const tierStyles = {
+        Observer: "bg-gradient-to-r from-gray-700",
+        Advisor: "bg-gradient-to-r from-blue-600",
+        Elite: "bg-gradient-to-r from-red-600"
+    };
+    
+    // Assuming the actual strategist tier is available from the user state or a context
+    const currentTier = tier; // Use the 'tier' state derived from authentication
+
     return (
-        <AppLayout
-            userInitials={initials}
-            userTier={tier}
-            navItems={navItems}
-            bottomNavItems={bottomNavItems}
-            activePath={pathname}
-        >
-            {childrenWithProps}
-            <Toaster />
-        </AppLayout>
+        <div className={`flex h-screen text-foreground ${tierStyles[currentTier as keyof typeof tierStyles]}`}>
+            <AppLayout
+                userInitials={initials}
+                userTier={tier}
+                navItems={navItems}
+                bottomNavItems={bottomNavItems}
+                activePath={pathname}
+            >
+                {childrenWithProps}
+                <Toaster />
+            </AppLayout>
+        </div>
     );
 }

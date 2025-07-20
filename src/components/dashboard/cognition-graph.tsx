@@ -1,24 +1,33 @@
-
-"use client";
-
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { BrainCircuit } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
 export default function CognitionGraph() {
-    return (
-        <div className="space-y-4">
-            <div className="p-4 bg-muted/50 rounded-lg flex items-center justify-center min-h-[200px] border border-dashed">
-                <div className="text-center">
-                    <BrainCircuit className="mx-auto h-12 w-12 text-muted-foreground" />
-                    <p className="mt-2 text-sm text-muted-foreground">Cognition graph will be rendered here.</p>
-                </div>
-            </div>
-            <div className="flex gap-2">
-                <Input placeholder="Enter prompt to configure graph..." className="flex-1" />
-                <Button>Render</Button>
-            </div>
-        </div>
-    );
+  const [clusters, setClusters] = useState<{ [key: string]: number }>({});
+
+  useEffect(() => {
+    const db = getFirestore();
+    const ref = collection(db, 'telemetry/MutationFeed/stream');
+
+    getDocs(ref).then((snap) => {
+      const counts: { [key: string]: number } = {};
+      snap.forEach((doc) => {
+        const c = doc.data().confidenceLevel || 'unknown';
+        counts[c] = (counts[c] || 0) + 1;
+      });
+      setClusters(counts);
+    });
+  }, []);
+
+  return (
+    <div className="p-4 border rounded bg-muted text-sm">
+      <div>🧠 Cognition Graph – Confidence Clusters</div>
+      <ul className="mt-2 space-y-1">
+        {Object.entries(clusters).map(([level, count]) => (
+          <li key={level}>
+            <strong>{level}</strong>: {count} mutation{count > 1 ? 's' : ''}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
