@@ -2,10 +2,12 @@
 const nextConfig = {
   reactStrictMode: true,
   output: 'standalone',
-  allowedDevOrigins: [
-    'https://6000-firebase-studio-*.cloudworkstations.dev',
-    'https://9000-firebase-studio-*.cloudworkstations.dev'
-  ]
+  experimental: {
+    allowedNextDevOrigins: [
+      "https://6000-firebase-studio-*.cloudworkstations.dev",
+      "https://9003-firebase-studio-*.cloudworkstations.dev"
+    ]
+  }
 };
 
 module.exports = nextConfig;
