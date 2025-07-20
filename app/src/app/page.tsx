@@ -1,4 +1,3 @@
-
 import AuthForm from "@/components/auth/auth-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BrainCircuit, BarChart3, FlaskConical } from "lucide-react";
